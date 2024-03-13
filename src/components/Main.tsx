@@ -9,7 +9,6 @@ import { AirshipToast } from 'react-native-airship'
 import { getDeviceSettings } from '../actions/DeviceSettingsActions'
 import { logoutRequest } from '../actions/LoginActions'
 import { checkEnabledExchanges, showReEnableOtpModal } from '../actions/SettingsActions'
-import { CryptoExchangeScene } from '../components/scenes/CryptoExchangeScene'
 import { HomeSceneUi4 } from '../components/ui4/scenes/HomeSceneUi4'
 import { ENV } from '../env'
 import { DEFAULT_EXPERIMENT_CONFIG, ExperimentConfig, getExperimentConfig } from '../experimentConfig'
@@ -53,9 +52,6 @@ import { CreateWalletImportOptionsScene } from './scenes/CreateWalletImportOptio
 import { CreateWalletImportScene } from './scenes/CreateWalletImportScene'
 import { CreateWalletSelectCryptoScene } from './scenes/CreateWalletSelectCryptoScene'
 import { CreateWalletSelectFiatScene } from './scenes/CreateWalletSelectFiatScene'
-import { CryptoExchangeQuoteProcessingScene } from './scenes/CryptoExchangeQuoteProcessingScene'
-import { CryptoExchangeQuoteScene } from './scenes/CryptoExchangeQuoteScene'
-import { CryptoExchangeSuccessScene } from './scenes/CryptoExchangeSuccessScene'
 import { CurrencyNotificationScene } from './scenes/CurrencyNotificationScene'
 import { CurrencySettingsScene } from './scenes/CurrencySettingsScene'
 import { DefaultFiatSettingScene } from './scenes/DefaultFiatSettingScene'
@@ -108,7 +104,11 @@ import { SpendingLimitsScene } from './scenes/SpendingLimitsScene'
 import { StakeModifyScene } from './scenes/Staking/StakeModifyScene'
 import { StakeOptionsScene } from './scenes/Staking/StakeOptionsScene'
 import { StakeOverviewScene } from './scenes/Staking/StakeOverviewScene'
+import { SwapConfirmationScene } from './scenes/SwapConfirmationScene'
+import { SwapCreateScene } from './scenes/SwapCreateScene'
+import { SwapProcessingScene } from './scenes/SwapProcessingScene'
 import { SwapSettingsScene } from './scenes/SwapSettingsScene'
+import { SwapSuccessScene } from './scenes/SwapSuccessScene'
 import { TransactionDetailsScene } from './scenes/TransactionDetailsScene'
 import { TransactionList } from './scenes/TransactionListScene'
 import { TransactionsExportScene } from './scenes/TransactionsExportScene'
@@ -397,7 +397,7 @@ const EdgeAppStack = () => {
       />
       <Stack.Screen
         name="exchangeSuccess"
-        component={CryptoExchangeSuccessScene}
+        component={SwapSuccessScene}
         options={{
           headerLeft: () => null
         }}
@@ -720,16 +720,16 @@ const EdgeExchangeTabScreen = () => {
     <Stack.Navigator initialRouteName="exchange" screenOptions={defaultScreenOptions}>
       <Stack.Screen
         name="exchange"
-        component={CryptoExchangeScene}
+        component={SwapCreateScene}
         options={firstSceneScreenOptions}
         listeners={{
           focus: () => dispatch(checkEnabledExchanges())
         }}
       />
-      <Stack.Screen name="exchangeQuote" component={CryptoExchangeQuoteScene} />
+      <Stack.Screen name="exchangeQuote" component={SwapConfirmationScene} />
       <Stack.Screen
         name="exchangeQuoteProcessing"
-        component={CryptoExchangeQuoteProcessingScene}
+        component={SwapProcessingScene}
         options={{
           headerLeft: () => null,
           headerRight: () => null
