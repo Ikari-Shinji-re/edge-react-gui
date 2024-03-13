@@ -9,26 +9,25 @@ import { AirshipToast } from 'react-native-airship'
 import { getDeviceSettings } from '../actions/DeviceSettingsActions'
 import { logoutRequest } from '../actions/LoginActions'
 import { checkEnabledExchanges, showReEnableOtpModal } from '../actions/SettingsActions'
-import { CryptoExchangeScene as CryptoExchangeSceneComponent } from '../components/scenes/CryptoExchangeScene'
-import { HomeSceneUi4 as HomeSceneUi4Component } from '../components/ui4/scenes/HomeSceneUi4'
+import { CryptoExchangeScene } from '../components/scenes/CryptoExchangeScene'
+import { HomeSceneUi4 } from '../components/ui4/scenes/HomeSceneUi4'
 import { ENV } from '../env'
 import { DEFAULT_EXPERIMENT_CONFIG, ExperimentConfig, getExperimentConfig } from '../experimentConfig'
 import { useAsyncEffect } from '../hooks/useAsyncEffect'
 import { useMount } from '../hooks/useMount'
 import { lstrings } from '../locales/strings'
 import { AddressFormScene } from '../plugins/gui/scenes/AddressFormScene'
-import { FiatPluginEnterAmountScene as FiatPluginEnterAmountSceneComponent } from '../plugins/gui/scenes/FiatPluginEnterAmountScene'
+import { FiatPluginEnterAmountScene } from '../plugins/gui/scenes/FiatPluginEnterAmountScene'
 import { FiatPluginWebViewComponent } from '../plugins/gui/scenes/FiatPluginWebView'
 import { InfoDisplayScene } from '../plugins/gui/scenes/InfoDisplayScene'
-import { RewardsCardDashboardScene as RewardsCardListSceneComponent } from '../plugins/gui/scenes/RewardsCardDashboardScene'
-import { RewardsCardWelcomeScene as RewardsCardWelcomeSceneComponent } from '../plugins/gui/scenes/RewardsCardWelcomeScene'
+import { RewardsCardDashboardScene } from '../plugins/gui/scenes/RewardsCardDashboardScene'
+import { RewardsCardWelcomeScene } from '../plugins/gui/scenes/RewardsCardWelcomeScene'
 import { SepaFormScene } from '../plugins/gui/scenes/SepaFormScene'
 import { defaultAccount } from '../reducers/CoreReducer'
 import { useDispatch, useSelector } from '../types/reactRedux'
 import { AppParamList, NavigationBase } from '../types/routerTypes'
 import { isMaestro } from '../util/maestro'
 import { logEvent } from '../util/tracking'
-import { ifLoggedIn } from './hoc/IfLoggedIn'
 import { useBackEvent } from './hoc/useBackEvent'
 import { BackButton } from './navigation/BackButton'
 import { CurrencySettingsTitle } from './navigation/CurrencySettingsTitle'
@@ -40,171 +39,89 @@ import { ParamHeaderTitle } from './navigation/ParamHeaderTitle'
 import { SideMenuButton } from './navigation/SideMenuButton'
 import { TransactionDetailsTitle } from './navigation/TransactionDetailsTitle'
 import { LoadingSplashScreen } from './progress-indicators/LoadingSplashScreen'
-import { AssetSettingsScene as AssetSettingsSceneComponent } from './scenes/AssetSettingsScene'
-import { ChangeMiningFeeScene as ChangeMiningFeeSceneComponent } from './scenes/ChangeMiningFeeScene'
-import { ChangePasswordScene as ChangePasswordSceneComponent } from './scenes/ChangePasswordScene'
-import { ChangePinScene as ChangePinSceneComponent } from './scenes/ChangePinScene'
-import { CoinRankingDetailsScene as CoinRankingDetailsSceneComponent } from './scenes/CoinRankingDetailsScene'
-import { CoinRankingScene as CoinRankingSceneComponent } from './scenes/CoinRankingScene'
-import { ConfirmScene as ConfirmSceneComponent } from './scenes/ConfirmScene'
-import { CreateWalletAccountSelectScene as CreateWalletAccountSelectSceneComponent } from './scenes/CreateWalletAccountSelectScene'
-import { CreateWalletAccountSetupScene as CreateWalletAccountSetupSceneComponent } from './scenes/CreateWalletAccountSetupScene'
-import { CreateWalletCompletionScene as CreateWalletCompletionSceneComponent } from './scenes/CreateWalletCompletionScene'
-import { CreateWalletImportOptionsScene as CreateWalletImportOptionsSceneComponent } from './scenes/CreateWalletImportOptionsScene'
-import { CreateWalletImportScene as CreateWalletImportSceneComponent } from './scenes/CreateWalletImportScene'
-import { CreateWalletSelectCryptoScene as CreateWalletSelectCryptoSceneComponent } from './scenes/CreateWalletSelectCryptoScene'
-import { CreateWalletSelectFiatScene as CreateWalletSelectFiatSceneComponent } from './scenes/CreateWalletSelectFiatScene'
-import { CryptoExchangeQuoteProcessingScene as CryptoExchangeQuoteProcessingSceneComponent } from './scenes/CryptoExchangeQuoteProcessingScene'
-import { CryptoExchangeQuoteScene as CryptoExchangeQuoteComponent } from './scenes/CryptoExchangeQuoteScene'
-import { CryptoExchangeSuccessScene as CryptoExchangeSuccessSceneComponent } from './scenes/CryptoExchangeSuccessScene'
-import { CurrencyNotificationScene as CurrencyNotificationSceneComponent } from './scenes/CurrencyNotificationScene'
-import { CurrencySettingsScene as CurrencySettingsSceneComponent } from './scenes/CurrencySettingsScene'
-import { DefaultFiatSettingScene as DefaultFiatSettingSceneComponent } from './scenes/DefaultFiatSettingScene'
+import { AssetSettingsScene } from './scenes/AssetSettingsScene'
+import { ChangeMiningFeeScene } from './scenes/ChangeMiningFeeScene'
+import { ChangePasswordScene } from './scenes/ChangePasswordScene'
+import { ChangePinScene } from './scenes/ChangePinScene'
+import { CoinRankingDetailsScene } from './scenes/CoinRankingDetailsScene'
+import { CoinRankingScene } from './scenes/CoinRankingScene'
+import { ConfirmScene } from './scenes/ConfirmScene'
+import { CreateWalletAccountSelectScene } from './scenes/CreateWalletAccountSelectScene'
+import { CreateWalletAccountSetupScene } from './scenes/CreateWalletAccountSetupScene'
+import { CreateWalletCompletionScene } from './scenes/CreateWalletCompletionScene'
+import { CreateWalletImportOptionsScene } from './scenes/CreateWalletImportOptionsScene'
+import { CreateWalletImportScene } from './scenes/CreateWalletImportScene'
+import { CreateWalletSelectCryptoScene } from './scenes/CreateWalletSelectCryptoScene'
+import { CreateWalletSelectFiatScene } from './scenes/CreateWalletSelectFiatScene'
+import { CryptoExchangeQuoteProcessingScene } from './scenes/CryptoExchangeQuoteProcessingScene'
+import { CryptoExchangeQuoteScene } from './scenes/CryptoExchangeQuoteScene'
+import { CryptoExchangeSuccessScene } from './scenes/CryptoExchangeSuccessScene'
+import { CurrencyNotificationScene } from './scenes/CurrencyNotificationScene'
+import { CurrencySettingsScene } from './scenes/CurrencySettingsScene'
+import { DefaultFiatSettingScene } from './scenes/DefaultFiatSettingScene'
 import { DevTestScene } from './scenes/DevTestScene'
-import { EdgeLoginScene as EdgeLoginSceneComponent } from './scenes/EdgeLoginScene'
-import { EditTokenScene as EditTokenSceneComponent } from './scenes/EditTokenScene'
-import { ExtraTabScene as ExtraTabSceneComponent } from './scenes/ExtraTabScene'
-import { FioAddressDetailsScene as FioAddressDetailsSceneComponent } from './scenes/Fio/FioAddressDetailsScene'
-import { FioAddressListScene as FioAddressListSceneComponent } from './scenes/Fio/FioAddressListScene'
-import { FioAddressRegisteredScene as FioAddressRegisteredSceneComponent } from './scenes/Fio/FioAddressRegisteredScene'
-import { FioAddressRegisterScene as FioAddressRegisterSceneComponent } from './scenes/Fio/FioAddressRegisterScene'
-import { FioAddressRegisterSelectWalletScene as FioAddressRegisterSelectWalletSceneComponent } from './scenes/Fio/FioAddressRegisterSelectWalletScene'
-import { FioAddressSettingsScene as FioAddressSettingsSceneComponent } from './scenes/Fio/FioAddressSettingsScene'
-import { FioConnectWalletConfirmScene as FioConnectWalletConfirmSceneComponent } from './scenes/Fio/FioConnectWalletConfirmScene'
-import { FioCreateHandleScene as FioCreateHandleSceneComponent } from './scenes/Fio/FioCreateHandleScene'
-import { FioDomainRegisterScene as FioDomainRegisterSceneComponent } from './scenes/Fio/FioDomainRegisterScene'
-import { FioDomainRegisterSelectWalletScene as FioDomainRegisterSelectWalletSceneComponent } from './scenes/Fio/FioDomainRegisterSelectWalletScene'
-import { FioDomainSettingsScene as FioDomainSettingsSceneComponent } from './scenes/Fio/FioDomainSettingsScene'
-import { FioNameConfirmScene as FioNameConfirmSceneComponent } from './scenes/Fio/FioNameConfirmScene'
-import { FioRequestConfirmationScene as FioRequestConfirmationSceneComponent } from './scenes/Fio/FioRequestConfirmationScene'
-import { FioRequestListScene as FioRequestListSceneComponent } from './scenes/Fio/FioRequestListScene'
-import { FioSentRequestDetailsScene as FioSentRequestDetailsSceneComponent } from './scenes/Fio/FioSentRequestDetailsScene'
-import { FioStakingChangeScene as FioStakingChangeSceneComponent } from './scenes/Fio/FioStakingChangeScene'
-import { FioStakingOverviewScene as FioStakingOverviewSceneComponent } from './scenes/Fio/FioStakingOverviewScene'
+import { EdgeLoginScene } from './scenes/EdgeLoginScene'
+import { EditTokenScene } from './scenes/EditTokenScene'
+import { ExtraTabScene } from './scenes/ExtraTabScene'
+import { FioAddressDetailsScene } from './scenes/Fio/FioAddressDetailsScene'
+import { FioAddressListScene } from './scenes/Fio/FioAddressListScene'
+import { FioAddressRegisteredScene } from './scenes/Fio/FioAddressRegisteredScene'
+import { FioAddressRegisterScene } from './scenes/Fio/FioAddressRegisterScene'
+import { FioAddressRegisterSelectWalletScene } from './scenes/Fio/FioAddressRegisterSelectWalletScene'
+import { FioAddressSettingsScene } from './scenes/Fio/FioAddressSettingsScene'
+import { FioConnectWalletConfirmScene } from './scenes/Fio/FioConnectWalletConfirmScene'
+import { FioCreateHandleScene } from './scenes/Fio/FioCreateHandleScene'
+import { FioDomainRegisterScene } from './scenes/Fio/FioDomainRegisterScene'
+import { FioDomainRegisterSelectWalletScene } from './scenes/Fio/FioDomainRegisterSelectWalletScene'
+import { FioDomainSettingsScene } from './scenes/Fio/FioDomainSettingsScene'
+import { FioNameConfirmScene } from './scenes/Fio/FioNameConfirmScene'
+import { FioRequestConfirmationScene } from './scenes/Fio/FioRequestConfirmationScene'
+import { FioRequestListScene } from './scenes/Fio/FioRequestListScene'
+import { FioSentRequestDetailsScene } from './scenes/Fio/FioSentRequestDetailsScene'
+import { FioStakingChangeScene } from './scenes/Fio/FioStakingChangeScene'
+import { FioStakingOverviewScene } from './scenes/Fio/FioStakingOverviewScene'
 import { GettingStartedScene } from './scenes/GettingStartedScene'
-import { GuiPluginListScene as GuiPluginListSceneComponent } from './scenes/GuiPluginListScene'
-import { GuiPluginViewScene as GuiPluginViewSceneComponent } from './scenes/GuiPluginViewScene'
-import { LoanCloseScene as LoanCloseSceneComponent } from './scenes/Loans/LoanCloseScene'
-import { LoanCreateConfirmationScene as LoanCreateConfirmationSceneComponent } from './scenes/Loans/LoanCreateConfirmationScene'
-import { LoanCreateScene as LoanCreateSceneComponent } from './scenes/Loans/LoanCreateScene'
-import { LoanDashboardScene as LoanDashboardSceneComponent } from './scenes/Loans/LoanDashboardScene'
-import { LoanDetailsScene as LoanDetailsSceneComponent } from './scenes/Loans/LoanDetailsScene'
-import { LoanManageScene as LoanManageSceneComponent } from './scenes/Loans/LoanManageScene'
-import { LoanStatusScene as LoanStatusSceneComponent } from './scenes/Loans/LoanStatusScene'
+import { GuiPluginListScene } from './scenes/GuiPluginListScene'
+import { GuiPluginViewScene } from './scenes/GuiPluginViewScene'
+import { LoanCloseScene } from './scenes/Loans/LoanCloseScene'
+import { LoanCreateConfirmationScene } from './scenes/Loans/LoanCreateConfirmationScene'
+import { LoanCreateScene } from './scenes/Loans/LoanCreateScene'
+import { LoanDashboardScene } from './scenes/Loans/LoanDashboardScene'
+import { LoanDetailsScene } from './scenes/Loans/LoanDetailsScene'
+import { LoanManageScene } from './scenes/Loans/LoanManageScene'
+import { LoanStatusScene } from './scenes/Loans/LoanStatusScene'
 import { LoginScene } from './scenes/LoginScene'
-import { ManageTokensScene as ManageTokensSceneComponent } from './scenes/ManageTokensScene'
-import { MigrateWalletCalculateFeeScene as MigrateWalletCalculateFeeSceneComponent } from './scenes/MigrateWalletCalculateFeeScene'
-import { MigrateWalletCompletionScene as MigrateWalletCompletionSceneComponent } from './scenes/MigrateWalletCompletionScene'
-import { MigrateWalletSelectCryptoScene as MigrateWalletSelectCryptoSceneComponent } from './scenes/MigrateWalletSelectCryptoScene'
-import { NotificationScene as NotificationSceneComponent } from './scenes/NotificationScene'
-import { OtpRepairScene as OtpRepairSceneComponent } from './scenes/OtpRepairScene'
-import { OtpSettingsScene as OtpSettingsSceneComponent } from './scenes/OtpSettingsScene'
-import { ChangeRecoveryScene as ChangeRecoverySceneComponent } from './scenes/PasswordRecoveryScene'
-import { PromotionSettingsScene as PromotionSettingsSceneComponent } from './scenes/PromotionSettingsScene'
-import { RequestScene as RequestSceneComponent } from './scenes/RequestScene'
-import { SecurityAlertsScene as SecurityAlertsSceneComponent } from './scenes/SecurityAlertsScene'
-import { SendScene2 as SendScene2Component } from './scenes/SendScene2'
-import { SettingsScene as SettingsSceneComponent } from './scenes/SettingsScene'
-import { SpendingLimitsScene as SpendingLimitsSceneComponent } from './scenes/SpendingLimitsScene'
-import { StakeModifyScene as StakeModifySceneComponent } from './scenes/Staking/StakeModifyScene'
-import { StakeOptionsScene as StakeOptionsSceneComponent } from './scenes/Staking/StakeOptionsScene'
-import { StakeOverviewScene as StakeOverviewSceneComponent } from './scenes/Staking/StakeOverviewScene'
-import { SwapSettingsScene as SwapSettingsSceneComponent } from './scenes/SwapSettingsScene'
-import { TransactionDetailsScene as TransactionDetailsSceneComponent } from './scenes/TransactionDetailsScene'
-import { TransactionList as TransactionListComponent } from './scenes/TransactionListScene'
-import { TransactionsExportScene as TransactionsExportSceneComponent } from './scenes/TransactionsExportScene'
-import { UpgradeUsernameScene as UpgradeUsernameSceneComponent } from './scenes/UpgradeUsernameScreen'
-import { WalletListScene as WalletListSceneComponent } from './scenes/WalletListScene'
-import { WcConnectionsScene as WcConnectionsSceneComponent } from './scenes/WcConnectionsScene'
-import { WcConnectScene as WcConnectSceneComponent } from './scenes/WcConnectScene'
-import { WcDisconnectScene as WcDisconnectSceneComponent } from './scenes/WcDisconnectScene'
-import { WebViewScene as WebViewSceneComponent } from './scenes/WebViewScene'
+import { ManageTokensScene } from './scenes/ManageTokensScene'
+import { MigrateWalletCalculateFeeScene } from './scenes/MigrateWalletCalculateFeeScene'
+import { MigrateWalletCompletionScene } from './scenes/MigrateWalletCompletionScene'
+import { MigrateWalletSelectCryptoScene } from './scenes/MigrateWalletSelectCryptoScene'
+import { NotificationScene } from './scenes/NotificationScene'
+import { OtpRepairScene } from './scenes/OtpRepairScene'
+import { OtpSettingsScene } from './scenes/OtpSettingsScene'
+import { ChangeRecoveryScene } from './scenes/PasswordRecoveryScene'
+import { PromotionSettingsScene } from './scenes/PromotionSettingsScene'
+import { RequestScene } from './scenes/RequestScene'
+import { SecurityAlertsScene } from './scenes/SecurityAlertsScene'
+import { SendScene2 } from './scenes/SendScene2'
+import { SettingsScene } from './scenes/SettingsScene'
+import { SpendingLimitsScene } from './scenes/SpendingLimitsScene'
+import { StakeModifyScene } from './scenes/Staking/StakeModifyScene'
+import { StakeOptionsScene } from './scenes/Staking/StakeOptionsScene'
+import { StakeOverviewScene } from './scenes/Staking/StakeOverviewScene'
+import { SwapSettingsScene } from './scenes/SwapSettingsScene'
+import { TransactionDetailsScene } from './scenes/TransactionDetailsScene'
+import { TransactionList } from './scenes/TransactionListScene'
+import { TransactionsExportScene } from './scenes/TransactionsExportScene'
+import { UpgradeUsernameScene } from './scenes/UpgradeUsernameScreen'
+import { WalletListScene } from './scenes/WalletListScene'
+import { WcConnectionsScene } from './scenes/WcConnectionsScene'
+import { WcConnectScene } from './scenes/WcConnectScene'
+import { WcDisconnectScene } from './scenes/WcDisconnectScene'
+import { WebViewScene } from './scenes/WebViewScene'
 import { Airship, showError } from './services/AirshipInstance'
 import { useTheme } from './services/ThemeContext'
 import { MenuTabs } from './themed/MenuTabs'
 import { SideMenu } from './themed/SideMenu'
-
-const ChangeMiningFeeScene = ifLoggedIn(ChangeMiningFeeSceneComponent)
-const ChangePasswordScene = ifLoggedIn(ChangePasswordSceneComponent)
-const ChangePinScene = ifLoggedIn(ChangePinSceneComponent)
-const ChangeRecoveryScene = ifLoggedIn(ChangeRecoverySceneComponent)
-const UpgradeUsernameScene = ifLoggedIn(UpgradeUsernameSceneComponent)
-const CoinRankingDetailsScene = ifLoggedIn(CoinRankingDetailsSceneComponent)
-const CoinRankingScene = ifLoggedIn(CoinRankingSceneComponent)
-const ConfirmScene = ifLoggedIn(ConfirmSceneComponent)
-const CreateWalletAccountSelectScene = ifLoggedIn(CreateWalletAccountSelectSceneComponent)
-const CreateWalletAccountSetupScene = ifLoggedIn(CreateWalletAccountSetupSceneComponent)
-const CreateWalletCompletionScene = ifLoggedIn(CreateWalletCompletionSceneComponent)
-const CreateWalletImportScene = ifLoggedIn(CreateWalletImportSceneComponent)
-const CreateWalletImportOptionsScene = ifLoggedIn(CreateWalletImportOptionsSceneComponent)
-const CreateWalletSelectCryptoScene = ifLoggedIn(CreateWalletSelectCryptoSceneComponent)
-const CreateWalletSelectFiatScene = ifLoggedIn(CreateWalletSelectFiatSceneComponent)
-const CryptoExchangeQuote = ifLoggedIn(CryptoExchangeQuoteComponent)
-const CryptoExchangeQuoteProcessingScene = ifLoggedIn(CryptoExchangeQuoteProcessingSceneComponent)
-const CryptoExchangeScene = ifLoggedIn(CryptoExchangeSceneComponent)
-const CryptoExchangeSuccessScene = ifLoggedIn(CryptoExchangeSuccessSceneComponent)
-const CurrencyNotificationScene = ifLoggedIn(CurrencyNotificationSceneComponent)
-const AssetSettingsScene = ifLoggedIn(AssetSettingsSceneComponent)
-const CurrencySettingsScene = ifLoggedIn(CurrencySettingsSceneComponent)
-const DefaultFiatSettingScene = ifLoggedIn(DefaultFiatSettingSceneComponent)
-const EdgeLoginScene = ifLoggedIn(EdgeLoginSceneComponent)
-const EditTokenScene = ifLoggedIn(EditTokenSceneComponent)
-const ExtraTabScene = ifLoggedIn(ExtraTabSceneComponent)
-const FiatPluginEnterAmountScene = ifLoggedIn(FiatPluginEnterAmountSceneComponent)
-const FioAddressDetailsScene = ifLoggedIn(FioAddressDetailsSceneComponent)
-const FioAddressListScene = ifLoggedIn(FioAddressListSceneComponent)
-const FioAddressRegisteredScene = ifLoggedIn(FioAddressRegisteredSceneComponent)
-const FioAddressRegisterScene = ifLoggedIn(FioAddressRegisterSceneComponent)
-const FioAddressRegisterSelectWalletScene = ifLoggedIn(FioAddressRegisterSelectWalletSceneComponent)
-const FioAddressSettingsScene = ifLoggedIn(FioAddressSettingsSceneComponent)
-const FioConnectWalletConfirmScene = ifLoggedIn(FioConnectWalletConfirmSceneComponent)
-const FioCreateHandleScene = ifLoggedIn(FioCreateHandleSceneComponent)
-const FioDomainRegisterScene = ifLoggedIn(FioDomainRegisterSceneComponent)
-const FioDomainRegisterSelectWalletScene = ifLoggedIn(FioDomainRegisterSelectWalletSceneComponent)
-const FioDomainSettingsScene = ifLoggedIn(FioDomainSettingsSceneComponent)
-const FioNameConfirmScene = ifLoggedIn(FioNameConfirmSceneComponent)
-const FioRequestConfirmationScene = ifLoggedIn(FioRequestConfirmationSceneComponent)
-const FioRequestListScene = ifLoggedIn(FioRequestListSceneComponent)
-const FioSentRequestDetailsScene = ifLoggedIn(FioSentRequestDetailsSceneComponent)
-const FioStakingChangeScene = ifLoggedIn(FioStakingChangeSceneComponent)
-const FioStakingOverviewScene = ifLoggedIn(FioStakingOverviewSceneComponent)
-const GuiPluginListScene = ifLoggedIn(GuiPluginListSceneComponent)
-const GuiPluginViewScene = ifLoggedIn(GuiPluginViewSceneComponent)
-const LoanCloseScene = ifLoggedIn(LoanCloseSceneComponent)
-const LoanCreateConfirmationScene = ifLoggedIn(LoanCreateConfirmationSceneComponent)
-const LoanCreateScene = ifLoggedIn(LoanCreateSceneComponent)
-const LoanDashboardScene = ifLoggedIn(LoanDashboardSceneComponent)
-const LoanDetailsScene = ifLoggedIn(LoanDetailsSceneComponent)
-const LoanManageScene = ifLoggedIn(LoanManageSceneComponent)
-const LoanStatusScene = ifLoggedIn(LoanStatusSceneComponent)
-const ManageTokensScene = ifLoggedIn(ManageTokensSceneComponent)
-const MigrateWalletCalculateFeeScene = ifLoggedIn(MigrateWalletCalculateFeeSceneComponent)
-const MigrateWalletCompletionScene = ifLoggedIn(MigrateWalletCompletionSceneComponent)
-const MigrateWalletSelectCryptoScene = ifLoggedIn(MigrateWalletSelectCryptoSceneComponent)
-const NotificationScene = ifLoggedIn(NotificationSceneComponent)
-const OtpRepairScene = ifLoggedIn(OtpRepairSceneComponent)
-const OtpSettingsScene = ifLoggedIn(OtpSettingsSceneComponent)
-const PromotionSettingsScene = ifLoggedIn(PromotionSettingsSceneComponent)
-const RequestScene = ifLoggedIn(RequestSceneComponent)
-const SecurityAlertsScene = ifLoggedIn(SecurityAlertsSceneComponent)
-const SendScene2 = ifLoggedIn(SendScene2Component)
-const SettingsScene = ifLoggedIn(SettingsSceneComponent)
-const SpendingLimitsScene = ifLoggedIn(SpendingLimitsSceneComponent)
-const RewardsCardDashboardScene = ifLoggedIn(RewardsCardListSceneComponent)
-const RewardsCardWelcomeScene = ifLoggedIn(RewardsCardWelcomeSceneComponent)
-const StakeModifyScene = ifLoggedIn(StakeModifySceneComponent)
-const StakeOptionsScene = ifLoggedIn(StakeOptionsSceneComponent)
-const StakeOverviewScene = ifLoggedIn(StakeOverviewSceneComponent)
-const SwapSettingsScene = ifLoggedIn(SwapSettingsSceneComponent)
-const TransactionDetailsScene = ifLoggedIn(TransactionDetailsSceneComponent)
-const TransactionList = ifLoggedIn(TransactionListComponent)
-const TransactionsExportScene = ifLoggedIn(TransactionsExportSceneComponent)
-const WalletListScene = ifLoggedIn(WalletListSceneComponent)
-const WcConnectionsScene = ifLoggedIn(WcConnectionsSceneComponent)
-const WcConnectScene = ifLoggedIn(WcConnectSceneComponent)
-const WcDisconnectScene = ifLoggedIn(WcDisconnectSceneComponent)
-const WebViewScene = ifLoggedIn(WebViewSceneComponent)
-const HomeSceneUi4 = ifLoggedIn(HomeSceneUi4Component)
 
 const Drawer = createDrawerNavigator<AppParamList>()
 const Stack = createStackNavigator<AppParamList>()
@@ -809,7 +726,7 @@ const EdgeExchangeTabScreen = () => {
           focus: () => dispatch(checkEnabledExchanges())
         }}
       />
-      <Stack.Screen name="exchangeQuote" component={CryptoExchangeQuote} />
+      <Stack.Screen name="exchangeQuote" component={CryptoExchangeQuoteScene} />
       <Stack.Screen
         name="exchangeQuoteProcessing"
         component={CryptoExchangeQuoteProcessingScene}
