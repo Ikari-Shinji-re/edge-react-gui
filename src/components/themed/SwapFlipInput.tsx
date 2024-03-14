@@ -2,7 +2,6 @@ import { add } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
 import * as React from 'react'
 import { useMemo, useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
 
 import { formatNumber } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
@@ -25,7 +24,6 @@ interface Props {
   displayDenomination: EdgeDenomination
   overridePrimaryNativeAmount: string
   isFocused: boolean
-  isThinking?: boolean
   onFocuseWallet: () => void
   onSelectWallet: () => void
   onAmountChanged: (amounts: ExchangedFlipInputAmounts) => void
@@ -90,16 +88,6 @@ export const SwapFlipInput = (props: Props) => {
     }
 
     return <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
-  }
-
-  if (props.isThinking) {
-    return (
-      <View style={[styles.container, styles.containerNoFee, styles.containerNoWalletSelected]}>
-        <View style={styles.topRow}>
-          <ActivityIndicator color={theme.iconTappable} />
-        </View>
-      </View>
-    )
   }
 
   if (wallet == null) {
