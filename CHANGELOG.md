@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- added: Add Cardano (ADA)
+
 ## 4.3.0
 
 - added: Wrapped Touchable* components to consolidate tap debounce logic
