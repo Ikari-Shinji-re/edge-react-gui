@@ -348,7 +348,7 @@ export const SwapCreateScene = (props: Props) => {
           wallet={fromWallet}
           buttonText={lstrings.select_src_wallet}
           headerText={fromHeaderText}
-          currencyCode={fromCurrencyCode}
+          tokenId={fromTokenId}
           displayDenomination={fromWalletDisplayDenomination}
           overridePrimaryNativeAmount={state.fromAmountNative}
           onSelectWallet={handleFromSelectWallet}
@@ -368,7 +368,7 @@ export const SwapCreateScene = (props: Props) => {
           wallet={toWallet}
           buttonText={lstrings.select_recv_wallet}
           headerText={toHeaderText}
-          currencyCode={toCurrencyCode}
+          tokenId={toTokenId}
           displayDenomination={toWalletDisplayDenomination}
           overridePrimaryNativeAmount={state.toAmountNative}
           onSelectWallet={handleToSelectWallet}

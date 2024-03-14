@@ -1,13 +1,12 @@
 import { add } from 'biggystring'
-import { EdgeCurrencyWallet, EdgeDenomination } from 'edge-core-js'
+import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
 import * as React from 'react'
 import { useMemo, useState } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 
 import { formatNumber } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
-import { useSelector } from '../../types/reactRedux'
-import { getTokenIdForced } from '../../util/CurrencyInfoHelpers'
+import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
 import { getWalletName } from '../../util/CurrencyWalletHelpers'
 import { convertNativeToDenomination } from '../../util/utils'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
@@ -22,7 +21,7 @@ interface Props {
   wallet?: EdgeCurrencyWallet
   buttonText: string
   headerText: string
-  currencyCode: string
+  tokenId: EdgeTokenId
   displayDenomination: EdgeDenomination
   overridePrimaryNativeAmount: string
   isFocused: boolean
@@ -37,7 +36,9 @@ interface Props {
 }
 
 export const SwapFlipInput = (props: Props) => {
-  const { children, currencyCode, displayDenomination, onNext, overridePrimaryNativeAmount, wallet } = props
+  const { children, tokenId, displayDenomination, onNext, overridePrimaryNativeAmount, wallet } = props
+
+  const currencyCode = wallet == null ? '' : getCurrencyCode(wallet, tokenId)
 
   const theme = useTheme()
   const styles = getStyles(theme)
@@ -51,14 +52,6 @@ export const SwapFlipInput = (props: Props) => {
   //
   // Derived State
   //
-
-  const account = useSelector(state => state.core.account)
-
-  const tokenId = useMemo(() => {
-    if (wallet == null) return null
-    // This will error if wallet is undefined
-    return getTokenIdForced(account, wallet.currencyInfo.pluginId, currencyCode)
-  }, [account, currencyCode, wallet])
 
   const cryptoAmount = useMemo(() => {
     if (wallet == null || tokenId === undefined) return
