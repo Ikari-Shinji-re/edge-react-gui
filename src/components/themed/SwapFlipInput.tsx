@@ -82,14 +82,6 @@ export const SwapFlipInput = (props: Props) => {
   // Render
   //
 
-  const renderBalance = () => {
-    if (cryptoAmount == null) {
-      return null
-    }
-
-    return <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
-  }
-
   if (wallet == null) {
     return <MainButton label={props.buttonText} type="secondary" onPress={launchSelector} />
   }
@@ -107,7 +99,9 @@ export const SwapFlipInput = (props: Props) => {
   return (
     <>
       <EdgeText style={styles.errorText}>{errorMessage}</EdgeText>
-      {renderBalance()}
+      {cryptoAmount == null ? null : (
+        <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
+      )}
       <CardUi4>
         <ExchangedFlipInput2
           onNext={onNext}
