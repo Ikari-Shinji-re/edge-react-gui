@@ -114,33 +114,10 @@ export const SwapFlipInput = (props: Props) => {
 }
 
 const getStyles = cacheStyles((theme: Theme) => ({
-  container: {
-    width: '100%'
-  },
-  containerNoFee: {
-    backgroundColor: theme.tileBackground,
-    borderRadius: 3
-  },
-  containerNoWalletSelected: {
-    paddingVertical: theme.rem(0.75),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   text: {
     fontFamily: theme.fontFaceMedium,
     fontSize: theme.rem(1),
     marginLeft: theme.rem(0.5)
-  },
-  topRow: {
-    height: theme.rem(2),
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  iconContainer: {
-    top: theme.rem(0.125),
-    borderRadius: theme.rem(1)
   },
   balanceText: {
     alignSelf: 'flex-start',
