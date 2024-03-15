@@ -5,16 +5,11 @@ import { useMemo } from 'react'
 
 import { formatNumber } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
-import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
-import { getWalletName } from '../../util/CurrencyWalletHelpers'
 import { convertNativeToDenomination } from '../../util/utils'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
 import { CardUi4 } from '../ui4/CardUi4'
-import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
-import { RowUi4 } from '../ui4/RowUi4'
 import { EdgeText } from './EdgeText'
 import { ExchangedFlipInput, ExchangedFlipInputAmounts } from './ExchangedFlipInput'
-import { MainButton } from './MainButton'
 
 interface Props {
   wallet?: EdgeCurrencyWallet
@@ -24,7 +19,7 @@ interface Props {
   displayDenomination: EdgeDenomination
   overridePrimaryNativeAmount: string
   isFocused: boolean
-  onFocuseWallet: () => void
+  onFocusWallet: () => void
   onSelectWallet: () => void
   onAmountChanged: (amounts: ExchangedFlipInputAmounts) => void
   onNext: () => void
@@ -35,8 +30,6 @@ interface Props {
 
 export const SwapFlipInput = (props: Props) => {
   const { children, tokenId, displayDenomination, onNext, overridePrimaryNativeAmount, wallet } = props
-
-  const currencyCode = wallet == null ? '' : getCurrencyCode(wallet, tokenId)
 
   const theme = useTheme()
   const styles = getStyles(theme)
@@ -52,8 +45,6 @@ export const SwapFlipInput = (props: Props) => {
     return formatNumber(add(cryptoAmountRaw, '0'))
   }, [displayDenomination.multiplier, tokenId, wallet])
 
-  const guiWalletName = wallet == null ? undefined : getWalletName(wallet)
-
   //
   // Handlers
   //
@@ -63,30 +54,19 @@ export const SwapFlipInput = (props: Props) => {
   }
 
   const launchSelector = () => {
-    props.onSelectWallet()
-  }
-
-  const focusMe = () => {
-    props.onFocuseWallet()
+    if (props.isFocused || wallet == null) {
+      props.onSelectWallet()
+    } else {
+      props.onFocusWallet()
+    }
   }
 
   //
   // Render
   //
 
-  if (!props.isFocused && wallet != null) {
-    return (
-      <CardUi4>
-        <RowUi4 icon={<CryptoIconUi4 sizeRem={1.75} walletId={wallet.id} tokenId={tokenId} />} onPress={focusMe}>
-          <EdgeText style={styles.text}>{guiWalletName + ': ' + currencyCode}</EdgeText>
-        </RowUi4>
-      </CardUi4>
-    )
-  }
-
   return (
     <>
-      {wallet == null ? <MainButton label={props.buttonText} type="secondary" onPress={launchSelector} /> : null}
       {cryptoAmount == null ? null : (
         <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
       )}
@@ -95,7 +75,7 @@ export const SwapFlipInput = (props: Props) => {
           onNext={onNext}
           onFocus={props.onFocus}
           onBlur={props.onBlur}
-          headerText={props.headerText}
+          headerText={wallet == null ? props.buttonText : props.headerText}
           headerCallback={launchSelector}
           onAmountChanged={handleAmountsChanged}
           startNativeAmount={overridePrimaryNativeAmount}
@@ -103,6 +83,7 @@ export const SwapFlipInput = (props: Props) => {
           forceField="fiat"
           tokenId={tokenId}
           wallet={wallet}
+          isFocused={props.isFocused}
         />
         {children}
       </CardUi4>
@@ -111,11 +92,6 @@ export const SwapFlipInput = (props: Props) => {
 }
 
 const getStyles = cacheStyles((theme: Theme) => ({
-  text: {
-    fontFamily: theme.fontFaceMedium,
-    fontSize: theme.rem(1),
-    marginLeft: theme.rem(0.5)
-  },
   balanceText: {
     alignSelf: 'flex-start',
     marginLeft: theme.rem(1),

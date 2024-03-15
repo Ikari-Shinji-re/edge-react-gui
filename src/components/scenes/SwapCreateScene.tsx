@@ -354,7 +354,7 @@ export const SwapCreateScene = (props: Props) => {
           onSelectWallet={handleFromSelectWallet}
           onAmountChanged={handleFromAmountChange}
           isFocused={isFromFocused}
-          onFocuseWallet={handleFromFocusWallet}
+          onFocusWallet={handleFromFocusWallet}
           onNext={handleNext}
         >
           {hasMaxSpend ? <MiniButton label={lstrings.string_max_cap} marginRem={[0.5, 0, 0.75]} onPress={handleMax} alignSelf="center" /> : null}
@@ -374,7 +374,7 @@ export const SwapCreateScene = (props: Props) => {
           onSelectWallet={handleToSelectWallet}
           onAmountChanged={handleToAmountChange}
           isFocused={isToFocused}
-          onFocuseWallet={handleToFocusWallet}
+          onFocusWallet={handleToFocusWallet}
           onNext={handleNext}
         />
       </EdgeAnim>

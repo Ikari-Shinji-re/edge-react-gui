@@ -38,6 +38,7 @@ export interface Props {
   editable?: boolean
   inputAccessoryViewID?: string
   headerCallback?: () => void
+  isFocused?: boolean
   onAmountChanged: (amounts: ExchangedFlipInputAmounts) => unknown
   onBlur?: () => void
   onFocus?: () => void
@@ -221,20 +222,22 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
         <EdgeText style={styles.headerText}>{headerText}</EdgeText>
       </RowUi4>
 
-      <FlipInputOld
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onNext={onNext}
-        ref={flipInputRef}
-        convertValue={convertValue}
-        editable={editable}
-        fieldInfos={fieldInfos}
-        returnKeyType={returnKeyType}
-        forceFieldNum={forceFieldMap[overrideForceField]}
-        inputAccessoryViewID={inputAccessoryViewID}
-        keyboardVisible={keyboardVisible}
-        startAmounts={[renderDisplayAmount ?? '', renderFiatAmount]}
-      />
+      {!props.isFocused ? null : (
+        <FlipInputOld
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onNext={onNext}
+          ref={flipInputRef}
+          convertValue={convertValue}
+          editable={editable}
+          fieldInfos={fieldInfos}
+          returnKeyType={returnKeyType}
+          forceFieldNum={forceFieldMap[overrideForceField]}
+          inputAccessoryViewID={inputAccessoryViewID}
+          keyboardVisible={keyboardVisible}
+          startAmounts={[renderDisplayAmount ?? '', renderFiatAmount]}
+        />
+      )}
     </>
   )
 })
