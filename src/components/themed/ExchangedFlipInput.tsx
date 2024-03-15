@@ -1,15 +1,18 @@
-import { div, log10, mul, round } from 'biggystring'
-import { EdgeCurrencyWallet, EdgeTokenId } from 'edge-core-js'
+import { add, div, log10, mul, round } from 'biggystring'
+import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
 import React, { useMemo, useState } from 'react'
 import { ReturnKeyType } from 'react-native'
 
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
+import { formatNumber } from '../../locales/intl'
+import { lstrings } from '../../locales/strings'
 import { emptyEdgeDenomination, getExchangeDenom, selectDisplayDenom } from '../../selectors/DenominationSelectors'
 import { useSelector } from '../../types/reactRedux'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
-import { DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
+import { convertNativeToDenomination, DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
+import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { RowUi4 } from '../ui4/RowUi4'
 import { EdgeText } from './EdgeText'
@@ -35,6 +38,7 @@ export interface Props {
   headerText: string
   forceField?: 'fiat' | 'crypto'
   returnKeyType?: ReturnKeyType
+  displayDenomination: EdgeDenomination
   editable?: boolean
   inputAccessoryViewID?: string
   headerCallback?: () => void
@@ -43,6 +47,7 @@ export interface Props {
   onBlur?: () => void
   onFocus?: () => void
   onNext?: () => void
+  children?: React.ReactNode
 }
 
 const forceFieldMap: { crypto: FieldNum; fiat: FieldNum } = {
@@ -79,6 +84,13 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
   const exchangeRates = useSelector(state => state.exchangeRates)
   const fiatCurrencyCode = useMaybeFiatCurrencyCode(wallet)
   const flipInputRef = React.useRef<FlipInputRef>(null)
+
+  const cryptoAmount = useMemo(() => {
+    if (wallet == null || tokenId === undefined) return
+    const balance = wallet.balanceMap.get(tokenId) ?? '0'
+    const cryptoAmountRaw: string = convertNativeToDenomination(props.displayDenomination.multiplier)(balance)
+    return formatNumber(add(cryptoAmountRaw, '0'))
+  }, [props.displayDenomination.multiplier, tokenId, wallet])
 
   const cryptoDisplayDenom = useSelector(state => (wallet == null ? emptyEdgeDenomination : selectDisplayDenom(state, wallet.currencyConfig, tokenId)))
   const fiatDenom = getDenomFromIsoCode(fiatCurrencyCode)
@@ -215,29 +227,39 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
 
   return (
     <>
-      <RowUi4
-        onPress={headerCallback}
-        icon={wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.5, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.5} tokenId={tokenId} />}
-      >
-        <EdgeText style={styles.headerText}>{headerText}</EdgeText>
-      </RowUi4>
-
-      {!props.isFocused ? null : (
-        <FlipInputOld
-          onBlur={onBlur}
-          onFocus={onFocus}
-          onNext={onNext}
-          ref={flipInputRef}
-          convertValue={convertValue}
-          editable={editable}
-          fieldInfos={fieldInfos}
-          returnKeyType={returnKeyType}
-          forceFieldNum={forceFieldMap[overrideForceField]}
-          inputAccessoryViewID={inputAccessoryViewID}
-          keyboardVisible={keyboardVisible}
-          startAmounts={[renderDisplayAmount ?? '', renderFiatAmount]}
-        />
+      {cryptoAmount == null ? null : (
+        <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + props.displayDenomination.name}</EdgeText>
       )}
+      <CardUi4>
+        <RowUi4
+          onPress={headerCallback}
+          icon={
+            wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.5, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.5} tokenId={tokenId} />
+          }
+        >
+          <EdgeText style={styles.headerText}>{headerText}</EdgeText>
+        </RowUi4>
+
+        {!props.isFocused ? null : (
+          <>
+            <FlipInputOld
+              onBlur={onBlur}
+              onFocus={onFocus}
+              onNext={onNext}
+              ref={flipInputRef}
+              convertValue={convertValue}
+              editable={editable}
+              fieldInfos={fieldInfos}
+              returnKeyType={returnKeyType}
+              forceFieldNum={forceFieldMap[overrideForceField]}
+              inputAccessoryViewID={inputAccessoryViewID}
+              keyboardVisible={keyboardVisible}
+              startAmounts={[renderDisplayAmount ?? '', renderFiatAmount]}
+            />
+            {props.children}
+          </>
+        )}
+      </CardUi4>
     </>
   )
 })
@@ -245,6 +267,11 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
 export const ExchangedFlipInput = React.memo(ExchangedFlipInputComponent)
 
 const getStyles = cacheStyles((theme: Theme) => ({
+  balanceText: {
+    alignSelf: 'flex-start',
+    marginLeft: theme.rem(1),
+    color: theme.secondaryText
+  },
   headerText: {
     fontWeight: '600',
     fontSize: theme.rem(1.0)
