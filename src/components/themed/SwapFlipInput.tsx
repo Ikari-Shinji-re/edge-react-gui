@@ -1,7 +1,7 @@
 import { add } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
 import * as React from 'react'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { formatNumber } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
@@ -42,12 +42,6 @@ export const SwapFlipInput = (props: Props) => {
   const styles = getStyles(theme)
 
   //
-  // State
-  //
-
-  const [errorMessage, setErrorMessage] = useState('')
-
-  //
   // Derived State
   //
 
@@ -69,12 +63,10 @@ export const SwapFlipInput = (props: Props) => {
   }
 
   const launchSelector = () => {
-    setErrorMessage('')
     props.onSelectWallet()
   }
 
   const focusMe = () => {
-    setErrorMessage('')
     props.onFocuseWallet()
   }
 
@@ -98,7 +90,6 @@ export const SwapFlipInput = (props: Props) => {
 
   return (
     <>
-      <EdgeText style={styles.errorText}>{errorMessage}</EdgeText>
       {cryptoAmount == null ? null : (
         <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
       )}
@@ -155,11 +146,5 @@ const getStyles = cacheStyles((theme: Theme) => ({
     alignSelf: 'flex-start',
     marginLeft: theme.rem(1),
     color: theme.secondaryText
-  },
-  errorText: {
-    alignSelf: 'flex-start',
-    marginLeft: theme.rem(0.5),
-    marginBottom: theme.rem(0.75),
-    color: theme.dangerText
   }
 }))
