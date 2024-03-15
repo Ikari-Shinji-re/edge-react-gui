@@ -23,11 +23,11 @@ import { SceneWrapper } from '../common/SceneWrapper'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
+import { ExchangedFlipInput } from '../themed/ExchangedFlipInput'
 import { ExchangedFlipInputAmounts } from '../themed/ExchangedFlipInput2'
 import { LineTextDivider } from '../themed/LineTextDivider'
 import { MiniButton } from '../themed/MiniButton'
 import { SceneHeader } from '../themed/SceneHeader'
-import { SwapFlipInput } from '../themed/SwapFlipInput'
 import { AlertCardUi4 } from '../ui4/AlertCardUi4'
 import { ButtonsViewUi4 } from '../ui4/ButtonsViewUi4'
 
@@ -344,38 +344,40 @@ export const SwapCreateScene = (props: Props) => {
         <SceneHeader title={lstrings.title_exchange} underline />
       </EdgeAnim>
       <EdgeAnim enter={fadeInUp60}>
-        <SwapFlipInput
-          wallet={fromWallet}
-          buttonText={lstrings.select_src_wallet}
-          headerText={fromHeaderText}
-          tokenId={fromTokenId}
+        <ExchangedFlipInput
           displayDenomination={fromWalletDisplayDenomination}
-          overridePrimaryNativeAmount={state.fromAmountNative}
-          onSelectWallet={handleFromSelectWallet}
-          onAmountChanged={handleFromAmountChange}
+          forceField="fiat"
+          headerText={fromWallet == null ? lstrings.select_src_wallet : fromHeaderText}
           isFocused={isFromFocused}
+          keyboardVisible={false}
+          onAmountChanged={handleFromAmountChange}
           onFocusWallet={handleFromFocusWallet}
           onNext={handleNext}
+          onSelectWallet={handleFromSelectWallet}
+          startNativeAmount={state.fromAmountNative}
+          tokenId={fromTokenId}
+          wallet={fromWallet}
         >
           {hasMaxSpend ? <MiniButton label={lstrings.string_max_cap} marginRem={[0.5, 0, 0.75]} onPress={handleMax} alignSelf="center" /> : null}
-        </SwapFlipInput>
+        </ExchangedFlipInput>
       </EdgeAnim>
       <EdgeAnim>
         <LineTextDivider title={lstrings.string_to_capitalize} lowerCased />
       </EdgeAnim>
       <EdgeAnim enter={fadeInDown30}>
-        <SwapFlipInput
-          wallet={toWallet}
-          buttonText={lstrings.select_recv_wallet}
-          headerText={toHeaderText}
-          tokenId={toTokenId}
+        <ExchangedFlipInput
           displayDenomination={toWalletDisplayDenomination}
-          overridePrimaryNativeAmount={state.toAmountNative}
-          onSelectWallet={handleToSelectWallet}
-          onAmountChanged={handleToAmountChange}
+          forceField="fiat"
+          headerText={toWallet == null ? lstrings.select_recv_wallet : toHeaderText}
           isFocused={isToFocused}
+          keyboardVisible={false}
+          onAmountChanged={handleToAmountChange}
           onFocusWallet={handleToFocusWallet}
           onNext={handleNext}
+          onSelectWallet={handleToSelectWallet}
+          startNativeAmount={state.toAmountNative}
+          tokenId={toTokenId}
+          wallet={toWallet}
         />
       </EdgeAnim>
       <EdgeAnim enter={fadeInDown60}>{renderAlert()}</EdgeAnim>
