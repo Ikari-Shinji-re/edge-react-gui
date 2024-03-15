@@ -19,11 +19,11 @@ import { EdgeText } from './EdgeText'
 import { FieldNum, FlipInputFieldInfos, FlipInputOld, FlipInputRef } from './FlipInputOld'
 export type ExchangeFlipInputFields = 'fiat' | 'crypto'
 
-export interface ExchangedFlipInputRef {
+export interface SwapInputCardInputRef {
   setAmount: (field: ExchangeFlipInputFields, value: string) => void
 }
 
-export interface ExchangedFlipInputAmounts {
+export interface SwapInputCardAmounts {
   exchangeAmount: string
   nativeAmount: string
   fiatAmount: string
@@ -42,7 +42,7 @@ export interface Props {
   editable?: boolean
   inputAccessoryViewID?: string
   isFocused?: boolean
-  onAmountChanged: (amounts: ExchangedFlipInputAmounts) => unknown
+  onAmountChanged: (amounts: SwapInputCardAmounts) => unknown
   onBlur?: () => void
   onFocus?: () => void
   onFocusWallet: () => void
@@ -56,12 +56,7 @@ const forceFieldMap: { crypto: FieldNum; fiat: FieldNum } = {
   fiat: 1
 }
 
-// ExchangedFlipInput3 wraps FlipInput2
-// 1. It accepts native crypto amounts from the parent for initial amount and setAmount
-// 2. Has FlipInput2 only show "display" amounts (ie. sats, bits, mETH)
-// 3. Returns values to parent in fiat exchange amt, crypto exchange amt, and crypto native amt
-
-const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Props>((props: Props, ref) => {
+const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((props: Props, ref) => {
   const {
     wallet,
     tokenId,
@@ -272,7 +267,7 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
   )
 })
 
-export const ExchangedFlipInput = React.memo(ExchangedFlipInputComponent)
+export const SwapInputCard = React.memo(SwapInputCardComponent)
 
 const getStyles = cacheStyles((theme: Theme) => ({
   balanceText: {

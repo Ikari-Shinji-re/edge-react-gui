@@ -23,11 +23,11 @@ import { SceneWrapper } from '../common/SceneWrapper'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
-import { ExchangedFlipInput } from '../themed/ExchangedFlipInput'
 import { ExchangedFlipInputAmounts } from '../themed/ExchangedFlipInput2'
 import { LineTextDivider } from '../themed/LineTextDivider'
 import { MiniButton } from '../themed/MiniButton'
 import { SceneHeader } from '../themed/SceneHeader'
+import { SwapInputCard } from '../themed/SwapInputCard'
 import { AlertCardUi4 } from '../ui4/AlertCardUi4'
 import { ButtonsViewUi4 } from '../ui4/ButtonsViewUi4'
 
@@ -344,7 +344,7 @@ export const SwapCreateScene = (props: Props) => {
         <SceneHeader title={lstrings.title_exchange} underline />
       </EdgeAnim>
       <EdgeAnim enter={fadeInUp60}>
-        <ExchangedFlipInput
+        <SwapInputCard
           displayDenomination={fromWalletDisplayDenomination}
           forceField="fiat"
           headerText={fromWallet == null ? lstrings.select_src_wallet : fromHeaderText}
@@ -359,13 +359,13 @@ export const SwapCreateScene = (props: Props) => {
           wallet={fromWallet}
         >
           {hasMaxSpend ? <MiniButton label={lstrings.string_max_cap} marginRem={[0.5, 0, 0.75]} onPress={handleMax} alignSelf="center" /> : null}
-        </ExchangedFlipInput>
+        </SwapInputCard>
       </EdgeAnim>
       <EdgeAnim>
         <LineTextDivider title={lstrings.string_to_capitalize} lowerCased />
       </EdgeAnim>
       <EdgeAnim enter={fadeInDown30}>
-        <ExchangedFlipInput
+        <SwapInputCard
           displayDenomination={toWalletDisplayDenomination}
           forceField="fiat"
           headerText={toWallet == null ? lstrings.select_recv_wallet : toHeaderText}
