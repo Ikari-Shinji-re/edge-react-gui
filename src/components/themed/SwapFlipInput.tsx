@@ -23,26 +23,6 @@ interface Props {
 export const SwapFlipInput = (props: Props) => {
   const { children, tokenId, displayDenomination, onNext, overridePrimaryNativeAmount, wallet } = props
 
-  //
-  // Handlers
-  //
-
-  const handleAmountsChanged = (amounts: ExchangedFlipInputAmounts) => {
-    props.onAmountChanged(amounts)
-  }
-
-  const launchSelector = () => {
-    if (props.isFocused || wallet == null) {
-      props.onSelectWallet()
-    } else {
-      props.onFocusWallet()
-    }
-  }
-
-  //
-  // Render
-  //
-
   return (
     <>
       <ExchangedFlipInput
@@ -50,9 +30,10 @@ export const SwapFlipInput = (props: Props) => {
         onFocus={props.onFocus}
         onBlur={props.onBlur}
         headerText={wallet == null ? props.buttonText : props.headerText}
-        headerCallback={launchSelector}
         displayDenomination={displayDenomination}
-        onAmountChanged={handleAmountsChanged}
+        onAmountChanged={props.onAmountChanged}
+        onFocusWallet={props.onFocusWallet}
+        onSelectWallet={props.onSelectWallet}
         startNativeAmount={overridePrimaryNativeAmount}
         keyboardVisible={false}
         forceField="fiat"

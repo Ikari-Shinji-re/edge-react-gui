@@ -41,12 +41,13 @@ export interface Props {
   displayDenomination: EdgeDenomination
   editable?: boolean
   inputAccessoryViewID?: string
-  headerCallback?: () => void
   isFocused?: boolean
   onAmountChanged: (amounts: ExchangedFlipInputAmounts) => unknown
   onBlur?: () => void
   onFocus?: () => void
+  onFocusWallet: () => void
   onNext?: () => void
+  onSelectWallet: () => void
   children?: React.ReactNode
 }
 
@@ -70,7 +71,6 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
     startNativeAmount,
     onAmountChanged,
     headerText,
-    headerCallback,
     returnKeyType,
     forceField = 'crypto',
     keyboardVisible = true,
@@ -187,6 +187,14 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
     }
   })
 
+  const handleHeaderPress = () => {
+    if (props.isFocused || wallet == null) {
+      props.onSelectWallet()
+    } else {
+      props.onFocusWallet()
+    }
+  }
+
   React.useEffect(() => {
     if (wallet == null) return
 
@@ -232,7 +240,7 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
       )}
       <CardUi4>
         <RowUi4
-          onPress={headerCallback}
+          onPress={handleHeaderPress}
           icon={
             wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.5, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.5} tokenId={tokenId} />
           }
