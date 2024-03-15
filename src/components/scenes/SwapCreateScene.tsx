@@ -385,16 +385,9 @@ export const SwapCreateScene = (props: Props) => {
 }
 
 const getStyles = cacheStyles((theme: Theme) => ({
-  mainScrollView: {
-    flex: 1
-  },
   header: {
     marginLeft: -theme.rem(0.5),
     width: '100%',
     marginVertical: theme.rem(1)
-  },
-  scrollViewContentContainer: {
-    alignItems: 'center',
-    marginHorizontal: theme.rem(0.5)
   }
 }))
