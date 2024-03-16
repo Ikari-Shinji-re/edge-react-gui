@@ -42,11 +42,9 @@ export interface Props {
   displayDenomination: EdgeDenomination
   editable?: boolean
   inputAccessoryViewID?: string
-  isFocused?: boolean
   onAmountChanged: (amounts: SwapInputCardAmounts) => unknown
   onBlur?: () => void
   onFocus?: () => void
-  onFocusWallet: () => void
   onNext?: () => void
   onSelectWallet: () => void
   children?: React.ReactNode
@@ -175,11 +173,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
   })
 
   const handleHeaderPress = () => {
-    if (props.isFocused || wallet == null) {
-      props.onSelectWallet()
-    } else {
-      props.onFocusWallet()
-    }
+    props.onSelectWallet()
   }
 
   const { initialExchangeAmount, initialDisplayAmount } = React.useMemo(() => {
@@ -196,7 +190,6 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
 
   React.useImperativeHandle(ref, () => ({
     setAmount: (field, value) => {
-      console.log(field, value)
       if (field === 'crypto') {
         const { displayAmount, fiatAmount } = convertFromCryptoNative(value)
         flipInputRef.current?.setAmounts([displayAmount, fiatAmount])
@@ -237,25 +230,21 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
           <EdgeText style={styles.headerText}>{headerText}</EdgeText>
         </RowUi4>
 
-        {!props.isFocused ? null : (
-          <>
-            <FlipInputNew
-              onBlur={onBlur}
-              onFocus={onFocus}
-              onNext={onNext}
-              ref={flipInputRef}
-              convertValue={convertValue}
-              editable={editable}
-              fieldInfos={fieldInfos}
-              returnKeyType={returnKeyType}
-              forceFieldNum={forceFieldMap[overrideForceField]}
-              inputAccessoryViewID={inputAccessoryViewID}
-              keyboardVisible={keyboardVisible}
-              startAmounts={[initialDisplayAmount, initialFiatAmount]}
-            />
-            {props.children}
-          </>
-        )}
+        <FlipInputNew
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onNext={onNext}
+          ref={flipInputRef}
+          convertValue={convertValue}
+          editable={editable}
+          fieldInfos={fieldInfos}
+          returnKeyType={returnKeyType}
+          forceFieldNum={forceFieldMap[overrideForceField]}
+          inputAccessoryViewID={inputAccessoryViewID}
+          keyboardVisible={keyboardVisible}
+          startAmounts={[initialDisplayAmount, initialFiatAmount]}
+        />
+        {props.children}
       </CardUi4>
     </>
   )

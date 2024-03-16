@@ -23,7 +23,7 @@ import { SceneWrapper } from '../common/SceneWrapper'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
-import { ExchangedFlipInputAmounts } from '../themed/ExchangedFlipInput2'
+import { ExchangedFlipInputAmounts, ExchangedFlipInputRef } from '../themed/ExchangedFlipInput2'
 import { LineTextDivider } from '../themed/LineTextDivider'
 import { MiniButton } from '../themed/MiniButton'
 import { SceneHeader } from '../themed/SceneHeader'
@@ -50,17 +50,13 @@ export interface SwapErrorDisplayInfo {
 interface Props extends EdgeSceneProps<'swapCreate'> {}
 
 interface State {
-  whichWalletFocus: 'from' | 'to' // Which wallet FlipInput2 was last focused and edited
-  fromAmountNative: string
-  toAmountNative: string
-  paddingBottom: number
+  nativeAmount: string
+  nativeAmountFor: 'from' | 'to'
 }
 
 const defaultState: State = {
-  whichWalletFocus: 'from',
-  fromAmountNative: '',
-  toAmountNative: '',
-  paddingBottom: 0
+  nativeAmount: '',
+  nativeAmountFor: 'from'
 }
 
 const emptyDenomnination = {
@@ -78,6 +74,9 @@ export const SwapCreateScene = (props: Props) => {
   const [state, setState] = useState({
     ...defaultState
   })
+
+  const fromInputRef = React.useRef<ExchangedFlipInputRef>(null)
+  const toInputRef = React.useRef<ExchangedFlipInputRef>(null)
 
   const swapRequestOptions = useSwapRequestOptions()
 
@@ -102,8 +101,6 @@ export const SwapCreateScene = (props: Props) => {
   const fromWalletSpecialCurrencyInfo = getSpecialCurrencyInfo(fromWallet?.currencyInfo.pluginId ?? '')
   const fromWalletBalanceMap = fromWallet?.balanceMap ?? new Map<string, string>()
 
-  const isFromFocused = state.whichWalletFocus === 'from'
-  const isToFocused = state.whichWalletFocus === 'to'
   const fromHeaderText = sprintf(lstrings.exchange_from_wallet, fromWalletName)
   const toHeaderText = sprintf(lstrings.exchange_to_wallet, toWalletName)
   // Determines if a coin can have Exchange Max option
@@ -128,10 +125,9 @@ export const SwapCreateScene = (props: Props) => {
   }
 
   const checkExceedsAmount = (): boolean => {
-    const { fromAmountNative, whichWalletFocus } = state
     const fromNativeBalance = fromWalletBalanceMap.get(fromTokenId) ?? '0'
 
-    return whichWalletFocus === 'from' && gte(fromNativeBalance, '0') && gt(fromAmountNative, fromNativeBalance)
+    return state.nativeAmountFor === 'from' && gte(fromNativeBalance, '0') && gt(state.nativeAmount, fromNativeBalance)
   }
 
   const getQuote = (swapRequest: EdgeSwapRequest) => {
@@ -252,18 +248,18 @@ export const SwapCreateScene = (props: Props) => {
       throw new Error('No wallet selected')
     }
 
+    if (zeroString(state.nativeAmount)) {
+      showError(`${lstrings.no_exchange_amount}. ${lstrings.select_exchange_amount}.`)
+      return
+    }
+
     const request: EdgeSwapRequest = {
       fromTokenId: fromTokenId,
       fromWallet: fromWallet,
-      nativeAmount: state.whichWalletFocus === 'from' ? state.fromAmountNative : state.toAmountNative,
-      quoteFor: state.whichWalletFocus,
+      nativeAmount: state.nativeAmount,
+      quoteFor: state.nativeAmountFor,
       toTokenId: toTokenId,
       toWallet: toWallet
-    }
-
-    if (zeroString(request.nativeAmount)) {
-      showError(`${lstrings.no_exchange_amount}. ${lstrings.select_exchange_amount}.`)
-      return
     }
 
     if (checkExceedsAmount()) return
@@ -279,32 +275,24 @@ export const SwapCreateScene = (props: Props) => {
     showWalletListModal('to')
   })
 
-  const handleFromFocusWallet = useHandler(() => {
-    setState({
-      ...state,
-      whichWalletFocus: 'from'
-    })
-  })
-
-  const handleToFocusWallet = useHandler(() => {
-    setState({
-      ...state,
-      whichWalletFocus: 'to'
-    })
-  })
-
   const handleFromAmountChange = useHandler((amounts: ExchangedFlipInputAmounts) => {
     setState({
       ...state,
-      fromAmountNative: amounts.nativeAmount
+      nativeAmount: amounts.nativeAmount,
+      nativeAmountFor: 'from'
     })
+    // Clear other input's amount:
+    toInputRef.current?.setAmount('crypto', '0')
   })
 
   const handleToAmountChange = useHandler((amounts: ExchangedFlipInputAmounts) => {
     setState({
       ...state,
-      toAmountNative: amounts.nativeAmount
+      nativeAmount: amounts.nativeAmount,
+      nativeAmountFor: 'to'
     })
+    // Clear other input's amount:
+    fromInputRef.current?.setAmount('crypto', '0')
   })
 
   //
@@ -312,8 +300,7 @@ export const SwapCreateScene = (props: Props) => {
   //
 
   const renderButton = () => {
-    const primaryNativeAmount = state.whichWalletFocus === 'from' ? state.fromAmountNative : state.toAmountNative
-    const showNext = fromCurrencyCode !== '' && toCurrencyCode !== '' && !!parseFloat(primaryNativeAmount)
+    const showNext = fromCurrencyCode !== '' && toCurrencyCode !== '' && !!parseFloat(state.nativeAmount)
     if (!showNext) return null
     if (checkExceedsAmount()) return null
     return <ButtonsViewUi4 primary={{ label: lstrings.string_next_capitalized, onPress: handleNext }} parentType="scene" />
@@ -345,16 +332,14 @@ export const SwapCreateScene = (props: Props) => {
       </EdgeAnim>
       <EdgeAnim enter={fadeInUp60}>
         <SwapInputCard
+          ref={fromInputRef}
           displayDenomination={fromWalletDisplayDenomination}
           forceField="fiat"
           headerText={fromWallet == null ? lstrings.select_src_wallet : fromHeaderText}
-          isFocused={isFromFocused}
           keyboardVisible={false}
           onAmountChanged={handleFromAmountChange}
-          onFocusWallet={handleFromFocusWallet}
           onNext={handleNext}
           onSelectWallet={handleFromSelectWallet}
-          startNativeAmount={state.fromAmountNative}
           tokenId={fromTokenId}
           wallet={fromWallet}
         >
@@ -366,16 +351,14 @@ export const SwapCreateScene = (props: Props) => {
       </EdgeAnim>
       <EdgeAnim enter={fadeInDown30}>
         <SwapInputCard
+          ref={toInputRef}
           displayDenomination={toWalletDisplayDenomination}
           forceField="fiat"
           headerText={toWallet == null ? lstrings.select_recv_wallet : toHeaderText}
-          isFocused={isToFocused}
           keyboardVisible={false}
           onAmountChanged={handleToAmountChange}
-          onFocusWallet={handleToFocusWallet}
           onNext={handleNext}
           onSelectWallet={handleToSelectWallet}
-          startNativeAmount={state.toAmountNative}
           tokenId={toTokenId}
           wallet={toWallet}
         />
