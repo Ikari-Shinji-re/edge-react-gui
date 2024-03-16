@@ -374,56 +374,19 @@ exports[`SwapCreateScene should render with loading props 1`] = `
             style={
               [
                 {
-                  "alignItems": "center",
-                  "alignSelf": "stretch",
-                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                  "alignItems": undefined,
+                  "flex": undefined,
                   "flexDirection": "row",
+                  "justifyContent": undefined,
+                  "marginBottom": 0,
+                  "marginLeft": 0,
+                  "marginRight": 0,
+                  "marginTop": 0,
                 },
-                {
-                  "marginBottom": 11,
-                  "marginLeft": 11,
-                  "marginRight": 11,
-                  "marginTop": 11,
-                },
+                undefined,
               ]
             }
           >
-            <View
-              style={
-                [
-                  {
-                    "flexDirection": "column",
-                    "flexShrink": 1,
-                  },
-                  {
-                    "marginRight": 34,
-                  },
-                ]
-              }
-            >
-              <Text
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.65}
-                numberOfLines={1}
-                style={
-                  [
-                    {
-                      "color": "#FFFFFF",
-                      "fontFamily": "Quicksand-Regular",
-                      "fontSize": 22,
-                      "includeFontPadding": false,
-                    },
-                    {
-                      "fontSize": 22,
-                      "fontWeight": "600",
-                    },
-                    null,
-                  ]
-                }
-              >
-                Select Source Wallet
-              </Text>
-            </View>
             <View
               accessibilityState={
                 {
@@ -442,7 +405,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   "text": undefined,
                 }
               }
-              accessible={false}
+              accessible={true}
               collapsable={false}
               focusable={true}
               onClick={[Function]}
@@ -454,16 +417,39 @@ exports[`SwapCreateScene should render with loading props 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "alignItems": "flex-end",
-                  "height": "100%",
-                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(255, 255, 255, .1)",
+                  "borderRadius": 100,
+                  "flexDirection": "row",
+                  "margin": 11,
                   "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "width": "100%",
+                  "paddingHorizontal": 17,
+                  "paddingVertical": 11,
                 }
               }
             >
+              <Text
+                adjustsFontSizeToFit={true}
+                minimumFontScale={0.65}
+                numberOfLines={1}
+                style={
+                  [
+                    {
+                      "color": "#FFFFFF",
+                      "fontFamily": "Quicksand-Regular",
+                      "fontSize": 22,
+                      "includeFontPadding": false,
+                    },
+                    {
+                      "fontSize": 22,
+                      "lineHeight": 34,
+                    },
+                    null,
+                  ]
+                }
+              >
+                Select Source Wallet
+              </Text>
               <Text
                 allowFontScaling={false}
                 style={
@@ -474,7 +460,8 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                     },
                     {
                       "color": "#00f1a2",
-                      "marginLeft": 11,
+                      "marginLeft": 22,
+                      "marginRight": 6,
                       "textAlign": "center",
                     },
                     {
@@ -488,7 +475,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
           </View>
@@ -1037,56 +1024,19 @@ exports[`SwapCreateScene should render with loading props 1`] = `
             style={
               [
                 {
-                  "alignItems": "center",
-                  "alignSelf": "stretch",
-                  "backgroundColor": "rgba(255, 255, 255, 0)",
+                  "alignItems": undefined,
+                  "flex": undefined,
                   "flexDirection": "row",
+                  "justifyContent": undefined,
+                  "marginBottom": 0,
+                  "marginLeft": 0,
+                  "marginRight": 0,
+                  "marginTop": 0,
                 },
-                {
-                  "marginBottom": 11,
-                  "marginLeft": 11,
-                  "marginRight": 11,
-                  "marginTop": 11,
-                },
+                undefined,
               ]
             }
           >
-            <View
-              style={
-                [
-                  {
-                    "flexDirection": "column",
-                    "flexShrink": 1,
-                  },
-                  {
-                    "marginRight": 34,
-                  },
-                ]
-              }
-            >
-              <Text
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.65}
-                numberOfLines={1}
-                style={
-                  [
-                    {
-                      "color": "#FFFFFF",
-                      "fontFamily": "Quicksand-Regular",
-                      "fontSize": 22,
-                      "includeFontPadding": false,
-                    },
-                    {
-                      "fontSize": 22,
-                      "fontWeight": "600",
-                    },
-                    null,
-                  ]
-                }
-              >
-                Select Receiving Wallet
-              </Text>
-            </View>
             <View
               accessibilityState={
                 {
@@ -1105,7 +1055,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   "text": undefined,
                 }
               }
-              accessible={false}
+              accessible={true}
               collapsable={false}
               focusable={true}
               onClick={[Function]}
@@ -1117,16 +1067,39 @@ exports[`SwapCreateScene should render with loading props 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "alignItems": "flex-end",
-                  "height": "100%",
-                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(255, 255, 255, .1)",
+                  "borderRadius": 100,
+                  "flexDirection": "row",
+                  "margin": 11,
                   "opacity": 1,
-                  "position": "absolute",
-                  "right": 0,
-                  "width": "100%",
+                  "paddingHorizontal": 17,
+                  "paddingVertical": 11,
                 }
               }
             >
+              <Text
+                adjustsFontSizeToFit={true}
+                minimumFontScale={0.65}
+                numberOfLines={1}
+                style={
+                  [
+                    {
+                      "color": "#FFFFFF",
+                      "fontFamily": "Quicksand-Regular",
+                      "fontSize": 22,
+                      "includeFontPadding": false,
+                    },
+                    {
+                      "fontSize": 22,
+                      "lineHeight": 34,
+                    },
+                    null,
+                  ]
+                }
+              >
+                Select Receiving Wallet
+              </Text>
               <Text
                 allowFontScaling={false}
                 style={
@@ -1137,7 +1110,8 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                     },
                     {
                       "color": "#00f1a2",
-                      "marginLeft": 11,
+                      "marginLeft": 22,
+                      "marginRight": 6,
                       "textAlign": "center",
                     },
                     {
@@ -1151,7 +1125,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
           </View>

@@ -101,8 +101,8 @@ export const SwapCreateScene = (props: Props) => {
   const fromWalletSpecialCurrencyInfo = getSpecialCurrencyInfo(fromWallet?.currencyInfo.pluginId ?? '')
   const fromWalletBalanceMap = fromWallet?.balanceMap ?? new Map<string, string>()
 
-  const fromHeaderText = sprintf(lstrings.exchange_from_wallet, fromWalletName)
-  const toHeaderText = sprintf(lstrings.exchange_to_wallet, toWalletName)
+  const fromHeaderText = fromWallet == null ? lstrings.select_src_wallet : fromWalletName
+  const toHeaderText = toWallet == null ? lstrings.select_recv_wallet : toWalletName
   // Determines if a coin can have Exchange Max option
   const hasMaxSpend = fromWalletSpecialCurrencyInfo.noMaxSpend !== true
 
@@ -331,7 +331,7 @@ export const SwapCreateScene = (props: Props) => {
           disabled={fromWallet == null}
           displayDenomination={fromWalletDisplayDenomination}
           forceField="fiat"
-          headerText={fromWallet == null ? lstrings.select_src_wallet : fromHeaderText}
+          walletPlaceholderText={fromHeaderText}
           keyboardVisible={false}
           onAmountChanged={handleFromAmountChange}
           onNext={handleNext}
@@ -353,7 +353,7 @@ export const SwapCreateScene = (props: Props) => {
           displayDenomination={toWalletDisplayDenomination}
           disabled={toWallet == null}
           forceField="fiat"
-          headerText={toWallet == null ? lstrings.select_recv_wallet : toHeaderText}
+          walletPlaceholderText={toHeaderText}
           keyboardVisible={false}
           onAmountChanged={handleToAmountChange}
           onNext={handleNext}

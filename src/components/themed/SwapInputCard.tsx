@@ -1,7 +1,8 @@
 import { add, div, log10, mul, round } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
 import React, { useMemo } from 'react'
-import { ReturnKeyType } from 'react-native'
+import { ReturnKeyType, TouchableOpacity } from 'react-native'
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome5'
 
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
@@ -11,10 +12,11 @@ import { emptyEdgeDenomination, getExchangeDenom, selectDisplayDenom } from '../
 import { useSelector } from '../../types/reactRedux'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
 import { convertNativeToDenomination, DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
+import { styled } from '../hoc/styled'
+import { Space } from '../layout/Space'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
 import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
-import { RowUi4 } from '../ui4/RowUi4'
 import { EdgeText } from './EdgeText'
 import { FieldNum, FlipInputFieldInfos, FlipInputNew, FlipInputRef } from './FlipInputNew'
 
@@ -36,7 +38,7 @@ export interface Props {
   tokenId: EdgeTokenId
   startNativeAmount?: string
   keyboardVisible?: boolean
-  headerText: string
+  walletPlaceholderText: string
   forceField?: 'fiat' | 'crypto'
   returnKeyType?: ReturnKeyType
   displayDenomination: EdgeDenomination
@@ -64,7 +66,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     onNext,
     startNativeAmount,
     onAmountChanged,
-    headerText,
+    walletPlaceholderText,
     returnKeyType,
     forceField = 'crypto',
     keyboardVisible = true,
@@ -172,7 +174,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     }
   })
 
-  const handleHeaderPress = () => {
+  const handleWalletPlaceholderPress = () => {
     props.onSelectWallet()
   }
 
@@ -221,14 +223,15 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
         <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + props.displayDenomination.name}</EdgeText>
       )}
       <CardUi4>
-        <RowUi4
-          onPress={handleHeaderPress}
-          icon={
-            wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.5, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.5} tokenId={tokenId} />
-          }
-        >
-          <EdgeText style={styles.headerText}>{headerText}</EdgeText>
-        </RowUi4>
+        <Space sideways>
+          <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
+            {wallet == null ? undefined : (
+              <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />
+            )}
+            <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
+            <ChevronIcon name="chevron-down" size={theme.rem(1)} />
+          </WalletPlaceHolder>
+        </Space>
 
         <FlipInputNew
           disabled={disabled}
@@ -252,15 +255,33 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
 
 export const SwapInputCard = React.memo(SwapInputCardComponent)
 
+const WalletPlaceHolder = styled(TouchableOpacity)(theme => ({
+  alignItems: 'center',
+  backgroundColor: theme.cardBaseColor,
+  borderRadius: 100,
+  flexDirection: 'row',
+  margin: theme.rem(0.5),
+  paddingHorizontal: theme.rem(0.75),
+  paddingVertical: theme.rem(0.5)
+}))
+
+const WalletPlaceHolderText = styled(EdgeText)(theme => ({
+  fontSize: theme.rem(1),
+  lineHeight: theme.rem(1.5)
+}))
+
+const ChevronIcon = styled(FontAwesome6)(theme => ({
+  color: theme.iconTappable,
+  marginLeft: theme.rem(1),
+  marginRight: theme.rem(0.25),
+  textAlign: 'center'
+}))
+
 const getStyles = cacheStyles((theme: Theme) => ({
   balanceText: {
     alignSelf: 'flex-start',
     marginLeft: theme.rem(1),
     color: theme.secondaryText
-  },
-  headerText: {
-    fontWeight: '600',
-    fontSize: theme.rem(1.0)
   }
 }))
 
