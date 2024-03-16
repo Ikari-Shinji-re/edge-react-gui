@@ -1,6 +1,6 @@
 import { add, div, log10, mul, round } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { ReturnKeyType } from 'react-native'
 
 import { useHandler } from '../../hooks/useHandler'
@@ -141,15 +141,6 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     return { displayAmount, nativeAmount, exchangeAmount }
   })
 
-  const [renderDisplayAmount, setRenderDisplayAmount] = useState<string>(() => {
-    const { displayAmount } = convertFromCryptoNative(startNativeAmount ?? '')
-    return displayAmount
-  })
-  const [renderFiatAmount, setRenderFiatAmount] = useState<string>(() => {
-    const { fiatAmount } = convertFromCryptoNative(startNativeAmount ?? '')
-    return fiatAmount
-  })
-
   const convertValue = useHandler(async (fieldNum: number, amount: string): Promise<string | undefined> => {
     if (amount === '') {
       onAmountChanged({
@@ -191,15 +182,17 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     }
   }
 
-  React.useEffect(() => {
-    if (wallet == null) return
-
-    const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
+  const { initialExchangeAmount, initialDisplayAmount } = React.useMemo(() => {
     const { exchangeAmount, displayAmount } = convertFromCryptoNative(startNativeAmount ?? '')
-    const initFiat = convertCurrency(exchangeAmount, cryptoCurrencyCode, wallet.fiatCurrencyCode)
-    setRenderDisplayAmount(displayAmount)
-    setRenderFiatAmount(initFiat)
-  }, [convertCurrency, convertFromCryptoNative, startNativeAmount, tokenId, wallet])
+    return { initialExchangeAmount: exchangeAmount, initialDisplayAmount: displayAmount }
+  }, [convertFromCryptoNative, startNativeAmount])
+
+  const initialFiatAmount = React.useMemo(() => {
+    if (wallet == null) return '0'
+    const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
+    const fiatAmount = convertCurrency(initialExchangeAmount, cryptoCurrencyCode, wallet.fiatCurrencyCode)
+    return fiatAmount
+  }, [convertCurrency, initialExchangeAmount, tokenId, wallet])
 
   React.useImperativeHandle(ref, () => ({
     setAmount: (field, value) => {
@@ -258,7 +251,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
               forceFieldNum={forceFieldMap[overrideForceField]}
               inputAccessoryViewID={inputAccessoryViewID}
               keyboardVisible={keyboardVisible}
-              startAmounts={[renderDisplayAmount ?? '', renderFiatAmount]}
+              startAmounts={[initialDisplayAmount, initialFiatAmount]}
             />
             {props.children}
           </>
