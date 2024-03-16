@@ -43,7 +43,7 @@ export type FlipInputFieldInfos = [FlipInputFieldInfo, FlipInputFieldInfo]
 
 export interface Props {
   convertValue: (sourceFieldNum: FieldNum, value: string) => Promise<string | undefined>
-  editable?: boolean
+  disabled?: boolean
   fieldInfos: FlipInputFieldInfos
   forceFieldNum?: FieldNum
   inputAccessoryViewID?: string
@@ -68,7 +68,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
   const {
     convertValue,
-    editable,
+    disabled = false,
     fieldInfos,
     forceFieldNum = 0,
     inputAccessoryViewID,
@@ -87,6 +87,12 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
   // primaryField is the index into the 2-tuple, 0 or 1
   const [primaryField, setPrimaryField] = useState<FieldNum>(forceFieldNum)
+
+  // Animates between 0 and 1 based our disabled state:
+  const disableAnimation = useSharedValue(0)
+  React.useEffect(() => {
+    disableAnimation.value = withTiming(disabled ? 1 : 0)
+  }, [disableAnimation, disabled])
 
   const [amountFocused, setAmountFocused] = useState(false)
   const focusAnimation = useSharedValue(0)
@@ -147,11 +153,12 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
       <BottomContainerView key="bottom">
         <AmountAnimatedNumericInput
           value={primaryAmount}
+          disableAnimation={disableAnimation}
           focusAnimation={focusAnimation}
           maxDecimals={fieldInfos[fieldNum].maxEntryDecimals}
           onChangeText={onNumericInputChange}
           autoCorrect={false}
-          editable={editable}
+          editable={!disabled}
           returnKeyType={returnKeyType}
           autoFocus={primaryField === fieldNum && keyboardVisible}
           ref={inputRefs[fieldNum]}
@@ -161,7 +168,11 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
           onBlur={handleBottomBlur}
         />
         {!isEnterTextMode ? <PlaceholderAnimatedText>{lstrings.string_tap_to_edit}</PlaceholderAnimatedText> : null}
-        {isEnterTextMode ? <CurrencySymbolAnimatedText focusAnimation={focusAnimation}>{' ' + currencyName}</CurrencySymbolAnimatedText> : null}
+        {isEnterTextMode ? (
+          <CurrencySymbolAnimatedText disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
+            {' ' + currencyName}
+          </CurrencySymbolAnimatedText>
+        ) : null}
       </BottomContainerView>
     )
   }
@@ -175,7 +186,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     const fieldInfo = fieldInfos[fieldNum]
     topText = `${topText} ${fieldInfo.currencyName}`
     return (
-      <EdgeTouchableWithoutFeedback onPress={onToggleFlipInput} key="top">
+      <EdgeTouchableWithoutFeedback onPress={onToggleFlipInput} key="top" disabled={disabled}>
         <TopAmountText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.65}>
           {topText}
         </TopAmountText>
@@ -193,7 +204,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     <>
       <ContainerView>
         <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>
-          <InnerView focusAnimation={focusAnimation}>
+          <InnerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
             <FrontAnimatedView animatedValue={animatedValue} pointerEvents={flipField(primaryField) ? 'auto' : 'none'}>
               {renderTopRow(1)}
               {renderBottomRow(0)}
@@ -222,10 +233,19 @@ const ContainerView = styled(View)(theme => ({
 }))
 
 const InnerView = styled(Animated.View)<{
+  disableAnimation: SharedValue<number>
   focusAnimation: SharedValue<number>
-}>(theme => ({ focusAnimation }) => {
-  const interpolateInputBackgroundColor = useAnimatedColorInterpolateFn(theme.textInputBackgroundColor, theme.textInputBackgroundColorFocused)
-  const interpolateOutlineColor = useAnimatedColorInterpolateFn(theme.textInputBorderColor, theme.textInputBorderColorFocused)
+}>(theme => ({ disableAnimation, focusAnimation }) => {
+  const interpolateInputBackgroundColor = useAnimatedColorInterpolateFn(
+    theme.textInputBackgroundColor,
+    theme.textInputBackgroundColorFocused,
+    theme.textInputBackgroundColorDisabled
+  )
+  const interpolateOutlineColor = useAnimatedColorInterpolateFn(
+    theme.textInputBorderColor,
+    theme.textInputBorderColorFocused,
+    theme.textInputBorderColorDisabled
+  )
   return [
     {
       alignItems: 'center',
@@ -236,8 +256,8 @@ const InnerView = styled(Animated.View)<{
       overflow: 'hidden'
     },
     useAnimatedStyle(() => ({
-      backgroundColor: interpolateInputBackgroundColor(focusAnimation),
-      borderColor: interpolateOutlineColor(focusAnimation)
+      backgroundColor: interpolateInputBackgroundColor(focusAnimation, disableAnimation),
+      borderColor: interpolateOutlineColor(focusAnimation, disableAnimation)
     }))
   ]
 })
@@ -285,31 +305,32 @@ const TopAmountText = styled(Text)(theme => () => [
   }
 ])
 
-const AmountAnimatedNumericInput = styledWithRef(AnimatedNumericInput)<{ focusAnimation: SharedValue<number>; value: string }>(
-  theme =>
-    ({ focusAnimation, value }) => {
-      const isAndroid = Platform.OS === 'android'
-      const interpolateTextColor = useAnimatedColorInterpolateFn(theme.textInputTextColor, theme.textInputTextColorFocused)
-      const characterLength = value.length
-      return [
-        {
-          includeFontPadding: false,
-          fontFamily: theme.fontFaceMedium,
-          fontSize: theme.rem(1.5),
-          // Android has more space added to the width of the input
-          // after the last character in the input. It seems to be
-          // setting a min-width to the input to roughly 2 characters in size.
-          // We can compensate for this with a negative margin when the character length
-          // is less then 2 characters.
-          marginRight: isAndroid ? -theme.rem(Math.max(0, 2 - characterLength) * 0.4) : 0,
-          padding: 0
-        },
-        useAnimatedStyle(() => ({
-          color: interpolateTextColor(focusAnimation)
-        }))
-      ]
-    }
-)
+const AmountAnimatedNumericInput = styledWithRef(AnimatedNumericInput)<{
+  disableAnimation: SharedValue<number>
+  focusAnimation: SharedValue<number>
+  value: string
+}>(theme => ({ disableAnimation, focusAnimation, value }) => {
+  const isAndroid = Platform.OS === 'android'
+  const interpolateTextColor = useAnimatedColorInterpolateFn(theme.textInputTextColor, theme.textInputTextColorFocused, theme.textInputTextColorDisabled)
+  const characterLength = value.length
+  return [
+    {
+      includeFontPadding: false,
+      fontFamily: theme.fontFaceMedium,
+      fontSize: theme.rem(1.5),
+      // Android has more space added to the width of the input
+      // after the last character in the input. It seems to be
+      // setting a min-width to the input to roughly 2 characters in size.
+      // We can compensate for this with a negative margin when the character length
+      // is less then 2 characters.
+      marginRight: isAndroid ? -theme.rem(Math.max(0, 2 - characterLength) * 0.4) : 0,
+      padding: 0
+    },
+    useAnimatedStyle(() => ({
+      color: interpolateTextColor(focusAnimation, disableAnimation)
+    }))
+  ]
+})
 
 const PlaceholderAnimatedText = styled(Animated.Text)(theme => ({
   position: 'absolute',
@@ -321,8 +342,11 @@ const PlaceholderAnimatedText = styled(Animated.Text)(theme => ({
   fontSize: theme.rem(1.5)
 }))
 
-const CurrencySymbolAnimatedText = styled(Animated.Text)<{ focusAnimation: SharedValue<number> }>(theme => ({ focusAnimation }) => {
-  const interpolateTextColor = useAnimatedColorInterpolateFn(theme.textInputTextColor, theme.textInputTextColorFocused)
+const CurrencySymbolAnimatedText = styled(Animated.Text)<{
+  disableAnimation: SharedValue<number>
+  focusAnimation: SharedValue<number>
+}>(theme => ({ disableAnimation, focusAnimation }) => {
+  const interpolateTextColor = useAnimatedColorInterpolateFn(theme.textInputTextColor, theme.textInputTextColorFocused, theme.textInputTextColorDisabled)
   return [
     {
       fontFamily: theme.fontFaceMedium,
@@ -330,7 +354,7 @@ const CurrencySymbolAnimatedText = styled(Animated.Text)<{ focusAnimation: Share
       includeFontPadding: false
     },
     useAnimatedStyle(() => ({
-      color: interpolateTextColor(focusAnimation)
+      color: interpolateTextColor(focusAnimation, disableAnimation)
     }))
   ]
 })
@@ -347,13 +371,14 @@ const BottomContainerView = styled(View)({
   alignItems: 'center'
 })
 
-function useAnimatedColorInterpolateFn(fromColor: string, toColor: string) {
+function useAnimatedColorInterpolateFn(defaultColor: string, focusColor: string, disableColor: string) {
   const interpolateFn = useMemo(() => {
-    return (focusValue: SharedValue<number>) => {
+    return (focusValue: SharedValue<number>, disabledValue: SharedValue<number>) => {
       'worklet'
-      return interpolateColor(focusValue.value, [0, 1], [fromColor, toColor])
+      const interFocusColor = interpolateColor(focusValue.value, [0, 1], [defaultColor, focusColor])
+      return interpolateColor(disabledValue.value, [0, 1], [interFocusColor, disableColor])
     }
-  }, [fromColor, toColor])
+  }, [defaultColor, focusColor, disableColor])
 
   return interpolateFn
 }

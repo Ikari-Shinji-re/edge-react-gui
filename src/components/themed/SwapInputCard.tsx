@@ -40,7 +40,7 @@ export interface Props {
   forceField?: 'fiat' | 'crypto'
   returnKeyType?: ReturnKeyType
   displayDenomination: EdgeDenomination
-  editable?: boolean
+  disabled?: boolean
   inputAccessoryViewID?: string
   onAmountChanged: (amounts: SwapInputCardAmounts) => unknown
   onBlur?: () => void
@@ -68,7 +68,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     returnKeyType,
     forceField = 'crypto',
     keyboardVisible = true,
-    editable,
+    disabled,
     inputAccessoryViewID
   } = props
 
@@ -231,12 +231,12 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
         </RowUi4>
 
         <FlipInputNew
+          disabled={disabled}
           onBlur={onBlur}
           onFocus={onFocus}
           onNext={onNext}
           ref={flipInputRef}
           convertValue={convertValue}
-          editable={editable}
           fieldInfos={fieldInfos}
           returnKeyType={returnKeyType}
           forceFieldNum={forceFieldMap[overrideForceField]}

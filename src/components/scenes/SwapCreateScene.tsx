@@ -333,6 +333,7 @@ export const SwapCreateScene = (props: Props) => {
       <EdgeAnim enter={fadeInUp60}>
         <SwapInputCard
           ref={fromInputRef}
+          disabled={fromWallet == null}
           displayDenomination={fromWalletDisplayDenomination}
           forceField="fiat"
           headerText={fromWallet == null ? lstrings.select_src_wallet : fromHeaderText}
@@ -343,7 +344,9 @@ export const SwapCreateScene = (props: Props) => {
           tokenId={fromTokenId}
           wallet={fromWallet}
         >
-          {hasMaxSpend ? <MiniButton label={lstrings.string_max_cap} marginRem={[0.5, 0, 0.75]} onPress={handleMax} alignSelf="center" /> : null}
+          {hasMaxSpend ? (
+            <MiniButton disabled={fromWallet == null} label={lstrings.string_max_cap} marginRem={[0.5, 0, 0.75]} onPress={handleMax} alignSelf="center" />
+          ) : null}
         </SwapInputCard>
       </EdgeAnim>
       <EdgeAnim>
@@ -353,6 +356,7 @@ export const SwapCreateScene = (props: Props) => {
         <SwapInputCard
           ref={toInputRef}
           displayDenomination={toWalletDisplayDenomination}
+          disabled={toWallet == null}
           forceField="fiat"
           headerText={toWallet == null ? lstrings.select_recv_wallet : toHeaderText}
           keyboardVisible={false}
