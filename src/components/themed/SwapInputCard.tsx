@@ -251,6 +251,7 @@ export const SwapInputCard = React.memo(SwapInputCardComponent)
 
 const CardHeading = styled(EdgeText)(theme => ({
   alignSelf: 'flex-start',
+  color: theme.secondaryText,
   marginHorizontal: theme.rem(1)
 }))
 

@@ -271,6 +271,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   },
                   {
                     "alignSelf": "flex-start",
+                    "color": "#3dd9f4",
                     "marginHorizontal": 22,
                   },
                   null,
@@ -1092,6 +1093,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   },
                   {
                     "alignSelf": "flex-start",
+                    "color": "#3dd9f4",
                     "marginHorizontal": 22,
                   },
                   null,
