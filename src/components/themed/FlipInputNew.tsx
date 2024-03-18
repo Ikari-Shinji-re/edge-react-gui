@@ -210,7 +210,11 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
   return (
     <>
-      <ContainerView>
+      <ContainerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
+        <ButtonBox onPress={onToggleFlipInput} paddingRem={0.75}>
+          <FlipIcon color={theme.iconTappable} size={theme.rem(1.5)} />
+        </ButtonBox>
+
         <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>
           <InnerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
             <FrontAnimatedView animatedValue={animatedValue} pointerEvents={flipField(primaryField) ? 'auto' : 'none'}>
@@ -223,10 +227,6 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
             </BackAnimatedView>
           </InnerView>
         </AmountFieldContainerTouchable>
-
-        <ButtonBox onPress={onToggleFlipInput} paddingRem={[0.5, 0, 0.5, 0.5]}>
-          <FlipIcon color={theme.iconTappable} size={theme.rem(1.5)} />
-        </ButtonBox>
       </ContainerView>
     </>
   )
@@ -234,13 +234,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
 const AnimatedNumericInput = Animated.createAnimatedComponent(NumericInput)
 
-const ContainerView = styled(View)(theme => ({
-  flexDirection: 'row',
-  alignItems: 'center',
-  margin: theme.rem(0.5)
-}))
-
-const InnerView = styled(Animated.View)<{
+const ContainerView = styled(Animated.View)<{
   disableAnimation: SharedValue<number>
   focusAnimation: SharedValue<number>
 }>(theme => ({ disableAnimation, focusAnimation }) => {
@@ -254,15 +248,19 @@ const InnerView = styled(Animated.View)<{
     theme.textInputBorderColorFocused,
     theme.textInputBorderColorDisabled
   )
+
   return [
     {
+      flexDirection: 'row',
       alignItems: 'center',
+      margin: theme.rem(0.5),
+
       borderWidth: theme.textInputBorderWidth,
       borderRadius: theme.rem(0.5),
       flex: 1,
-      flexDirection: 'row',
       overflow: 'hidden'
     },
+
     useAnimatedStyle(() => ({
       backgroundColor: interpolateInputBackgroundColor(focusAnimation, disableAnimation),
       borderColor: interpolateOutlineColor(focusAnimation, disableAnimation)
@@ -270,10 +268,22 @@ const InnerView = styled(Animated.View)<{
   ]
 })
 
+const InnerView = styled(Animated.View)<{
+  disableAnimation: SharedValue<number>
+  focusAnimation: SharedValue<number>
+}>(theme => {
+  return {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    overflow: 'hidden'
+  }
+})
+
 const FrontAnimatedView = styled(Animated.View)<{ animatedValue: SharedValue<number> }>(theme => ({ animatedValue }) => [
   {
     backfaceVisibility: 'hidden',
-    paddingHorizontal: theme.rem(1),
+    paddingRight: theme.rem(1),
     paddingVertical: theme.rem(0.5)
   },
   useAnimatedStyle(() => {
@@ -287,7 +297,7 @@ const FrontAnimatedView = styled(Animated.View)<{ animatedValue: SharedValue<num
 const BackAnimatedView = styled(Animated.View)<{ animatedValue: SharedValue<number> }>(theme => ({ animatedValue }) => [
   {
     backfaceVisibility: 'hidden',
-    paddingHorizontal: theme.rem(1),
+    paddingRight: theme.rem(1),
     paddingVertical: theme.rem(0.5),
     position: 'absolute',
     top: 0,

@@ -502,14 +502,101 @@ exports[`SwapCreateScene should render with loading props 1`] = `
             </View>
           </View>
           <View
-            style={
+            disableAnimation={
               {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "margin": 11,
+                "value": 0,
               }
             }
+            focusAnimation={
+              {
+                "value": 0,
+              }
+            }
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 11,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "margin": 11,
+                  "overflow": "hidden",
+                },
+                {
+                  "backgroundColor": undefined,
+                  "borderColor": undefined,
+                },
+              ]
+            }
           >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={false}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "marginBottom": 0,
+                  "marginLeft": 0,
+                  "marginRight": 0,
+                  "marginTop": 0,
+                  "opacity": 1,
+                  "paddingBottom": 17,
+                  "paddingLeft": 17,
+                  "paddingRight": 17,
+                  "paddingTop": 17,
+                }
+              }
+            >
+              <Text
+                adjustsFontSizeToFit={true}
+                allowFontScaling={false}
+                style={
+                  [
+                    {
+                      "color": undefined,
+                      "fontSize": 12,
+                    },
+                    {
+                      "color": "#00f1a2",
+                      "fontSize": 34,
+                    },
+                    {
+                      "fontFamily": "custom",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
             <View
               accessibilityState={
                 {
@@ -540,20 +627,12 @@ exports[`SwapCreateScene should render with loading props 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                [
-                  {
-                    "alignItems": "center",
-                    "borderRadius": 11,
-                    "borderWidth": 1,
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "overflow": "hidden",
-                  },
-                  {
-                    "backgroundColor": undefined,
-                    "borderColor": undefined,
-                  },
-                ]
+                {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "overflow": "hidden",
+                }
               }
             >
               <View
@@ -567,7 +646,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   [
                     {
                       "backfaceVisibility": "hidden",
-                      "paddingHorizontal": 22,
+                      "paddingRight": 22,
                       "paddingVertical": 11,
                     },
                     {
@@ -690,7 +769,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                       "backfaceVisibility": "hidden",
                       "bottom": 0,
                       "left": 0,
-                      "paddingHorizontal": 22,
+                      "paddingRight": 22,
                       "paddingVertical": 11,
                       "position": "absolute",
                       "right": 0,
@@ -803,73 +882,6 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   </Text>
                 </View>
               </View>
-            </View>
-            <View
-              accessibilityState={
-                {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": false,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={false}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                {
-                  "marginBottom": 0,
-                  "marginLeft": 0,
-                  "marginRight": 0,
-                  "marginTop": 0,
-                  "opacity": 1,
-                  "paddingBottom": 11,
-                  "paddingLeft": 11,
-                  "paddingRight": 0,
-                  "paddingTop": 11,
-                }
-              }
-            >
-              <Text
-                adjustsFontSizeToFit={true}
-                allowFontScaling={false}
-                style={
-                  [
-                    {
-                      "color": undefined,
-                      "fontSize": 12,
-                    },
-                    {
-                      "color": "#00f1a2",
-                      "fontSize": 34,
-                    },
-                    {
-                      "fontFamily": "custom",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
-                }
-              >
-                
-              </Text>
             </View>
           </View>
           <View
@@ -1174,14 +1186,101 @@ exports[`SwapCreateScene should render with loading props 1`] = `
             </View>
           </View>
           <View
-            style={
+            disableAnimation={
               {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "margin": 11,
+                "value": 0,
               }
             }
+            focusAnimation={
+              {
+                "value": 0,
+              }
+            }
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "borderRadius": 11,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "margin": 11,
+                  "overflow": "hidden",
+                },
+                {
+                  "backgroundColor": undefined,
+                  "borderColor": undefined,
+                },
+              ]
+            }
           >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={false}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "marginBottom": 0,
+                  "marginLeft": 0,
+                  "marginRight": 0,
+                  "marginTop": 0,
+                  "opacity": 1,
+                  "paddingBottom": 17,
+                  "paddingLeft": 17,
+                  "paddingRight": 17,
+                  "paddingTop": 17,
+                }
+              }
+            >
+              <Text
+                adjustsFontSizeToFit={true}
+                allowFontScaling={false}
+                style={
+                  [
+                    {
+                      "color": undefined,
+                      "fontSize": 12,
+                    },
+                    {
+                      "color": "#00f1a2",
+                      "fontSize": 34,
+                    },
+                    {
+                      "fontFamily": "custom",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    {},
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
             <View
               accessibilityState={
                 {
@@ -1212,20 +1311,12 @@ exports[`SwapCreateScene should render with loading props 1`] = `
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
               style={
-                [
-                  {
-                    "alignItems": "center",
-                    "borderRadius": 11,
-                    "borderWidth": 1,
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "overflow": "hidden",
-                  },
-                  {
-                    "backgroundColor": undefined,
-                    "borderColor": undefined,
-                  },
-                ]
+                {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "overflow": "hidden",
+                }
               }
             >
               <View
@@ -1239,7 +1330,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   [
                     {
                       "backfaceVisibility": "hidden",
-                      "paddingHorizontal": 22,
+                      "paddingRight": 22,
                       "paddingVertical": 11,
                     },
                     {
@@ -1362,7 +1453,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                       "backfaceVisibility": "hidden",
                       "bottom": 0,
                       "left": 0,
-                      "paddingHorizontal": 22,
+                      "paddingRight": 22,
                       "paddingVertical": 11,
                       "position": "absolute",
                       "right": 0,
@@ -1475,73 +1566,6 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   </Text>
                 </View>
               </View>
-            </View>
-            <View
-              accessibilityState={
-                {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": false,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={false}
-              collapsable={false}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                {
-                  "marginBottom": 0,
-                  "marginLeft": 0,
-                  "marginRight": 0,
-                  "marginTop": 0,
-                  "opacity": 1,
-                  "paddingBottom": 11,
-                  "paddingLeft": 11,
-                  "paddingRight": 0,
-                  "paddingTop": 11,
-                }
-              }
-            >
-              <Text
-                adjustsFontSizeToFit={true}
-                allowFontScaling={false}
-                style={
-                  [
-                    {
-                      "color": undefined,
-                      "fontSize": 12,
-                    },
-                    {
-                      "color": "#00f1a2",
-                      "fontSize": 34,
-                    },
-                    {
-                      "fontFamily": "custom",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    {},
-                  ]
-                }
-              >
-                
-              </Text>
             </View>
           </View>
         </View>
