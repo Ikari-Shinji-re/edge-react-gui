@@ -6,6 +6,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome5'
 
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
+import { lstrings } from '../../locales/strings'
 import { emptyEdgeDenomination, getExchangeDenom, selectDisplayDenom } from '../../selectors/DenominationSelectors'
 import { useSelector } from '../../types/reactRedux'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
@@ -235,6 +236,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
           inputAccessoryViewID={inputAccessoryViewID}
           keyboardVisible={keyboardVisible}
           startAmounts={[initialDisplayAmount, initialFiatAmount]}
+          placeholders={[lstrings.string_tap_to_edit, lstrings.string_tap_next_for_quote]}
         />
         {props.children}
       </CardUi4>

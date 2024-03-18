@@ -588,6 +588,7 @@ const strings = {
   string_to_capitalize: 'To',
   string_show_balance: 'Show Balance',
   string_amount: 'Amount',
+  string_tap_next_for_quote: 'Tap "Next" for Quote',
   string_tap_to_edit: 'Tap to edit',
   string_rate: 'Rate',
   string_got_it: 'Got it!',

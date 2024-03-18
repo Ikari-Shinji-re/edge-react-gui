@@ -48,6 +48,7 @@ export interface Props {
   forceFieldNum?: FieldNum
   inputAccessoryViewID?: string
   keyboardVisible?: boolean
+  placeholders?: [string, string]
   returnKeyType?: ReturnKeyType
   startAmounts: [string, string]
 
@@ -73,6 +74,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     forceFieldNum = 0,
     inputAccessoryViewID,
     keyboardVisible,
+    placeholders = [lstrings.string_tap_to_edit, ''],
     returnKeyType = 'done',
     startAmounts,
     // Events:
@@ -146,6 +148,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     const zeroAmount = zeroString(amounts[fieldNum])
     const primaryAmount = zeroAmount && !amountFocused ? '' : amounts[fieldNum]
 
+    const placeholder = placeholders[0]
     const isEnterTextMode = amountFocused || !zeroAmount
     const currencyName = fieldInfos[fieldNum].currencyName
 
@@ -167,7 +170,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
           onFocus={handleBottomFocus}
           onBlur={handleBottomBlur}
         />
-        {!isEnterTextMode ? <PlaceholderAnimatedText>{lstrings.string_tap_to_edit}</PlaceholderAnimatedText> : null}
+        {!isEnterTextMode && placeholder !== '' ? <PlaceholderAnimatedText>{placeholder}</PlaceholderAnimatedText> : null}
         {isEnterTextMode ? (
           <CurrencySymbolAnimatedText disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
             {' ' + currencyName}
@@ -183,12 +186,17 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
       topText = formatNumberInput(topText, { minDecimals: 0, maxDecimals: fieldInfos[fieldNum].maxEntryDecimals })
     }
 
+    const placeholder = placeholders[1]
+    const zeroAmount = zeroString(amounts[fieldNum])
+    const isEnterTextMode = amountFocused || !zeroAmount
+
     const fieldInfo = fieldInfos[fieldNum]
     topText = `${topText} ${fieldInfo.currencyName}`
+
     return (
       <EdgeTouchableWithoutFeedback onPress={onToggleFlipInput} key="top" disabled={disabled}>
         <TopAmountText numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.65}>
-          {topText}
+          {isEnterTextMode || placeholder === '' ? topText : placeholder}
         </TopAmountText>
       </EdgeTouchableWithoutFeedback>
     )
