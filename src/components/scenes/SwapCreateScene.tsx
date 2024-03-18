@@ -19,15 +19,14 @@ import { EdgeSceneProps } from '../../types/routerTypes'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
 import { getWalletName } from '../../util/CurrencyWalletHelpers'
 import { convertNativeToDenomination, zeroString } from '../../util/utils'
-import { EdgeAnim, fadeInDown30, fadeInDown60, fadeInDown90, fadeInUp60, fadeInUp90 } from '../common/EdgeAnim'
+import { EdgeAnim, fadeInDown30, fadeInDown60, fadeInDown90, fadeInUp60 } from '../common/EdgeAnim'
 import { SceneWrapper } from '../common/SceneWrapper'
 import { SwapVerticalIcon } from '../icons/ThemedIcons'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
-import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
+import { useTheme } from '../services/ThemeContext'
 import { ExchangedFlipInputAmounts, ExchangedFlipInputRef } from '../themed/ExchangedFlipInput2'
 import { LineTextDivider } from '../themed/LineTextDivider'
-import { SceneHeader } from '../themed/SceneHeader'
 import { SwapInputCard } from '../themed/SwapInputCard'
 import { ButtonBox } from '../themed/ThemedButtons'
 import { AlertCardUi4 } from '../ui4/AlertCardUi4'
@@ -70,7 +69,6 @@ export const SwapCreateScene = (props: Props) => {
   const { navigation, route } = props
   const { fromWalletId, fromTokenId = null, toWalletId, toTokenId = null, errorDisplayInfo } = route.params ?? {}
   const theme = useTheme()
-  const styles = getStyles(theme)
   const dispatch = useDispatch()
 
   const [state, setState] = useState({
@@ -349,9 +347,6 @@ export const SwapCreateScene = (props: Props) => {
 
   return (
     <SceneWrapper hasTabs hasNotifications scroll keyboardShouldPersistTaps="handled" padding={theme.rem(0.5)}>
-      <EdgeAnim style={styles.header} enter={fadeInUp90}>
-        <SceneHeader title={lstrings.title_exchange} underline />
-      </EdgeAnim>
       <EdgeAnim enter={fadeInUp60}>
         <SwapInputCard
           ref={fromInputRef}
@@ -395,11 +390,3 @@ export const SwapCreateScene = (props: Props) => {
     </SceneWrapper>
   )
 }
-
-const getStyles = cacheStyles((theme: Theme) => ({
-  header: {
-    marginLeft: -theme.rem(0.5),
-    width: '100%',
-    marginVertical: theme.rem(1)
-  }
-}))

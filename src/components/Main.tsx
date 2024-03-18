@@ -721,7 +721,10 @@ const EdgeSwapTabScreen = () => {
       <Stack.Screen
         name="swapCreate"
         component={SwapCreateScene}
-        options={firstSceneScreenOptions}
+        options={{
+          ...firstSceneScreenOptions,
+          title: lstrings.title_exchange
+        }}
         listeners={{
           focus: () => dispatch(checkEnabledExchanges())
         }}
