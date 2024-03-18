@@ -333,6 +333,28 @@ exports[`SwapCreateScene should render with loading props 1`] = `
         entering={BaseAnimationMock {}}
         layout={BaseAnimationMock {}}
       >
+        <Text
+          adjustsFontSizeToFit={true}
+          minimumFontScale={0.65}
+          numberOfLines={1}
+          style={
+            [
+              {
+                "color": "#FFFFFF",
+                "fontFamily": "Quicksand-Regular",
+                "fontSize": 22,
+                "includeFontPadding": false,
+              },
+              {
+                "alignSelf": "flex-start",
+                "marginHorizontal": 22,
+              },
+              null,
+            ]
+          }
+        >
+          I have 
+        </Text>
         <View
           style={
             [
@@ -983,6 +1005,28 @@ exports[`SwapCreateScene should render with loading props 1`] = `
         entering={BaseAnimationMock {}}
         layout={BaseAnimationMock {}}
       >
+        <Text
+          adjustsFontSizeToFit={true}
+          minimumFontScale={0.65}
+          numberOfLines={1}
+          style={
+            [
+              {
+                "color": "#FFFFFF",
+                "fontFamily": "Quicksand-Regular",
+                "fontSize": 22,
+                "includeFontPadding": false,
+              },
+              {
+                "alignSelf": "flex-start",
+                "marginHorizontal": 22,
+              },
+              null,
+            ]
+          }
+        >
+          I want
+        </Text>
         <View
           style={
             [

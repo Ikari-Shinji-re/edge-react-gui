@@ -1,20 +1,18 @@
-import { add, div, log10, mul, round } from 'biggystring'
-import { EdgeCurrencyWallet, EdgeDenomination, EdgeTokenId } from 'edge-core-js'
+import { div, log10, mul, round } from 'biggystring'
+import { EdgeCurrencyWallet, EdgeTokenId } from 'edge-core-js'
 import React, { useMemo } from 'react'
 import { ReturnKeyType, TouchableOpacity } from 'react-native'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome5'
 
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
-import { formatNumber } from '../../locales/intl'
-import { lstrings } from '../../locales/strings'
 import { emptyEdgeDenomination, getExchangeDenom, selectDisplayDenom } from '../../selectors/DenominationSelectors'
 import { useSelector } from '../../types/reactRedux'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
-import { convertNativeToDenomination, DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
+import { DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
 import { styled } from '../hoc/styled'
 import { Space } from '../layout/Space'
-import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
+import { useTheme } from '../services/ThemeContext'
 import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { EdgeText } from './EdgeText'
@@ -34,6 +32,7 @@ export interface SwapInputCardAmounts {
 }
 
 export interface Props {
+  heading?: string
   wallet?: EdgeCurrencyWallet
   tokenId: EdgeTokenId
   startNativeAmount?: string
@@ -41,7 +40,6 @@ export interface Props {
   walletPlaceholderText: string
   forceField?: 'fiat' | 'crypto'
   returnKeyType?: ReturnKeyType
-  displayDenomination: EdgeDenomination
   disabled?: boolean
   inputAccessoryViewID?: string
   onAmountChanged: (amounts: SwapInputCardAmounts) => unknown
@@ -59,6 +57,7 @@ const forceFieldMap: { crypto: FieldNum; fiat: FieldNum } = {
 
 const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((props: Props, ref) => {
   const {
+    heading,
     wallet,
     tokenId,
     onBlur,
@@ -75,18 +74,10 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
   } = props
 
   const theme = useTheme()
-  const styles = getStyles(theme)
 
   const exchangeRates = useSelector(state => state.exchangeRates)
   const fiatCurrencyCode = useMaybeFiatCurrencyCode(wallet)
   const flipInputRef = React.useRef<FlipInputRef>(null)
-
-  const cryptoAmount = useMemo(() => {
-    if (wallet == null || tokenId === undefined) return
-    const balance = wallet.balanceMap.get(tokenId) ?? '0'
-    const cryptoAmountRaw: string = convertNativeToDenomination(props.displayDenomination.multiplier)(balance)
-    return formatNumber(add(cryptoAmountRaw, '0'))
-  }, [props.displayDenomination.multiplier, tokenId, wallet])
 
   const cryptoDisplayDenom = useSelector(state => (wallet == null ? emptyEdgeDenomination : selectDisplayDenom(state, wallet.currencyConfig, tokenId)))
   const fiatDenom = getDenomFromIsoCode(fiatCurrencyCode)
@@ -219,9 +210,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
 
   return (
     <>
-      {cryptoAmount == null ? null : (
-        <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + props.displayDenomination.name}</EdgeText>
-      )}
+      {heading == null ? null : <CardHeading>{heading}</CardHeading>}
       <CardUi4>
         <Space sideways>
           <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
@@ -255,6 +244,11 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
 
 export const SwapInputCard = React.memo(SwapInputCardComponent)
 
+const CardHeading = styled(EdgeText)(theme => ({
+  alignSelf: 'flex-start',
+  marginHorizontal: theme.rem(1)
+}))
+
 const WalletPlaceHolder = styled(TouchableOpacity)(theme => ({
   alignItems: 'center',
   backgroundColor: theme.cardBaseColor,
@@ -275,14 +269,6 @@ const ChevronIcon = styled(FontAwesome6)(theme => ({
   marginLeft: theme.rem(1),
   marginRight: theme.rem(0.25),
   textAlign: 'center'
-}))
-
-const getStyles = cacheStyles((theme: Theme) => ({
-  balanceText: {
-    alignSelf: 'flex-start',
-    marginLeft: theme.rem(1),
-    color: theme.secondaryText
-  }
 }))
 
 const useMaybeFiatCurrencyCode = (wallet?: EdgeCurrencyWallet): string => {
