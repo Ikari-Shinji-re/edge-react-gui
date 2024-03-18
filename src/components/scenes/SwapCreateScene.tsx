@@ -2,7 +2,7 @@ import { add, gt, gte } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeSwapRequest, EdgeTokenId } from 'edge-core-js'
 import * as React from 'react'
 import { useMemo, useState } from 'react'
-import { Keyboard } from 'react-native'
+import { Keyboard, View } from 'react-native'
 import { sprintf } from 'sprintf-js'
 
 import { DisableAsset } from '../../actions/ExchangeInfoActions'
@@ -21,6 +21,7 @@ import { getWalletName } from '../../util/CurrencyWalletHelpers'
 import { convertNativeToDenomination, zeroString } from '../../util/utils'
 import { EdgeAnim, fadeInDown30, fadeInDown60, fadeInDown90, fadeInUp60 } from '../common/EdgeAnim'
 import { SceneWrapper } from '../common/SceneWrapper'
+import { styled } from '../hoc/styled'
 import { SwapVerticalIcon } from '../icons/ThemedIcons'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
@@ -347,46 +348,60 @@ export const SwapCreateScene = (props: Props) => {
 
   return (
     <SceneWrapper hasTabs hasNotifications scroll keyboardShouldPersistTaps="handled" padding={theme.rem(0.5)}>
-      <EdgeAnim enter={fadeInUp60}>
-        <SwapInputCard
-          ref={fromInputRef}
-          heading={sprintf(lstrings.exchange_title_sending_s, fromWalletBalanceText)}
-          disabled={fromWallet == null}
-          forceField="fiat"
-          walletPlaceholderText={fromHeaderText}
-          keyboardVisible={false}
-          onAmountChanged={handleFromAmountChange}
-          onNext={handleNext}
-          onSelectWallet={handleFromSelectWallet}
-          tokenId={fromTokenId}
-          wallet={fromWallet}
-          onMaxPress={hasMaxSpend ? handleMaxPress : undefined}
-        />
-      </EdgeAnim>
-      <EdgeAnim>
-        <LineTextDivider lowerCased>
-          <ButtonBox onPress={handleFlipWalletPress}>
-            <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(2)} />
-          </ButtonBox>
-        </LineTextDivider>
-      </EdgeAnim>
-      <EdgeAnim enter={fadeInDown30}>
-        <SwapInputCard
-          ref={toInputRef}
-          disabled={toWallet == null}
-          forceField="fiat"
-          walletPlaceholderText={toHeaderText}
-          keyboardVisible={false}
-          onAmountChanged={handleToAmountChange}
-          onNext={handleNext}
-          onSelectWallet={handleToSelectWallet}
-          tokenId={toTokenId}
-          wallet={toWallet}
-          heading={lstrings.exchange_title_receiving}
-        />
-      </EdgeAnim>
-      <EdgeAnim enter={fadeInDown60}>{renderAlert()}</EdgeAnim>
-      <EdgeAnim enter={fadeInDown90}>{renderButton()}</EdgeAnim>
+      <CenteringContainer>
+        <MaxWidthContainer>
+          <EdgeAnim enter={fadeInUp60}>
+            <SwapInputCard
+              ref={fromInputRef}
+              heading={sprintf(lstrings.exchange_title_sending_s, fromWalletBalanceText)}
+              disabled={fromWallet == null}
+              forceField="fiat"
+              walletPlaceholderText={fromHeaderText}
+              keyboardVisible={false}
+              onAmountChanged={handleFromAmountChange}
+              onNext={handleNext}
+              onSelectWallet={handleFromSelectWallet}
+              tokenId={fromTokenId}
+              wallet={fromWallet}
+              onMaxPress={hasMaxSpend ? handleMaxPress : undefined}
+            />
+          </EdgeAnim>
+          <EdgeAnim>
+            <LineTextDivider lowerCased>
+              <ButtonBox onPress={handleFlipWalletPress}>
+                <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(2)} />
+              </ButtonBox>
+            </LineTextDivider>
+          </EdgeAnim>
+          <EdgeAnim enter={fadeInDown30}>
+            <SwapInputCard
+              ref={toInputRef}
+              disabled={toWallet == null}
+              forceField="fiat"
+              walletPlaceholderText={toHeaderText}
+              keyboardVisible={false}
+              onAmountChanged={handleToAmountChange}
+              onNext={handleNext}
+              onSelectWallet={handleToSelectWallet}
+              tokenId={toTokenId}
+              wallet={toWallet}
+              heading={lstrings.exchange_title_receiving}
+            />
+          </EdgeAnim>
+          <EdgeAnim enter={fadeInDown60}>{renderAlert()}</EdgeAnim>
+          <EdgeAnim enter={fadeInDown90}>{renderButton()}</EdgeAnim>
+        </MaxWidthContainer>
+      </CenteringContainer>
     </SceneWrapper>
   )
 }
+
+const CenteringContainer = styled(View)({
+  flexDirection: 'row',
+  justifyContent: 'center'
+})
+
+const MaxWidthContainer = styled(View)({
+  flexGrow: 1,
+  maxWidth: 480
+})
