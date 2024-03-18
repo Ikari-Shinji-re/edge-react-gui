@@ -586,7 +586,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                       "fontSize": 34,
                     },
                     {
-                      "fontFamily": "custom",
+                      "fontFamily": "Ionicons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
@@ -594,7 +594,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
             <View
@@ -1125,10 +1125,10 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   },
                   {
                     "color": "#00f1a2",
-                    "fontSize": 34,
+                    "fontSize": 45,
                   },
                   {
-                    "fontFamily": "custom",
+                    "fontFamily": "Ionicons",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
@@ -1136,7 +1136,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
           <View
@@ -1407,7 +1407,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                       "fontSize": 34,
                     },
                     {
-                      "fontFamily": "custom",
+                      "fontFamily": "Ionicons",
                       "fontStyle": "normal",
                       "fontWeight": "normal",
                     },
@@ -1415,7 +1415,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   ]
                 }
               >
-                
+                
               </Text>
             </View>
             <View

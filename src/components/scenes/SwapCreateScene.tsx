@@ -21,7 +21,7 @@ import { getWalletName } from '../../util/CurrencyWalletHelpers'
 import { convertNativeToDenomination, zeroString } from '../../util/utils'
 import { EdgeAnim, fadeInDown30, fadeInDown60, fadeInDown90, fadeInUp60, fadeInUp90 } from '../common/EdgeAnim'
 import { SceneWrapper } from '../common/SceneWrapper'
-import { FlipIcon } from '../icons/ThemedIcons'
+import { SwapVerticalIcon } from '../icons/ThemedIcons'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
@@ -371,7 +371,7 @@ export const SwapCreateScene = (props: Props) => {
       <EdgeAnim>
         <LineTextDivider lowerCased>
           <ButtonBox onPress={handleFlipWalletPress}>
-            <FlipIcon color={theme.iconTappable} size={theme.rem(1.5)} />
+            <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(2)} />
           </ButtonBox>
         </LineTextDivider>
       </EdgeAnim>

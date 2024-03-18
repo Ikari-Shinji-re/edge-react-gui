@@ -21,7 +21,7 @@ import { useState } from '../../types/reactHooks'
 import { zeroString } from '../../util/utils'
 import { EdgeTouchableWithoutFeedback } from '../common/EdgeTouchableWithoutFeedback'
 import { styled, styledWithRef } from '../hoc/styled'
-import { FlipIcon } from '../icons/ThemedIcons'
+import { SwapVerticalIcon } from '../icons/ThemedIcons'
 import { showError } from '../services/AirshipInstance'
 import { useTheme } from '../services/ThemeContext'
 import { ButtonUi4 } from '../ui4/ButtonUi4'
@@ -215,7 +215,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     <>
       <ContainerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
         <ButtonBox onPress={onToggleFlipInput} paddingRem={0.75}>
-          <FlipIcon color={theme.iconTappable} size={theme.rem(1.5)} />
+          <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(1.5)} />
         </ButtonBox>
 
         <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>
