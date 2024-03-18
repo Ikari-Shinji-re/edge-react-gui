@@ -396,10 +396,11 @@ export const SwapCreateScene = (props: Props) => {
   )
 }
 
-const CenteringContainer = styled(View)({
+const CenteringContainer = styled(View)(theme => ({
   flexDirection: 'row',
-  justifyContent: 'center'
-})
+  justifyContent: 'center',
+  marginTop: theme.rem(1)
+}))
 
 const MaxWidthContainer = styled(View)({
   flexGrow: 1,

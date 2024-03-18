@@ -241,6 +241,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
           {
             "flexDirection": "row",
             "justifyContent": "center",
+            "marginTop": 22,
           }
         }
       >
