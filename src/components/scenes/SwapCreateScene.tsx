@@ -21,6 +21,7 @@ import { getWalletName } from '../../util/CurrencyWalletHelpers'
 import { convertNativeToDenomination, zeroString } from '../../util/utils'
 import { EdgeAnim, fadeInDown30, fadeInDown60, fadeInDown90, fadeInUp60, fadeInUp90 } from '../common/EdgeAnim'
 import { SceneWrapper } from '../common/SceneWrapper'
+import { FlipIcon } from '../icons/ThemedIcons'
 import { WalletListModal, WalletListResult } from '../modals/WalletListModal'
 import { Airship, showError, showWarning } from '../services/AirshipInstance'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
@@ -28,6 +29,7 @@ import { ExchangedFlipInputAmounts, ExchangedFlipInputRef } from '../themed/Exch
 import { LineTextDivider } from '../themed/LineTextDivider'
 import { SceneHeader } from '../themed/SceneHeader'
 import { SwapInputCard } from '../themed/SwapInputCard'
+import { ButtonBox } from '../themed/ThemedButtons'
 import { AlertCardUi4 } from '../ui4/AlertCardUi4'
 import { ButtonsViewUi4 } from '../ui4/ButtonsViewUi4'
 
@@ -193,6 +195,25 @@ export const SwapCreateScene = (props: Props) => {
   // Handlers
   //
 
+  const handleFlipWalletPress = useHandler(() => {
+    // Flip params:
+    navigation.setParams({
+      fromWalletId: toWalletId,
+      fromTokenId: toTokenId,
+      toWalletId: fromWalletId,
+      toTokenId: fromTokenId,
+      errorDisplayInfo
+    })
+    // Clear amount input state:
+    setState({
+      ...state,
+      nativeAmount: '0'
+    })
+    // Clear all input amounts:
+    toInputRef.current?.setAmount('crypto', '0')
+    fromInputRef.current?.setAmount('crypto', '0')
+  })
+
   const handleSelectWallet = useHandler(async (walletId: string, tokenId: EdgeTokenId, direction: 'from' | 'to') => {
     const params = {
       ...route.params,
@@ -348,7 +369,11 @@ export const SwapCreateScene = (props: Props) => {
         />
       </EdgeAnim>
       <EdgeAnim>
-        <LineTextDivider title={lstrings.string_to_capitalize} lowerCased />
+        <LineTextDivider lowerCased>
+          <ButtonBox onPress={handleFlipWalletPress}>
+            <FlipIcon color={theme.iconTappable} size={theme.rem(1.5)} />
+          </ButtonBox>
+        </LineTextDivider>
       </EdgeAnim>
       <EdgeAnim enter={fadeInDown30}>
         <SwapInputCard
