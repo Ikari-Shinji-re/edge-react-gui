@@ -4,6 +4,7 @@ import { sprintf } from 'sprintf-js'
 
 import { formatNumber, isValidInput } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
+import { AppParamList } from '../../types/routerTypes'
 import { EdgeAsset } from '../../types/types'
 import { getPartnerIconUri } from '../../util/CdnUris'
 import { infoServerData } from '../../util/network'
@@ -11,6 +12,7 @@ import { logEvent } from '../../util/tracking'
 import { fuzzyTimeout } from '../../util/utils'
 import { FiatPlugin, FiatPluginFactory, FiatPluginFactoryArgs, FiatPluginStartParams } from './fiatPluginTypes'
 import { FiatProvider, FiatProviderAssetMap, FiatProviderGetQuoteParams, FiatProviderQuote } from './fiatProviderTypes'
+import { StateManager } from './hooks/useStateManager'
 import { getBestError, getRateFromQuote } from './pluginUtils'
 import { banxaProvider } from './providers/banxaProvider'
 import { bityProvider } from './providers/bityProvider'
@@ -19,6 +21,7 @@ import { moonpayProvider } from './providers/moonpayProvider'
 import { mtpelerinProvider } from './providers/mtpelerinProvider'
 import { paybisProvider } from './providers/paybisProvider'
 import { simplexProvider } from './providers/simplexProvider'
+import { EnterAmountState, FiatPluginEnterAmountParams } from './scenes/FiatPluginEnterAmountScene'
 import { initializeProviders } from './util/initializeProviders'
 
 // A map keyed by provider pluginIds, and values representing preferred priority
@@ -33,6 +36,11 @@ const asPaymentTypeProviderPriorityMap = asObject(asProviderPriorityMap)
 type PaymentTypeProviderPriorityMap = ReturnType<typeof asPaymentTypeProviderPriorityMap>
 
 type PriorityArray = Array<{ [pluginId: string]: boolean }>
+
+interface ConvertValueInternalResult {}
+type InternalFiatPluginEnterAmountParams = FiatPluginEnterAmountParams & {
+  convertValueInternal: (sourceFieldNum: number, value: string, stateManager: StateManager<EnterAmountState>) => Promise<ConvertValueInternalResult>
+}
 
 const providerFactories = [banxaProvider, bityProvider, kadoProvider, moonpayProvider, mtpelerinProvider, paybisProvider, simplexProvider]
 
@@ -207,7 +215,7 @@ export const amountQuoteFiatPlugin: FiatPluginFactory = async (params: FiatPlugi
 
       // Navigate to scene to have user enter amount
       const initialValue1 = requireCrypto ? undefined : defaultFiatAmount ?? DEFAULT_FIAT_AMOUNT
-      showUi.enterAmount({
+      const enterAmount: InternalFiatPluginEnterAmountParams = {
         disableInput,
         headerTitle: isBuy ? sprintf(lstrings.fiat_plugin_buy_currencycode, currencyCode) : sprintf(lstrings.fiat_plugin_sell_currencycode_s, currencyCode),
         initState: {
@@ -218,7 +226,15 @@ export const amountQuoteFiatPlugin: FiatPluginFactory = async (params: FiatPlugi
         label2: sprintf(lstrings.fiat_plugin_amount_currencycode, currencyCode),
         swapInputLocations: requireCrypto,
         async onChangeText() {},
+        async onMax(sourceFieldNum, stateManager) {
+          const result = await enterAmount.convertValue(sourceFieldNum, '999999999', stateManager)
+        },
+
         async convertValue(sourceFieldNum, value, stateManager) {
+          return undefined
+        },
+
+        async convertValueInternal(sourceFieldNum, value, stateManager) {
           if (!isValidInput(value)) {
             stateManager.update({ statusText: { content: lstrings.create_wallet_invalid_input, textType: 'error' } })
             return
@@ -376,7 +392,8 @@ export const amountQuoteFiatPlugin: FiatPluginFactory = async (params: FiatPlugi
           }
           await bestQuote.approveQuote({ showUi, coreWallet })
         }
-      })
+      }
+      showUi.enterAmount(enterAmount)
     }
   }
   return fiatPlugin
