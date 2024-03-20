@@ -16,7 +16,8 @@ import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { RowUi4 } from '../ui4/RowUi4'
 import { EdgeText } from './EdgeText'
-import { FieldNum, FlipInputFieldInfos, FlipInputOld, FlipInputRef } from './FlipInputOld'
+import { FieldNum, FlipInputFieldInfos, FlipInputNew, FlipInputRef } from './FlipInputNew'
+
 export type ExchangeFlipInputFields = 'fiat' | 'crypto'
 
 export interface SwapInputCardInputRef {
@@ -245,7 +246,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
 
         {!props.isFocused ? null : (
           <>
-            <FlipInputOld
+            <FlipInputNew
               onBlur={onBlur}
               onFocus={onFocus}
               onNext={onNext}
