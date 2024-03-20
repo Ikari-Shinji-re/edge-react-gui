@@ -42,17 +42,19 @@ export interface FlipInputFieldInfo {
 export type FlipInputFieldInfos = [FlipInputFieldInfo, FlipInputFieldInfo]
 
 export interface Props {
+  convertValue: (sourceFieldNum: FieldNum, value: string) => Promise<string | undefined>
+  editable?: boolean
+  fieldInfos: FlipInputFieldInfos
+  forceFieldNum?: FieldNum
+  inputAccessoryViewID?: string
+  keyboardVisible?: boolean
+  returnKeyType?: ReturnKeyType
+  startAmounts: [string, string]
+
+  // Events:
   onBlur?: () => void
   onFocus?: () => void
   onNext?: () => void
-  convertValue: (sourceFieldNum: FieldNum, value: string) => Promise<string | undefined>
-  startAmounts: [string, string]
-  forceFieldNum?: FieldNum
-  keyboardVisible?: boolean
-  inputAccessoryViewID?: string
-  fieldInfos: FlipInputFieldInfos
-  returnKeyType?: ReturnKeyType
-  editable?: boolean
 }
 
 const FLIP_DURATION = 300
@@ -65,17 +67,17 @@ export const FlipInput2 = React.forwardRef<FlipInputRef, Props>((props: Props, r
   const inputRefs = [React.useRef<TextInput>(null), React.useRef<TextInput>(null)]
 
   const {
-    startAmounts,
+    convertValue,
+    editable,
     fieldInfos,
+    forceFieldNum = 0,
+    inputAccessoryViewID,
     keyboardVisible,
     returnKeyType = 'done',
+    startAmounts,
     onBlur,
     onFocus,
-    onNext,
-    inputAccessoryViewID,
-    convertValue,
-    forceFieldNum = 0,
-    editable
+    onNext
   } = props
   const animatedValue = useSharedValue(forceFieldNum)
 
