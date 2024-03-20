@@ -62,7 +62,7 @@ const flipField = (fieldNum: FieldNum): FieldNum => {
   return fieldNum === 0 ? 1 : 0
 }
 
-export const FlipInput2 = React.forwardRef<FlipInputRef, Props>((props: Props, ref) => {
+export const FlipInputOld = React.forwardRef<FlipInputRef, Props>((props: Props, ref) => {
   const theme = useTheme()
   const inputRefs = [React.useRef<TextInput>(null), React.useRef<TextInput>(null)]
 

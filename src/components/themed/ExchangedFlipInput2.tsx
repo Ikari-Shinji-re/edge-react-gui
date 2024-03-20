@@ -14,7 +14,7 @@ import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { RowUi4 } from '../ui4/RowUi4'
 import { EdgeText } from './EdgeText'
-import { FieldNum, FlipInput2, FlipInputFieldInfos, FlipInputRef } from './FlipInput2'
+import { FieldNum, FlipInputFieldInfos, FlipInputOld, FlipInputRef } from './FlipInputOld'
 export type ExchangeFlipInputFields = 'fiat' | 'crypto'
 
 export interface ExchangedFlipInputRef {
@@ -206,7 +206,7 @@ const ExchangedFlipInput2Component = React.forwardRef<ExchangedFlipInputRef, Pro
         <EdgeText style={styles.headerText}>{headerText}</EdgeText>
       </RowUi4>
 
-      <FlipInput2
+      <FlipInputOld
         onBlur={onBlur}
         onFocus={onFocus}
         onNext={onNext}
