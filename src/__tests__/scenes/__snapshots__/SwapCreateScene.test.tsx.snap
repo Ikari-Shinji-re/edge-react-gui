@@ -315,7 +315,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                     ]
                   }
                 >
-                  I have 
+                  I have
                 </Text>
                 <View
                   style={

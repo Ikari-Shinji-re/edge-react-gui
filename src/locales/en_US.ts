@@ -1278,7 +1278,7 @@ const strings = {
   exchange_select_sending_wallet: 'Please select a wallet from which to swap',
   exchange_select_receiving_wallet: 'Please select a wallet to which to swap',
   exchange_title_receiving: 'I want',
-  exchange_title_sending_s: 'I have %s',
+  exchange_title_sending: 'I have',
 
   // WalletConnect Scenes/Modals
   wc_walletconnect_title: 'WalletConnect',

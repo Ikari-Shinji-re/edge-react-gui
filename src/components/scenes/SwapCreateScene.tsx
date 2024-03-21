@@ -1,7 +1,7 @@
-import { add, gt, gte } from 'biggystring'
+import { gt, gte } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeSwapRequest, EdgeTokenId } from 'edge-core-js'
 import * as React from 'react'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Keyboard, View } from 'react-native'
 import { sprintf } from 'sprintf-js'
 
@@ -11,14 +11,12 @@ import { getSpecialCurrencyInfo } from '../../constants/WalletAndCurrencyConstan
 import { useSwapRequestOptions } from '../../hooks/swap/useSwapRequestOptions'
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
-import { formatNumber } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
-import { selectDisplayDenom } from '../../selectors/DenominationSelectors'
 import { useDispatch, useSelector } from '../../types/reactRedux'
 import { EdgeSceneProps } from '../../types/routerTypes'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
 import { getWalletName } from '../../util/CurrencyWalletHelpers'
-import { convertNativeToDenomination, zeroString } from '../../util/utils'
+import { zeroString } from '../../util/utils'
 import { EdgeAnim, fadeInDown30, fadeInDown60, fadeInDown90, fadeInUp60 } from '../common/EdgeAnim'
 import { SceneWrapper } from '../common/SceneWrapper'
 import { styled } from '../hoc/styled'
@@ -61,11 +59,6 @@ const defaultState: State = {
   nativeAmountFor: 'from'
 }
 
-const emptyDenomnination = {
-  name: '',
-  multiplier: '1'
-}
-
 export const SwapCreateScene = (props: Props) => {
   const { navigation, route } = props
   const { fromWalletId, fromTokenId = null, toWalletId, toTokenId = null, errorDisplayInfo } = route.params ?? {}
@@ -93,9 +86,6 @@ export const SwapCreateScene = (props: Props) => {
   const fromCurrencyCode = fromWallet == null ? '' : getCurrencyCode(fromWallet, fromTokenId)
   const toCurrencyCode = toWallet == null ? '' : getCurrencyCode(toWallet, toTokenId)
 
-  const fromWalletDisplayDenomination = useSelector(state =>
-    fromWallet == null ? emptyDenomnination : selectDisplayDenom(state, fromWallet.currencyConfig, fromTokenId)
-  )
   const fromWalletSpecialCurrencyInfo = getSpecialCurrencyInfo(fromWallet?.currencyInfo.pluginId ?? '')
   const fromWalletBalanceMap = fromWallet?.balanceMap ?? new Map<string, string>()
 
@@ -337,15 +327,6 @@ export const SwapCreateScene = (props: Props) => {
     return null
   }
 
-  const fromWalletBalanceText: string = useMemo(() => {
-    if (fromWallet == null || fromTokenId === undefined) return ''
-    const balance = fromWallet.balanceMap.get(fromTokenId) ?? '0'
-    const cryptoAmountRaw: string = convertNativeToDenomination(fromWalletDisplayDenomination.multiplier)(balance)
-    const fromCryptoBalance = formatNumber(add(cryptoAmountRaw, '0'))
-
-    return fromCryptoBalance + ' ' + fromWalletDisplayDenomination.name
-  }, [fromTokenId, fromWallet, fromWalletDisplayDenomination.multiplier, fromWalletDisplayDenomination.name])
-
   return (
     <SceneWrapper hasTabs hasNotifications scroll keyboardShouldPersistTaps="handled" padding={theme.rem(0.5)}>
       <CenteringContainer>
@@ -353,7 +334,7 @@ export const SwapCreateScene = (props: Props) => {
           <EdgeAnim enter={fadeInUp60}>
             <SwapInputCard
               ref={fromInputRef}
-              heading={sprintf(lstrings.exchange_title_sending_s, fromWalletBalanceText)}
+              heading={lstrings.exchange_title_sending}
               disabled={fromWallet == null}
               forceField="fiat"
               walletPlaceholderText={fromHeaderText}
