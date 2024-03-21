@@ -271,11 +271,11 @@ const WalletPlaceHolder = styled(TouchableOpacity)(theme => ({
   borderRadius: 100,
   flexDirection: 'row',
   paddingHorizontal: theme.rem(0.75),
-  paddingVertical: theme.rem(0.5)
+  paddingVertical: theme.rem(0.25)
 }))
 
 const WalletPlaceHolderText = styled(EdgeText)(theme => ({
-  fontSize: theme.rem(1),
+  fontSize: theme.rem(0.75),
   lineHeight: theme.rem(1.5)
 }))
 

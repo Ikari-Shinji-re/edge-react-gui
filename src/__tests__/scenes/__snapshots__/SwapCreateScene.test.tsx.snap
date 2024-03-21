@@ -370,7 +370,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                         "flexDirection": "row",
                         "opacity": 1,
                         "paddingHorizontal": 17,
-                        "paddingVertical": 11,
+                        "paddingVertical": 6,
                       }
                     }
                   >
@@ -387,7 +387,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                             "includeFontPadding": false,
                           },
                           {
-                            "fontSize": 22,
+                            "fontSize": 17,
                             "lineHeight": 34,
                           },
                           null,
@@ -1119,7 +1119,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                         "flexDirection": "row",
                         "opacity": 1,
                         "paddingHorizontal": 17,
-                        "paddingVertical": 11,
+                        "paddingVertical": 6,
                       }
                     }
                   >
@@ -1136,7 +1136,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                             "includeFontPadding": false,
                           },
                           {
-                            "fontSize": 22,
+                            "fontSize": 17,
                             "lineHeight": 34,
                           },
                           null,
