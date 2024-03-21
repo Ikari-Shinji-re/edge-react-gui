@@ -284,95 +284,600 @@ exports[`SwapCreateScene should render with loading props 1`] = `
               style={
                 [
                   {
-                    "alignSelf": "stretch",
-                    "borderRadius": 16,
-                  },
-                  {
-                    "marginBottom": 11,
-                    "marginLeft": 11,
-                    "marginRight": 11,
-                    "marginTop": 11,
-                  },
-                  {
-                    "paddingBottom": 11,
-                    "paddingLeft": 11,
-                    "paddingRight": 11,
-                    "paddingTop": 11,
+                    "alignItems": undefined,
+                    "flex": undefined,
+                    "flexDirection": "row",
+                    "justifyContent": undefined,
+                    "marginBottom": 0,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "marginTop": 0,
                   },
                   undefined,
                 ]
               }
             >
               <View
-                style={
+                accessibilityState={
                   {
-                    "backgroundColor": "rgba(255, 255, 255, .1)",
-                    "borderRadius": 16,
-                    "bottom": 0,
-                    "left": 0,
-                    "overflow": "hidden",
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
                   }
                 }
-              />
-              <View
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  [
-                    {
-                      "alignItems": undefined,
-                      "flex": undefined,
-                      "flexDirection": "row",
-                      "justifyContent": undefined,
-                      "marginBottom": 0,
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                      "marginTop": 0,
-                    },
-                    undefined,
-                  ]
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(255, 255, 255, .1)",
+                    "borderRadius": 100,
+                    "flexDirection": "row",
+                    "margin": 11,
+                    "opacity": 1,
+                    "paddingHorizontal": 17,
+                    "paddingVertical": 11,
+                  }
+                }
+              >
+                <Text
+                  adjustsFontSizeToFit={true}
+                  minimumFontScale={0.65}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "color": "#FFFFFF",
+                        "fontFamily": "Quicksand-Regular",
+                        "fontSize": 22,
+                        "includeFontPadding": false,
+                      },
+                      {
+                        "fontSize": 22,
+                        "lineHeight": 34,
+                      },
+                      null,
+                    ]
+                  }
+                >
+                  Select Source Wallet
+                </Text>
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    [
+                      {
+                        "color": undefined,
+                        "fontSize": 22,
+                      },
+                      {
+                        "color": "#00f1a2",
+                        "marginLeft": 22,
+                        "marginRight": 6,
+                        "textAlign": "center",
+                      },
+                      {
+                        "fontFamily": "FontAwesome5Free-Solid",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {
+                        "fontWeight": "900",
+                      },
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
+            <View
+              disableAnimation={
+                {
+                  "value": 0,
+                }
+              }
+              focusAnimation={
+                {
+                  "value": 0,
+                }
+              }
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderRadius": 11,
+                    "borderWidth": 1,
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "margin": 11,
+                    "overflow": "hidden",
+                  },
+                  {
+                    "backgroundColor": undefined,
+                    "borderColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={false}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "marginBottom": 0,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "marginTop": 0,
+                    "opacity": 1,
+                    "paddingBottom": 17,
+                    "paddingLeft": 17,
+                    "paddingRight": 17,
+                    "paddingTop": 17,
+                  }
+                }
+              >
+                <Text
+                  adjustsFontSizeToFit={true}
+                  allowFontScaling={false}
+                  style={
+                    [
+                      {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      {
+                        "color": "#00f1a2",
+                        "fontSize": 34,
+                      },
+                      {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessible={false}
+                disableAnimation={
+                  {
+                    "value": 0,
+                  }
+                }
+                focusAnimation={
+                  {
+                    "value": 0,
+                  }
+                }
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "overflow": "hidden",
+                  }
                 }
               >
                 <View
-                  accessibilityState={
+                  animatedValue={
                     {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": undefined,
-                      "expanded": undefined,
-                      "selected": undefined,
+                      "value": 1,
                     }
                   }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                  pointerEvents="none"
                   style={
-                    {
-                      "alignItems": "center",
-                      "backgroundColor": "rgba(255, 255, 255, .1)",
-                      "borderRadius": 100,
-                      "flexDirection": "row",
-                      "margin": 11,
-                      "opacity": 1,
-                      "paddingHorizontal": 17,
-                      "paddingVertical": 11,
+                    [
+                      {
+                        "backfaceVisibility": "hidden",
+                        "paddingRight": 22,
+                        "paddingVertical": 11,
+                      },
+                      {
+                        "transform": [
+                          {
+                            "rotateX": "undefineddeg",
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": true,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
                     }
+                    accessible={true}
+                    adjustsFontSizeToFit={true}
+                    focusable={true}
+                    minimumFontScale={0.65}
+                    numberOfLines={1}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      [
+                        {
+                          "alignSelf": "flex-start",
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Regular",
+                          "fontSize": 18,
+                          "includeFontPadding": false,
+                        },
+                      ]
+                    }
+                  >
+                    Tap "Next" for Quote
+                  </Text>
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <TextInput
+                      autoCorrect={false}
+                      autoFocus={false}
+                      disableAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      editable={false}
+                      focusAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      keyboardType="decimal-pad"
+                      onBlur={[Function]}
+                      onChangeText={[Function]}
+                      onFocus={[Function]}
+                      onSubmitEditing={[Function]}
+                      returnKeyType="done"
+                      style={
+                        [
+                          {
+                            "fontFamily": "Quicksand-Medium",
+                            "fontSize": 34,
+                            "includeFontPadding": false,
+                            "marginRight": 0,
+                            "padding": 0,
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ]
+                      }
+                      value=""
+                    />
+                    <Text
+                      style={
+                        {
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Medium",
+                          "fontSize": 34,
+                          "includeFontPadding": false,
+                          "left": 0,
+                          "position": "absolute",
+                          "top": 0,
+                        }
+                      }
+                    >
+                      Tap to edit
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  animatedValue={
+                    {
+                      "value": 1,
+                    }
+                  }
+                  pointerEvents="auto"
+                  style={
+                    [
+                      {
+                        "backfaceVisibility": "hidden",
+                        "bottom": 0,
+                        "left": 0,
+                        "paddingRight": 22,
+                        "paddingVertical": 11,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      {
+                        "transform": [
+                          {
+                            "rotateX": "undefineddeg",
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                >
+                  <Text
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": true,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessible={true}
+                    adjustsFontSizeToFit={true}
+                    focusable={true}
+                    minimumFontScale={0.65}
+                    numberOfLines={1}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      [
+                        {
+                          "alignSelf": "flex-start",
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Regular",
+                          "fontSize": 18,
+                          "includeFontPadding": false,
+                        },
+                      ]
+                    }
+                  >
+                    Tap "Next" for Quote
+                  </Text>
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <TextInput
+                      autoCorrect={false}
+                      autoFocus={false}
+                      disableAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      editable={false}
+                      focusAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      keyboardType="decimal-pad"
+                      onBlur={[Function]}
+                      onChangeText={[Function]}
+                      onFocus={[Function]}
+                      onSubmitEditing={[Function]}
+                      returnKeyType="done"
+                      style={
+                        [
+                          {
+                            "fontFamily": "Quicksand-Medium",
+                            "fontSize": 34,
+                            "includeFontPadding": false,
+                            "marginRight": 0,
+                            "padding": 0,
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ]
+                      }
+                      value=""
+                    />
+                    <Text
+                      style={
+                        {
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Medium",
+                          "fontSize": 34,
+                          "includeFontPadding": false,
+                          "left": 0,
+                          "position": "absolute",
+                          "top": 0,
+                        }
+                      }
+                    >
+                      Tap to edit
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": undefined,
+                    "flex": undefined,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                    "marginBottom": 0,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "marginTop": 0,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": true,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "center",
+                    "flexBasis": "auto",
+                    "flexGrow": 0,
+                    "flexShrink": 0,
+                    "justifyContent": "center",
+                    "opacity": 1,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "paddingTop": 0,
+                  }
+                }
+              >
+                <BVLinearGradient
+                  colors={
+                    [
+                      16777215,
+                      16777215,
+                    ]
+                  }
+                  endPoint={
+                    {
+                      "x": 1,
+                      "y": 1,
+                    }
+                  }
+                  locations={null}
+                  startPoint={
+                    {
+                      "x": 0,
+                      "y": 0,
+                    }
+                  }
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "borderRadius": 34,
+                        "flexDirection": "row",
+                        "flexGrow": 0,
+                        "flexShrink": 0,
+                        "justifyContent": "center",
+                      },
+                      {
+                        "alignSelf": "center",
+                      },
+                      {
+                        "alignSelf": "center",
+                      },
+                      {
+                        "alignSelf": "center",
+                        "height": 45,
+                        "paddingHorizontal": 28,
+                      },
+                      {
+                        "opacity": 0.3,
+                      },
+                    ]
                   }
                 >
                   <Text
@@ -387,564 +892,21 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                           "fontSize": 22,
                           "includeFontPadding": false,
                         },
-                        {
-                          "fontSize": 22,
-                          "lineHeight": 34,
-                        },
+                        [
+                          {
+                            "color": "#00f1a2",
+                            "fontFamily": "Quicksand-Regular",
+                            "fontSize": 22,
+                          },
+                          null,
+                        ],
                         null,
                       ]
                     }
                   >
-                    Select Source Wallet
+                    MAX
                   </Text>
-                  <Text
-                    allowFontScaling={false}
-                    style={
-                      [
-                        {
-                          "color": undefined,
-                          "fontSize": 22,
-                        },
-                        {
-                          "color": "#00f1a2",
-                          "marginLeft": 22,
-                          "marginRight": 6,
-                          "textAlign": "center",
-                        },
-                        {
-                          "fontFamily": "FontAwesome5Free-Solid",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {
-                          "fontWeight": "900",
-                        },
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
-              </View>
-              <View
-                disableAnimation={
-                  {
-                    "value": 0,
-                  }
-                }
-                focusAnimation={
-                  {
-                    "value": 0,
-                  }
-                }
-                style={
-                  [
-                    {
-                      "alignItems": "center",
-                      "borderRadius": 11,
-                      "borderWidth": 1,
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "margin": 11,
-                      "overflow": "hidden",
-                    },
-                    {
-                      "backgroundColor": undefined,
-                      "borderColor": undefined,
-                    },
-                  ]
-                }
-              >
-                <View
-                  accessibilityState={
-                    {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": false,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={false}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    {
-                      "marginBottom": 0,
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                      "marginTop": 0,
-                      "opacity": 1,
-                      "paddingBottom": 17,
-                      "paddingLeft": 17,
-                      "paddingRight": 17,
-                      "paddingTop": 17,
-                    }
-                  }
-                >
-                  <Text
-                    adjustsFontSizeToFit={true}
-                    allowFontScaling={false}
-                    style={
-                      [
-                        {
-                          "color": undefined,
-                          "fontSize": 12,
-                        },
-                        {
-                          "color": "#00f1a2",
-                          "fontSize": 34,
-                        },
-                        {
-                          "fontFamily": "Ionicons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
-                <View
-                  accessibilityState={
-                    {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": false,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessible={false}
-                  disableAnimation={
-                    {
-                      "value": 0,
-                    }
-                  }
-                  focusAnimation={
-                    {
-                      "value": 0,
-                    }
-                  }
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "overflow": "hidden",
-                    }
-                  }
-                >
-                  <View
-                    animatedValue={
-                      {
-                        "value": 1,
-                      }
-                    }
-                    pointerEvents="none"
-                    style={
-                      [
-                        {
-                          "backfaceVisibility": "hidden",
-                          "paddingRight": 22,
-                          "paddingVertical": 11,
-                        },
-                        {
-                          "transform": [
-                            {
-                              "rotateX": "undefineddeg",
-                            },
-                          ],
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      accessibilityState={
-                        {
-                          "busy": undefined,
-                          "checked": undefined,
-                          "disabled": true,
-                          "expanded": undefined,
-                          "selected": undefined,
-                        }
-                      }
-                      accessible={true}
-                      adjustsFontSizeToFit={true}
-                      focusable={true}
-                      minimumFontScale={0.65}
-                      numberOfLines={1}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        [
-                          {
-                            "alignSelf": "flex-start",
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Regular",
-                            "fontSize": 18,
-                            "includeFontPadding": false,
-                          },
-                        ]
-                      }
-                    >
-                      Tap "Next" for Quote
-                    </Text>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        }
-                      }
-                    >
-                      <TextInput
-                        autoCorrect={false}
-                        autoFocus={false}
-                        disableAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        editable={false}
-                        focusAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        keyboardType="decimal-pad"
-                        onBlur={[Function]}
-                        onChangeText={[Function]}
-                        onFocus={[Function]}
-                        onSubmitEditing={[Function]}
-                        returnKeyType="done"
-                        style={
-                          [
-                            {
-                              "fontFamily": "Quicksand-Medium",
-                              "fontSize": 34,
-                              "includeFontPadding": false,
-                              "marginRight": 0,
-                              "padding": 0,
-                            },
-                            {
-                              "color": undefined,
-                            },
-                          ]
-                        }
-                        value=""
-                      />
-                      <Text
-                        style={
-                          {
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Medium",
-                            "fontSize": 34,
-                            "includeFontPadding": false,
-                            "left": 0,
-                            "position": "absolute",
-                            "top": 0,
-                          }
-                        }
-                      >
-                        Tap to edit
-                      </Text>
-                    </View>
-                  </View>
-                  <View
-                    animatedValue={
-                      {
-                        "value": 1,
-                      }
-                    }
-                    pointerEvents="auto"
-                    style={
-                      [
-                        {
-                          "backfaceVisibility": "hidden",
-                          "bottom": 0,
-                          "left": 0,
-                          "paddingRight": 22,
-                          "paddingVertical": 11,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        },
-                        {
-                          "transform": [
-                            {
-                              "rotateX": "undefineddeg",
-                            },
-                          ],
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      accessibilityState={
-                        {
-                          "busy": undefined,
-                          "checked": undefined,
-                          "disabled": true,
-                          "expanded": undefined,
-                          "selected": undefined,
-                        }
-                      }
-                      accessible={true}
-                      adjustsFontSizeToFit={true}
-                      focusable={true}
-                      minimumFontScale={0.65}
-                      numberOfLines={1}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        [
-                          {
-                            "alignSelf": "flex-start",
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Regular",
-                            "fontSize": 18,
-                            "includeFontPadding": false,
-                          },
-                        ]
-                      }
-                    >
-                      Tap "Next" for Quote
-                    </Text>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        }
-                      }
-                    >
-                      <TextInput
-                        autoCorrect={false}
-                        autoFocus={false}
-                        disableAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        editable={false}
-                        focusAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        keyboardType="decimal-pad"
-                        onBlur={[Function]}
-                        onChangeText={[Function]}
-                        onFocus={[Function]}
-                        onSubmitEditing={[Function]}
-                        returnKeyType="done"
-                        style={
-                          [
-                            {
-                              "fontFamily": "Quicksand-Medium",
-                              "fontSize": 34,
-                              "includeFontPadding": false,
-                              "marginRight": 0,
-                              "padding": 0,
-                            },
-                            {
-                              "color": undefined,
-                            },
-                          ]
-                        }
-                        value=""
-                      />
-                      <Text
-                        style={
-                          {
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Medium",
-                            "fontSize": 34,
-                            "includeFontPadding": false,
-                            "left": 0,
-                            "position": "absolute",
-                            "top": 0,
-                          }
-                        }
-                      >
-                        Tap to edit
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={
-                  [
-                    {
-                      "alignItems": undefined,
-                      "flex": undefined,
-                      "flexDirection": "row",
-                      "justifyContent": "flex-end",
-                      "marginBottom": 0,
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                      "marginTop": 0,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <View
-                  accessibilityState={
-                    {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": true,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={
-                    {
-                      "alignItems": "center",
-                      "alignSelf": "center",
-                      "flexBasis": "auto",
-                      "flexGrow": 0,
-                      "flexShrink": 0,
-                      "justifyContent": "center",
-                      "opacity": 1,
-                      "paddingBottom": 0,
-                      "paddingLeft": 0,
-                      "paddingRight": 0,
-                      "paddingTop": 0,
-                    }
-                  }
-                >
-                  <BVLinearGradient
-                    colors={
-                      [
-                        16777215,
-                        16777215,
-                      ]
-                    }
-                    endPoint={
-                      {
-                        "x": 1,
-                        "y": 1,
-                      }
-                    }
-                    locations={null}
-                    startPoint={
-                      {
-                        "x": 0,
-                        "y": 0,
-                      }
-                    }
-                    style={
-                      [
-                        {
-                          "alignItems": "center",
-                          "borderRadius": 34,
-                          "flexDirection": "row",
-                          "flexGrow": 0,
-                          "flexShrink": 0,
-                          "justifyContent": "center",
-                        },
-                        {
-                          "alignSelf": "center",
-                        },
-                        {
-                          "alignSelf": "center",
-                        },
-                        {
-                          "alignSelf": "center",
-                          "height": 45,
-                          "paddingHorizontal": 28,
-                        },
-                        {
-                          "opacity": 0.3,
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      adjustsFontSizeToFit={true}
-                      minimumFontScale={0.65}
-                      numberOfLines={1}
-                      style={
-                        [
-                          {
-                            "color": "#FFFFFF",
-                            "fontFamily": "Quicksand-Regular",
-                            "fontSize": 22,
-                            "includeFontPadding": false,
-                          },
-                          [
-                            {
-                              "color": "#00f1a2",
-                              "fontFamily": "Quicksand-Regular",
-                              "fontSize": 22,
-                            },
-                            null,
-                          ],
-                          null,
-                        ]
-                      }
-                    >
-                      MAX
-                    </Text>
-                  </BVLinearGradient>
-                </View>
+                </BVLinearGradient>
               </View>
             </View>
           </View>
@@ -1081,149 +1043,218 @@ exports[`SwapCreateScene should render with loading props 1`] = `
               style={
                 [
                   {
-                    "alignSelf": "stretch",
-                    "borderRadius": 16,
-                  },
-                  {
-                    "marginBottom": 11,
-                    "marginLeft": 11,
-                    "marginRight": 11,
-                    "marginTop": 11,
-                  },
-                  {
-                    "paddingBottom": 11,
-                    "paddingLeft": 11,
-                    "paddingRight": 11,
-                    "paddingTop": 11,
+                    "alignItems": undefined,
+                    "flex": undefined,
+                    "flexDirection": "row",
+                    "justifyContent": undefined,
+                    "marginBottom": 0,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "marginTop": 0,
                   },
                   undefined,
                 ]
               }
             >
               <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   {
+                    "alignItems": "center",
                     "backgroundColor": "rgba(255, 255, 255, .1)",
-                    "borderRadius": 16,
-                    "bottom": 0,
-                    "left": 0,
-                    "overflow": "hidden",
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
+                    "borderRadius": 100,
+                    "flexDirection": "row",
+                    "margin": 11,
+                    "opacity": 1,
+                    "paddingHorizontal": 17,
+                    "paddingVertical": 11,
                   }
-                }
-              />
-              <View
-                style={
-                  [
-                    {
-                      "alignItems": undefined,
-                      "flex": undefined,
-                      "flexDirection": "row",
-                      "justifyContent": undefined,
-                      "marginBottom": 0,
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                      "marginTop": 0,
-                    },
-                    undefined,
-                  ]
                 }
               >
-                <View
-                  accessibilityState={
-                    {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": undefined,
-                      "expanded": undefined,
-                      "selected": undefined,
-                    }
-                  }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={true}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                <Text
+                  adjustsFontSizeToFit={true}
+                  minimumFontScale={0.65}
+                  numberOfLines={1}
                   style={
-                    {
-                      "alignItems": "center",
-                      "backgroundColor": "rgba(255, 255, 255, .1)",
-                      "borderRadius": 100,
-                      "flexDirection": "row",
-                      "margin": 11,
-                      "opacity": 1,
-                      "paddingHorizontal": 17,
-                      "paddingVertical": 11,
-                    }
+                    [
+                      {
+                        "color": "#FFFFFF",
+                        "fontFamily": "Quicksand-Regular",
+                        "fontSize": 22,
+                        "includeFontPadding": false,
+                      },
+                      {
+                        "fontSize": 22,
+                        "lineHeight": 34,
+                      },
+                      null,
+                    ]
                   }
                 >
-                  <Text
-                    adjustsFontSizeToFit={true}
-                    minimumFontScale={0.65}
-                    numberOfLines={1}
-                    style={
-                      [
-                        {
-                          "color": "#FFFFFF",
-                          "fontFamily": "Quicksand-Regular",
-                          "fontSize": 22,
-                          "includeFontPadding": false,
-                        },
-                        {
-                          "fontSize": 22,
-                          "lineHeight": 34,
-                        },
-                        null,
-                      ]
-                    }
-                  >
-                    Select Receiving Wallet
-                  </Text>
-                  <Text
-                    allowFontScaling={false}
-                    style={
-                      [
-                        {
-                          "color": undefined,
-                          "fontSize": 22,
-                        },
-                        {
-                          "color": "#00f1a2",
-                          "marginLeft": 22,
-                          "marginRight": 6,
-                          "textAlign": "center",
-                        },
-                        {
-                          "fontFamily": "FontAwesome5Free-Solid",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {
-                          "fontWeight": "900",
-                        },
-                      ]
-                    }
-                  >
-                    
-                  </Text>
-                </View>
+                  Select Receiving Wallet
+                </Text>
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    [
+                      {
+                        "color": undefined,
+                        "fontSize": 22,
+                      },
+                      {
+                        "color": "#00f1a2",
+                        "marginLeft": 22,
+                        "marginRight": 6,
+                        "textAlign": "center",
+                      },
+                      {
+                        "fontFamily": "FontAwesome5Free-Solid",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {
+                        "fontWeight": "900",
+                      },
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
+            <View
+              disableAnimation={
+                {
+                  "value": 0,
+                }
+              }
+              focusAnimation={
+                {
+                  "value": 0,
+                }
+              }
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderRadius": 11,
+                    "borderWidth": 1,
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "margin": 11,
+                    "overflow": "hidden",
+                  },
+                  {
+                    "backgroundColor": undefined,
+                    "borderColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={false}
+                collapsable={false}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  {
+                    "marginBottom": 0,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "marginTop": 0,
+                    "opacity": 1,
+                    "paddingBottom": 17,
+                    "paddingLeft": 17,
+                    "paddingRight": 17,
+                    "paddingTop": 17,
+                  }
+                }
+              >
+                <Text
+                  adjustsFontSizeToFit={true}
+                  allowFontScaling={false}
+                  style={
+                    [
+                      {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      {
+                        "color": "#00f1a2",
+                        "fontSize": 34,
+                      },
+                      {
+                        "fontFamily": "Ionicons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      {},
+                    ]
+                  }
+                >
+                  
+                </Text>
               </View>
               <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": false,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessible={false}
                 disableAnimation={
                   {
                     "value": 0,
@@ -1234,375 +1265,268 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                     "value": 0,
                   }
                 }
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
-                  [
-                    {
-                      "alignItems": "center",
-                      "borderRadius": 11,
-                      "borderWidth": 1,
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "margin": 11,
-                      "overflow": "hidden",
-                    },
-                    {
-                      "backgroundColor": undefined,
-                      "borderColor": undefined,
-                    },
-                  ]
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "overflow": "hidden",
+                  }
                 }
               >
                 <View
-                  accessibilityState={
+                  animatedValue={
                     {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": false,
-                      "expanded": undefined,
-                      "selected": undefined,
+                      "value": 1,
                     }
                   }
-                  accessibilityValue={
-                    {
-                      "max": undefined,
-                      "min": undefined,
-                      "now": undefined,
-                      "text": undefined,
-                    }
-                  }
-                  accessible={false}
-                  collapsable={false}
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                  pointerEvents="none"
                   style={
-                    {
-                      "marginBottom": 0,
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                      "marginTop": 0,
-                      "opacity": 1,
-                      "paddingBottom": 17,
-                      "paddingLeft": 17,
-                      "paddingRight": 17,
-                      "paddingTop": 17,
-                    }
+                    [
+                      {
+                        "backfaceVisibility": "hidden",
+                        "paddingRight": 22,
+                        "paddingVertical": 11,
+                      },
+                      {
+                        "transform": [
+                          {
+                            "rotateX": "undefineddeg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 >
                   <Text
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": true,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessible={true}
                     adjustsFontSizeToFit={true}
-                    allowFontScaling={false}
+                    focusable={true}
+                    minimumFontScale={0.65}
+                    numberOfLines={1}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
                     style={
                       [
                         {
-                          "color": undefined,
-                          "fontSize": 12,
+                          "alignSelf": "flex-start",
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Regular",
+                          "fontSize": 18,
+                          "includeFontPadding": false,
                         },
-                        {
-                          "color": "#00f1a2",
-                          "fontSize": 34,
-                        },
-                        {
-                          "fontFamily": "Ionicons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        {},
                       ]
                     }
                   >
-                    
+                    Tap "Next" for Quote
                   </Text>
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <TextInput
+                      autoCorrect={false}
+                      autoFocus={false}
+                      disableAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      editable={false}
+                      focusAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      keyboardType="decimal-pad"
+                      onBlur={[Function]}
+                      onChangeText={[Function]}
+                      onFocus={[Function]}
+                      onSubmitEditing={[Function]}
+                      returnKeyType="done"
+                      style={
+                        [
+                          {
+                            "fontFamily": "Quicksand-Medium",
+                            "fontSize": 34,
+                            "includeFontPadding": false,
+                            "marginRight": 0,
+                            "padding": 0,
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ]
+                      }
+                      value=""
+                    />
+                    <Text
+                      style={
+                        {
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Medium",
+                          "fontSize": 34,
+                          "includeFontPadding": false,
+                          "left": 0,
+                          "position": "absolute",
+                          "top": 0,
+                        }
+                      }
+                    >
+                      Tap to edit
+                    </Text>
+                  </View>
                 </View>
                 <View
-                  accessibilityState={
+                  animatedValue={
                     {
-                      "busy": undefined,
-                      "checked": undefined,
-                      "disabled": false,
-                      "expanded": undefined,
-                      "selected": undefined,
+                      "value": 1,
                     }
                   }
-                  accessible={false}
-                  disableAnimation={
-                    {
-                      "value": 0,
-                    }
-                  }
-                  focusAnimation={
-                    {
-                      "value": 0,
-                    }
-                  }
-                  focusable={true}
-                  onClick={[Function]}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                  pointerEvents="auto"
                   style={
-                    {
-                      "alignItems": "center",
-                      "flex": 1,
-                      "flexDirection": "row",
-                      "overflow": "hidden",
-                    }
+                    [
+                      {
+                        "backfaceVisibility": "hidden",
+                        "bottom": 0,
+                        "left": 0,
+                        "paddingRight": 22,
+                        "paddingVertical": 11,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      },
+                      {
+                        "transform": [
+                          {
+                            "rotateX": "undefineddeg",
+                          },
+                        ],
+                      },
+                    ]
                   }
                 >
-                  <View
-                    animatedValue={
+                  <Text
+                    accessibilityState={
                       {
-                        "value": 1,
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": true,
+                        "expanded": undefined,
+                        "selected": undefined,
                       }
                     }
-                    pointerEvents="none"
+                    accessible={true}
+                    adjustsFontSizeToFit={true}
+                    focusable={true}
+                    minimumFontScale={0.65}
+                    numberOfLines={1}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
                     style={
                       [
                         {
-                          "backfaceVisibility": "hidden",
-                          "paddingRight": 22,
-                          "paddingVertical": 11,
-                        },
-                        {
-                          "transform": [
-                            {
-                              "rotateX": "undefineddeg",
-                            },
-                          ],
+                          "alignSelf": "flex-start",
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Regular",
+                          "fontSize": 18,
+                          "includeFontPadding": false,
                         },
                       ]
                     }
                   >
-                    <Text
-                      accessibilityState={
+                    Tap "Next" for Quote
+                  </Text>
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <TextInput
+                      autoCorrect={false}
+                      autoFocus={false}
+                      disableAnimation={
                         {
-                          "busy": undefined,
-                          "checked": undefined,
-                          "disabled": true,
-                          "expanded": undefined,
-                          "selected": undefined,
+                          "value": 0,
                         }
                       }
-                      accessible={true}
-                      adjustsFontSizeToFit={true}
-                      focusable={true}
-                      minimumFontScale={0.65}
-                      numberOfLines={1}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
+                      editable={false}
+                      focusAnimation={
+                        {
+                          "value": 0,
+                        }
+                      }
+                      keyboardType="decimal-pad"
+                      onBlur={[Function]}
+                      onChangeText={[Function]}
+                      onFocus={[Function]}
+                      onSubmitEditing={[Function]}
+                      returnKeyType="done"
                       style={
                         [
                           {
-                            "alignSelf": "flex-start",
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Regular",
-                            "fontSize": 18,
-                            "includeFontPadding": false,
-                          },
-                        ]
-                      }
-                    >
-                      Tap "Next" for Quote
-                    </Text>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        }
-                      }
-                    >
-                      <TextInput
-                        autoCorrect={false}
-                        autoFocus={false}
-                        disableAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        editable={false}
-                        focusAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        keyboardType="decimal-pad"
-                        onBlur={[Function]}
-                        onChangeText={[Function]}
-                        onFocus={[Function]}
-                        onSubmitEditing={[Function]}
-                        returnKeyType="done"
-                        style={
-                          [
-                            {
-                              "fontFamily": "Quicksand-Medium",
-                              "fontSize": 34,
-                              "includeFontPadding": false,
-                              "marginRight": 0,
-                              "padding": 0,
-                            },
-                            {
-                              "color": undefined,
-                            },
-                          ]
-                        }
-                        value=""
-                      />
-                      <Text
-                        style={
-                          {
-                            "color": "rgba(255, 255, 255, .5)",
                             "fontFamily": "Quicksand-Medium",
                             "fontSize": 34,
                             "includeFontPadding": false,
-                            "left": 0,
-                            "position": "absolute",
-                            "top": 0,
-                          }
-                        }
-                      >
-                        Tap to edit
-                      </Text>
-                    </View>
-                  </View>
-                  <View
-                    animatedValue={
-                      {
-                        "value": 1,
+                            "marginRight": 0,
+                            "padding": 0,
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ]
                       }
-                    }
-                    pointerEvents="auto"
-                    style={
-                      [
+                      value=""
+                    />
+                    <Text
+                      style={
                         {
-                          "backfaceVisibility": "hidden",
-                          "bottom": 0,
+                          "color": "rgba(255, 255, 255, .5)",
+                          "fontFamily": "Quicksand-Medium",
+                          "fontSize": 34,
+                          "includeFontPadding": false,
                           "left": 0,
-                          "paddingRight": 22,
-                          "paddingVertical": 11,
                           "position": "absolute",
-                          "right": 0,
                           "top": 0,
-                        },
-                        {
-                          "transform": [
-                            {
-                              "rotateX": "undefineddeg",
-                            },
-                          ],
-                        },
-                      ]
-                    }
-                  >
-                    <Text
-                      accessibilityState={
-                        {
-                          "busy": undefined,
-                          "checked": undefined,
-                          "disabled": true,
-                          "expanded": undefined,
-                          "selected": undefined,
                         }
                       }
-                      accessible={true}
-                      adjustsFontSizeToFit={true}
-                      focusable={true}
-                      minimumFontScale={0.65}
-                      numberOfLines={1}
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        [
-                          {
-                            "alignSelf": "flex-start",
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Regular",
-                            "fontSize": 18,
-                            "includeFontPadding": false,
-                          },
-                        ]
-                      }
                     >
-                      Tap "Next" for Quote
+                      Tap to edit
                     </Text>
-                    <View
-                      style={
-                        {
-                          "alignItems": "center",
-                          "flexDirection": "row",
-                        }
-                      }
-                    >
-                      <TextInput
-                        autoCorrect={false}
-                        autoFocus={false}
-                        disableAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        editable={false}
-                        focusAnimation={
-                          {
-                            "value": 0,
-                          }
-                        }
-                        keyboardType="decimal-pad"
-                        onBlur={[Function]}
-                        onChangeText={[Function]}
-                        onFocus={[Function]}
-                        onSubmitEditing={[Function]}
-                        returnKeyType="done"
-                        style={
-                          [
-                            {
-                              "fontFamily": "Quicksand-Medium",
-                              "fontSize": 34,
-                              "includeFontPadding": false,
-                              "marginRight": 0,
-                              "padding": 0,
-                            },
-                            {
-                              "color": undefined,
-                            },
-                          ]
-                        }
-                        value=""
-                      />
-                      <Text
-                        style={
-                          {
-                            "color": "rgba(255, 255, 255, .5)",
-                            "fontFamily": "Quicksand-Medium",
-                            "fontSize": 34,
-                            "includeFontPadding": false,
-                            "left": 0,
-                            "position": "absolute",
-                            "top": 0,
-                          }
-                        }
-                      >
-                        Tap to edit
-                      </Text>
-                    </View>
                   </View>
                 </View>
               </View>

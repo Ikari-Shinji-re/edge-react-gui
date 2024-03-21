@@ -15,7 +15,6 @@ import { styled } from '../hoc/styled'
 import { Space } from '../layout/Space'
 import { useTheme } from '../services/ThemeContext'
 import { ButtonUi4 } from '../ui4/ButtonUi4'
-import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { EdgeText } from './EdgeText'
 import { FieldNum, FlipInputFieldInfos, FlipInputNew, FlipInputRef } from './FlipInputNew'
@@ -214,38 +213,34 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
   return (
     <>
       {heading == null ? null : <CardHeading>{heading}</CardHeading>}
-      <CardUi4>
-        <Space sideways>
-          <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
-            {wallet == null ? undefined : (
-              <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />
-            )}
-            <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
-            <ChevronIcon name="chevron-down" size={theme.rem(1)} />
-          </WalletPlaceHolder>
-        </Space>
+      <Space sideways>
+        <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
+          {wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />}
+          <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
+          <ChevronIcon name="chevron-down" size={theme.rem(1)} />
+        </WalletPlaceHolder>
+      </Space>
 
-        <FlipInputNew
-          disabled={disabled}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          onNext={onNext}
-          ref={flipInputRef}
-          convertValue={convertValue}
-          fieldInfos={fieldInfos}
-          returnKeyType={returnKeyType}
-          forceFieldNum={forceFieldMap[overrideForceField]}
-          inputAccessoryViewID={inputAccessoryViewID}
-          keyboardVisible={keyboardVisible}
-          startAmounts={[initialDisplayAmount, initialFiatAmount]}
-          placeholders={[lstrings.string_tap_to_edit, lstrings.string_tap_next_for_quote]}
-        />
-        {onMaxPress == null ? null : (
-          <Space left sideways>
-            <ButtonUi4 disabled={disabled} type="tertiary" mini label={lstrings.string_max_cap} marginRem={0} onPress={onMaxPress} />
-          </Space>
-        )}
-      </CardUi4>
+      <FlipInputNew
+        disabled={disabled}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        onNext={onNext}
+        ref={flipInputRef}
+        convertValue={convertValue}
+        fieldInfos={fieldInfos}
+        returnKeyType={returnKeyType}
+        forceFieldNum={forceFieldMap[overrideForceField]}
+        inputAccessoryViewID={inputAccessoryViewID}
+        keyboardVisible={keyboardVisible}
+        startAmounts={[initialDisplayAmount, initialFiatAmount]}
+        placeholders={[lstrings.string_tap_to_edit, lstrings.string_tap_next_for_quote]}
+      />
+      {onMaxPress == null ? null : (
+        <Space left sideways>
+          <ButtonUi4 disabled={disabled} type="tertiary" mini label={lstrings.string_max_cap} marginRem={0} onPress={onMaxPress} />
+        </Space>
+      )}
     </>
   )
 })
