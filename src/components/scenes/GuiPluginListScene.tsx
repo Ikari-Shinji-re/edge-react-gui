@@ -1,9 +1,10 @@
 import { Disklet } from 'disklet'
-import { EdgeAccount } from 'edge-core-js/types'
+import { EdgeAccount, EdgeTokenId } from 'edge-core-js/types'
 import * as React from 'react'
 import { Image, ListRenderItemInfo, Platform, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Animated from 'react-native-reanimated'
+import { sprintf } from 'sprintf-js'
 
 import { checkAndShowLightBackupModal } from '../../actions/BackupModalActions'
 import { checkAndSetRegion, showCountrySelectionModal } from '../../actions/CountryListActions'
@@ -27,6 +28,7 @@ import { AccountReferral } from '../../types/ReferralTypes'
 import { EdgeSceneProps } from '../../types/routerTypes'
 import { PluginTweak } from '../../types/TweakTypes'
 import { getPartnerIconUri } from '../../util/CdnUris'
+import { getCurrencyCodeWithAccount } from '../../util/CurrencyInfoHelpers'
 import { filterGuiPluginJson } from '../../util/GuiPluginTools'
 import { infoServerData } from '../../util/network'
 import { bestOfPlugins } from '../../util/ReferralHelpers'
@@ -47,6 +49,7 @@ import { SectionHeaderUi4 } from '../ui4/SectionHeaderUi4'
 
 export interface GuiPluginListParams {
   launchPluginId?: string
+  filterAsset?: { pluginId: string; tokenId: EdgeTokenId }
 }
 
 const buyRaw = buyPluginJsonOverrideRaw.length > 0 ? buyPluginJsonOverrideRaw : buyPluginJsonRaw
@@ -95,6 +98,7 @@ interface StateProps {
   developerModeOn: boolean
   deviceId: string
   disablePlugins: NestedDisableMap
+  filterAsset?: { pluginId: string; tokenId: EdgeTokenId }
   insetStyle: InsetStyle
   onCountryPress: () => void
   handleScroll: SceneScrollHandler
@@ -203,7 +207,7 @@ class GuiPluginList extends React.PureComponent<Props, State> {
    * Launch the provided plugin, including pre-flight checks.
    */
   async openPlugin(listRow: GuiPluginRow, longPress: boolean = false) {
-    const { coreDisklet, countryCode, stateProvinceCode, deviceId, disablePlugins, navigation, account, onLogEvent } = this.props
+    const { coreDisklet, countryCode, filterAsset, stateProvinceCode, deviceId, disablePlugins, navigation, account, onLogEvent } = this.props
     const { pluginId, paymentType, deepQuery = {} } = listRow
     const plugin = guiPlugins[pluginId]
 
@@ -248,6 +252,7 @@ class GuiPluginList extends React.PureComponent<Props, State> {
         direction,
         disablePlugins: disableProviders,
         disklet: coreDisklet,
+        filterAsset,
         guiPlugin: plugin,
         longPress,
         navigation,
@@ -314,7 +319,7 @@ class GuiPluginList extends React.PureComponent<Props, State> {
   }
 
   renderTop = () => {
-    const { countryCode, stateProvinceCode, onCountryPress, theme } = this.props
+    const { account, countryCode, stateProvinceCode, onCountryPress, theme, filterAsset } = this.props
     const styles = getStyles(theme)
     const direction = this.getSceneDirection()
     const countryData = COUNTRY_CODES.find(country => country['alpha-2'] === countryCode)
@@ -326,6 +331,8 @@ class GuiPluginList extends React.PureComponent<Props, State> {
     const countryName = hasCountryData ? countryData.name : lstrings.buy_sell_crypto_select_country_button
     const iconStyle = stateProvinceData == null ? styles.selectedCountryFlag : styles.selectedCountryFlagSelectableRow
     const icon = !hasCountryData ? undefined : <FastImage source={imageSrc} style={iconStyle} />
+
+    const titleAsset = filterAsset == null ? lstrings.cryptocurrency : getCurrencyCodeWithAccount(account, filterAsset.pluginId, filterAsset.tokenId)
 
     const countryCard =
       stateProvinceData == null ? (
@@ -339,7 +346,11 @@ class GuiPluginList extends React.PureComponent<Props, State> {
     return (
       <>
         <EdgeAnim style={styles.header} enter={fadeInUp90}>
-          <SceneHeader title={direction === 'buy' ? lstrings.title_plugin_buy : lstrings.title_plugin_sell} underline withTopMargin />
+          <SceneHeader
+            title={direction === 'buy' ? sprintf(lstrings.title_plugin_buy_s, titleAsset) : sprintf(lstrings.title_plugin_sell_s, titleAsset)}
+            underline
+            withTopMargin
+          />
         </EdgeAnim>
 
         {hasCountryData ? (

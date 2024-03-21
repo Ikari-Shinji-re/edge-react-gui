@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard'
 import { Disklet } from 'disklet'
-import { EdgeAccount, EdgeTransaction } from 'edge-core-js'
+import { EdgeAccount, EdgeTokenId, EdgeTransaction } from 'edge-core-js'
 import * as React from 'react'
 import { Platform } from 'react-native'
 import { CustomTabs } from 'react-native-custom-tabs'
@@ -44,6 +44,7 @@ export const executePlugin = async (params: {
   deviceId: string
   direction: 'buy' | 'sell'
   disablePlugins?: NestedDisableMap
+  filterAsset?: { pluginId: string; tokenId: EdgeTokenId }
   guiPlugin: GuiPlugin
   longPress?: boolean
   navigation: NavigationBase
@@ -58,6 +59,7 @@ export const executePlugin = async (params: {
     deviceId,
     direction,
     disklet,
+    filterAsset,
     guiPlugin,
     longPress = false,
     navigation,
@@ -96,8 +98,19 @@ export const executePlugin = async (params: {
     },
     walletPicker: async (params): Promise<FiatPluginWalletPickerResult | undefined> => {
       const { headerTitle, allowedAssets, showCreateWallet } = params
+
       const result = await Airship.show<WalletListResult>(bridge => (
-        <WalletListModal bridge={bridge} navigation={navigation} headerTitle={headerTitle} allowedAssets={allowedAssets} showCreateWallet={showCreateWallet} />
+        <WalletListModal
+          bridge={bridge}
+          navigation={navigation}
+          headerTitle={headerTitle}
+          allowedAssets={
+            filterAsset != null && allowedAssets != null
+              ? allowedAssets.filter(asset => (asset.pluginId === filterAsset.pluginId && filterAsset.tokenId == null) || asset.tokenId === filterAsset.tokenId)
+              : allowedAssets
+          }
+          showCreateWallet={showCreateWallet}
+        />
       ))
       if (result?.type === 'wallet') return result
     },

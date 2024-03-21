@@ -345,6 +345,10 @@ export function DevTestScene(props: Props) {
             <ButtonUi4 marginRem={0.5} onPress={() => {}} label="Secondary" type="secondary" />
             <ButtonUi4 marginRem={0.5} onPress={() => {}} label="Tertiary" type="tertiary" />
           </OutlinedView>
+          <EdgeText style={{ marginVertical: theme.rem(0.5) }}>test</EdgeText>
+          <OutlinedView2>
+            <ButtonUi4 marginRem={0.5} onPress={() => {}} label="Primary" type="primary" layout="column" />
+          </OutlinedView2>
         </>
         <>
           <SectionHeaderUi4 leftTitle="DeepLinking" />
@@ -377,4 +381,11 @@ const OutlinedView = styled(View)({
   borderColor: 'white',
   alignItems: 'center',
   justifyContent: 'center'
+})
+
+const OutlinedView2 = styled(View)({
+  flexDirection: 'column',
+  borderWidth: 1,
+  borderColor: 'white',
+  alignItems: 'flex-end'
 })
