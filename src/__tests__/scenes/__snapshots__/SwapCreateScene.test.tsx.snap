@@ -808,12 +808,30 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                     </View>
                   </View>
                 </View>
+              </View>
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": undefined,
+                      "flex": undefined,
+                      "flexDirection": "row",
+                      "justifyContent": "flex-end",
+                      "marginBottom": 0,
+                      "marginLeft": 0,
+                      "marginRight": 0,
+                      "marginTop": 0,
+                    },
+                    undefined,
+                  ]
+                }
+              >
                 <View
                   accessibilityState={
                     {
                       "busy": undefined,
                       "checked": undefined,
-                      "disabled": false,
+                      "disabled": true,
                       "expanded": undefined,
                       "selected": undefined,
                     }
@@ -826,7 +844,7 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                       "text": undefined,
                     }
                   }
-                  accessible={false}
+                  accessible={true}
                   collapsable={false}
                   focusable={true}
                   onClick={[Function]}
@@ -838,137 +856,94 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                   onStartShouldSetResponder={[Function]}
                   style={
                     {
-                      "marginBottom": 0,
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                      "marginTop": 0,
+                      "alignItems": "center",
+                      "alignSelf": "center",
+                      "flexBasis": "auto",
+                      "flexGrow": 0,
+                      "flexShrink": 0,
+                      "justifyContent": "center",
                       "opacity": 1,
-                      "paddingBottom": 6,
-                      "paddingLeft": 6,
-                      "paddingRight": 6,
-                      "paddingTop": 6,
+                      "paddingBottom": 0,
+                      "paddingLeft": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     }
                   }
                 >
-                  <View
-                    accessibilityState={
+                  <BVLinearGradient
+                    colors={
+                      [
+                        16777215,
+                        16777215,
+                      ]
+                    }
+                    endPoint={
                       {
-                        "busy": undefined,
-                        "checked": undefined,
-                        "disabled": true,
-                        "expanded": undefined,
-                        "selected": undefined,
+                        "x": 1,
+                        "y": 1,
                       }
                     }
-                    accessibilityValue={
+                    locations={null}
+                    startPoint={
                       {
-                        "max": undefined,
-                        "min": undefined,
-                        "now": undefined,
-                        "text": undefined,
+                        "x": 0,
+                        "y": 0,
                       }
                     }
-                    accessible={true}
-                    collapsable={false}
-                    focusable={true}
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
                     style={
-                      {
-                        "alignItems": "center",
-                        "alignSelf": "center",
-                        "flexBasis": "auto",
-                        "flexGrow": 0,
-                        "flexShrink": 0,
-                        "justifyContent": "center",
-                        "opacity": 1,
-                        "paddingBottom": 0,
-                        "paddingLeft": 0,
-                        "paddingRight": 0,
-                        "paddingTop": 0,
-                      }
+                      [
+                        {
+                          "alignItems": "center",
+                          "borderRadius": 34,
+                          "flexDirection": "row",
+                          "flexGrow": 0,
+                          "flexShrink": 0,
+                          "justifyContent": "center",
+                        },
+                        {
+                          "alignSelf": "center",
+                        },
+                        {
+                          "alignSelf": "center",
+                        },
+                        {
+                          "alignSelf": "center",
+                          "height": 45,
+                          "paddingHorizontal": 28,
+                        },
+                        {
+                          "opacity": 0.3,
+                        },
+                      ]
                     }
                   >
-                    <BVLinearGradient
-                      colors={
-                        [
-                          16777215,
-                          16777215,
-                        ]
-                      }
-                      endPoint={
-                        {
-                          "x": 1,
-                          "y": 1,
-                        }
-                      }
-                      locations={null}
-                      startPoint={
-                        {
-                          "x": 0,
-                          "y": 0,
-                        }
-                      }
+                    <Text
+                      adjustsFontSizeToFit={true}
+                      minimumFontScale={0.65}
+                      numberOfLines={1}
                       style={
                         [
                           {
-                            "alignItems": "center",
-                            "borderRadius": 34,
-                            "flexDirection": "row",
-                            "flexGrow": 0,
-                            "flexShrink": 0,
-                            "justifyContent": "center",
+                            "color": "#FFFFFF",
+                            "fontFamily": "Quicksand-Regular",
+                            "fontSize": 22,
+                            "includeFontPadding": false,
                           },
-                          {
-                            "alignSelf": "center",
-                          },
-                          {
-                            "alignSelf": "center",
-                          },
-                          {
-                            "alignSelf": "center",
-                            "height": 45,
-                            "paddingHorizontal": 28,
-                          },
-                          {
-                            "opacity": 0.3,
-                          },
+                          [
+                            {
+                              "color": "#00f1a2",
+                              "fontFamily": "Quicksand-Regular",
+                              "fontSize": 22,
+                            },
+                            null,
+                          ],
+                          null,
                         ]
                       }
                     >
-                      <Text
-                        adjustsFontSizeToFit={true}
-                        minimumFontScale={0.65}
-                        numberOfLines={1}
-                        style={
-                          [
-                            {
-                              "color": "#FFFFFF",
-                              "fontFamily": "Quicksand-Regular",
-                              "fontSize": 22,
-                              "includeFontPadding": false,
-                            },
-                            [
-                              {
-                                "color": "#00f1a2",
-                                "fontFamily": "Quicksand-Regular",
-                                "fontSize": 22,
-                              },
-                              null,
-                            ],
-                            null,
-                          ]
-                        }
-                      >
-                        MAX
-                      </Text>
-                    </BVLinearGradient>
-                  </View>
+                      MAX
+                    </Text>
+                  </BVLinearGradient>
                 </View>
               </View>
             </View>

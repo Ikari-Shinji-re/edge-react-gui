@@ -14,6 +14,7 @@ import { DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDec
 import { styled } from '../hoc/styled'
 import { Space } from '../layout/Space'
 import { useTheme } from '../services/ThemeContext'
+import { ButtonUi4 } from '../ui4/ButtonUi4'
 import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { EdgeText } from './EdgeText'
@@ -239,8 +240,12 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
           keyboardVisible={keyboardVisible}
           startAmounts={[initialDisplayAmount, initialFiatAmount]}
           placeholders={[lstrings.string_tap_to_edit, lstrings.string_tap_next_for_quote]}
-          onMaxPress={onMaxPress}
         />
+        {onMaxPress == null ? null : (
+          <Space left sideways>
+            <ButtonUi4 disabled={disabled} type="tertiary" mini label={lstrings.string_max_cap} marginRem={0} onPress={onMaxPress} />
+          </Space>
+        )}
         {props.children}
       </CardUi4>
     </>
