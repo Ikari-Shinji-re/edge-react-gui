@@ -54,6 +54,7 @@ export interface Props {
 
   // Renders:
   renderHeader?: () => React.ReactNode
+  renderIcon?: () => React.ReactNode
 
   // Events:
   onBlur?: () => void
@@ -83,6 +84,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
     // Renders:
     renderHeader,
+    renderIcon,
 
     // Events:
     onBlur,
@@ -221,7 +223,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
       <InputContainerView>
         <ButtonBox onPress={onToggleFlipInput} paddingRem={0.75}>
-          <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(1.5)} />
+          {renderIcon ? renderIcon() : <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(1.5)} />}
         </ButtonBox>
 
         <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>

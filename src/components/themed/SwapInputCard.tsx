@@ -212,15 +212,17 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
         {heading == null ? null : <CardHeading>{heading}</CardHeading>}
         <Space sideways>
           <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
-            {wallet == null ? undefined : (
-              <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />
-            )}
             <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
           </WalletPlaceHolder>
         </Space>
       </Header>
     )
   }
+
+  const renderIcon = (wallet: EdgeCurrencyWallet) => {
+    return <CryptoIconUi4 marginRem={0} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />
+  }
+  const maybeRenderIcon = wallet == null ? undefined : () => renderIcon(wallet)
 
   return (
     <>
@@ -233,6 +235,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
         convertValue={convertValue}
         fieldInfos={fieldInfos}
         renderHeader={renderHeader}
+        renderIcon={maybeRenderIcon}
         returnKeyType={returnKeyType}
         forceFieldNum={forceFieldMap[overrideForceField]}
         inputAccessoryViewID={inputAccessoryViewID}
