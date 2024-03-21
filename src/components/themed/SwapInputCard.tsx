@@ -50,7 +50,6 @@ export interface Props {
   onMaxPress?: () => void
   onNext?: () => void
   onSelectWallet: () => void
-  children?: React.ReactNode
 }
 
 const forceFieldMap: { crypto: FieldNum; fiat: FieldNum } = {
@@ -246,7 +245,6 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
             <ButtonUi4 disabled={disabled} type="tertiary" mini label={lstrings.string_max_cap} marginRem={0} onPress={onMaxPress} />
           </Space>
         )}
-        {props.children}
       </CardUi4>
     </>
   )
