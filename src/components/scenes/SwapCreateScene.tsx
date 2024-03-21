@@ -26,7 +26,6 @@ import { Airship, showError, showWarning } from '../services/AirshipInstance'
 import { cacheStyles, Theme, useTheme } from '../services/ThemeContext'
 import { ExchangedFlipInputAmounts, ExchangedFlipInputRef } from '../themed/ExchangedFlipInput2'
 import { LineTextDivider } from '../themed/LineTextDivider'
-import { MiniButton } from '../themed/MiniButton'
 import { SceneHeader } from '../themed/SceneHeader'
 import { SwapInputCard } from '../themed/SwapInputCard'
 import { AlertCardUi4 } from '../ui4/AlertCardUi4'
@@ -211,7 +210,7 @@ export const SwapCreateScene = (props: Props) => {
     dispatch(updateMostRecentWalletsSelected(walletId, tokenId))
   })
 
-  const handleMax = useHandler(() => {
+  const handleMaxPress = useHandler(() => {
     if (toWallet == null) {
       showWarning(`${lstrings.exchange_select_receiving_wallet}`)
       Keyboard.dismiss()
@@ -345,11 +344,8 @@ export const SwapCreateScene = (props: Props) => {
           onSelectWallet={handleFromSelectWallet}
           tokenId={fromTokenId}
           wallet={fromWallet}
-        >
-          {hasMaxSpend ? (
-            <MiniButton disabled={fromWallet == null} label={lstrings.string_max_cap} marginRem={[0.5, 0, 0.75]} onPress={handleMax} alignSelf="center" />
-          ) : null}
-        </SwapInputCard>
+          onMaxPress={hasMaxSpend ? handleMaxPress : undefined}
+        />
       </EdgeAnim>
       <EdgeAnim>
         <LineTextDivider title={lstrings.string_to_capitalize} lowerCased />

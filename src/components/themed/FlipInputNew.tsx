@@ -24,6 +24,7 @@ import { styled, styledWithRef } from '../hoc/styled'
 import { FlipIcon } from '../icons/ThemedIcons'
 import { showError } from '../services/AirshipInstance'
 import { useTheme } from '../services/ThemeContext'
+import { ButtonUi4 } from '../ui4/ButtonUi4'
 import { NumericInput } from './NumericInput'
 import { ButtonBox } from './ThemedButtons'
 
@@ -55,6 +56,7 @@ export interface Props {
   // Events:
   onBlur?: () => void
   onFocus?: () => void
+  onMaxPress?: () => void
   onNext?: () => void
 }
 
@@ -80,6 +82,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     // Events:
     onBlur,
     onFocus,
+    onMaxPress,
     onNext
   } = props
   const animatedValue = useSharedValue(forceFieldNum)
@@ -227,6 +230,12 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
             </BackAnimatedView>
           </InnerView>
         </AmountFieldContainerTouchable>
+
+        {onMaxPress == null ? null : (
+          <ButtonBox paddingRem={0.25}>
+            <ButtonUi4 disabled={disabled} type="tertiary" mini label={lstrings.string_max_cap} marginRem={0} onPress={onMaxPress} />
+          </ButtonBox>
+        )}
       </ContainerView>
     </>
   )

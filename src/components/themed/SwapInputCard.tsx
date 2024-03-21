@@ -46,6 +46,7 @@ export interface Props {
   onAmountChanged: (amounts: SwapInputCardAmounts) => unknown
   onBlur?: () => void
   onFocus?: () => void
+  onMaxPress?: () => void
   onNext?: () => void
   onSelectWallet: () => void
   children?: React.ReactNode
@@ -63,6 +64,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     tokenId,
     onBlur,
     onFocus,
+    onMaxPress,
     onNext,
     startNativeAmount,
     onAmountChanged,
@@ -237,6 +239,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
           keyboardVisible={keyboardVisible}
           startAmounts={[initialDisplayAmount, initialFiatAmount]}
           placeholders={[lstrings.string_tap_to_edit, lstrings.string_tap_next_for_quote]}
+          onMaxPress={onMaxPress}
         />
         {props.children}
       </CardUi4>
