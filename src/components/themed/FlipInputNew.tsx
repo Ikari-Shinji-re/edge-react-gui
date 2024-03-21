@@ -52,6 +52,9 @@ export interface Props {
   returnKeyType?: ReturnKeyType
   startAmounts: [string, string]
 
+  // Renders:
+  renderHeader?: () => React.ReactNode
+
   // Events:
   onBlur?: () => void
   onFocus?: () => void
@@ -77,6 +80,10 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     placeholders = [lstrings.string_tap_to_edit, ''],
     returnKeyType = 'done',
     startAmounts,
+
+    // Renders:
+    renderHeader,
+
     // Events:
     onBlur,
     onFocus,
@@ -210,22 +217,26 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
   return (
     <ContainerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
-      <ButtonBox onPress={onToggleFlipInput} paddingRem={0.75}>
-        <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(1.5)} />
-      </ButtonBox>
+      {renderHeader ? renderHeader() : null}
 
-      <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>
-        <InnerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
-          <FrontAnimatedView animatedValue={animatedValue} pointerEvents={flipField(primaryField) ? 'auto' : 'none'}>
-            {renderTopRow(1)}
-            {renderBottomRow(0)}
-          </FrontAnimatedView>
-          <BackAnimatedView animatedValue={animatedValue} pointerEvents={primaryField ? 'auto' : 'none'}>
-            {renderTopRow(0)}
-            {renderBottomRow(1)}
-          </BackAnimatedView>
-        </InnerView>
-      </AmountFieldContainerTouchable>
+      <InputContainerView>
+        <ButtonBox onPress={onToggleFlipInput} paddingRem={0.75}>
+          <SwapVerticalIcon color={theme.iconTappable} size={theme.rem(1.5)} />
+        </ButtonBox>
+
+        <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>
+          <InnerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
+            <FrontAnimatedView animatedValue={animatedValue} pointerEvents={flipField(primaryField) ? 'auto' : 'none'}>
+              {renderTopRow(1)}
+              {renderBottomRow(0)}
+            </FrontAnimatedView>
+            <BackAnimatedView animatedValue={animatedValue} pointerEvents={primaryField ? 'auto' : 'none'}>
+              {renderTopRow(0)}
+              {renderBottomRow(1)}
+            </BackAnimatedView>
+          </InnerView>
+        </AmountFieldContainerTouchable>
+      </InputContainerView>
     </ContainerView>
   )
 })
@@ -249,8 +260,8 @@ const ContainerView = styled(Animated.View)<{
 
   return [
     {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: 'column',
+      alignItems: 'stretch',
       margin: theme.rem(0.5),
 
       borderWidth: theme.textInputBorderWidth,
@@ -265,6 +276,11 @@ const ContainerView = styled(Animated.View)<{
     }))
   ]
 })
+
+const InputContainerView = styled(View)(theme => ({
+  flexDirection: 'row',
+  alignItems: 'center'
+}))
 
 const InnerView = styled(Animated.View)<{
   disableAnimation: SharedValue<number>

@@ -1,7 +1,7 @@
 import { div, log10, mul, round } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeTokenId } from 'edge-core-js'
 import React, { useMemo } from 'react'
-import { ReturnKeyType, TouchableOpacity } from 'react-native'
+import { ReturnKeyType, TouchableOpacity, View } from 'react-native'
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome5'
 
 import { useHandler } from '../../hooks/useHandler'
@@ -210,17 +210,25 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     return fiatValue === '0' ? 'crypto' : forceField
   }, [convertCurrency, forceField, tokenId, wallet])
 
+  const renderHeader = () => {
+    return (
+      <Header>
+        {heading == null ? null : <CardHeading>{heading}</CardHeading>}
+        <Space sideways>
+          <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
+            {wallet == null ? undefined : (
+              <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />
+            )}
+            <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
+            <ChevronIcon name="chevron-down" size={theme.rem(1)} />
+          </WalletPlaceHolder>
+        </Space>
+      </Header>
+    )
+  }
+
   return (
     <>
-      {heading == null ? null : <CardHeading>{heading}</CardHeading>}
-      <Space sideways>
-        <WalletPlaceHolder onPress={handleWalletPlaceholderPress}>
-          {wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />}
-          <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
-          <ChevronIcon name="chevron-down" size={theme.rem(1)} />
-        </WalletPlaceHolder>
-      </Space>
-
       <FlipInputNew
         disabled={disabled}
         onBlur={onBlur}
@@ -229,6 +237,7 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
         ref={flipInputRef}
         convertValue={convertValue}
         fieldInfos={fieldInfos}
+        renderHeader={renderHeader}
         returnKeyType={returnKeyType}
         forceFieldNum={forceFieldMap[overrideForceField]}
         inputAccessoryViewID={inputAccessoryViewID}
@@ -247,10 +256,15 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
 
 export const SwapInputCard = React.memo(SwapInputCardComponent)
 
+const Header = styled(View)(theme => ({
+  alignItems: 'center',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  padding: theme.rem(0.75)
+}))
+
 const CardHeading = styled(EdgeText)(theme => ({
-  alignSelf: 'flex-start',
-  color: theme.secondaryText,
-  marginHorizontal: theme.rem(1)
+  color: theme.secondaryText
 }))
 
 const WalletPlaceHolder = styled(TouchableOpacity)(theme => ({
@@ -258,7 +272,6 @@ const WalletPlaceHolder = styled(TouchableOpacity)(theme => ({
   backgroundColor: theme.cardBaseColor,
   borderRadius: 100,
   flexDirection: 'row',
-  margin: theme.rem(0.5),
   paddingHorizontal: theme.rem(0.75),
   paddingVertical: theme.rem(0.5)
 }))
