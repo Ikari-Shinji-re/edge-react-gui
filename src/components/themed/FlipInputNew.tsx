@@ -9,6 +9,7 @@ import Animated, {
   runOnJS,
   SharedValue,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withDelay,
   withTiming
@@ -19,9 +20,10 @@ import { formatNumberInput, isValidInput } from '../../locales/intl'
 import { lstrings } from '../../locales/strings'
 import { useState } from '../../types/reactHooks'
 import { zeroString } from '../../util/utils'
+import { EdgeTouchableOpacity } from '../common/EdgeTouchableOpacity'
 import { EdgeTouchableWithoutFeedback } from '../common/EdgeTouchableWithoutFeedback'
 import { styled, styledWithRef } from '../hoc/styled'
-import { SwapVerticalIcon } from '../icons/ThemedIcons'
+import { CloseIconAnimated, SwapVerticalIcon } from '../icons/ThemedIcons'
 import { showError } from '../services/AirshipInstance'
 import { useTheme } from '../services/ThemeContext'
 import { NumericInput } from './NumericInput'
@@ -69,6 +71,7 @@ const flipField = (fieldNum: FieldNum): FieldNum => {
 
 export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props, ref) => {
   const theme = useTheme()
+  const themeRem = theme.rem(1)
   const inputRefs = [React.useRef<TextInput>(null), React.useRef<TextInput>(null)]
 
   const {
@@ -96,6 +99,8 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
   // `amounts` is always a 2-tuple
   const [amounts, setAmounts] = useState<[string, string]>(startAmounts)
 
+  const hasAmount = !zeroString(amounts[0])
+
   // primaryField is the index into the 2-tuple, 0 or 1
   const [primaryField, setPrimaryField] = useState<FieldNum>(forceFieldNum)
 
@@ -107,6 +112,13 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
 
   const [amountFocused, setAmountFocused] = useState(false)
   const focusAnimation = useSharedValue(0)
+
+  const interpolateIconColor = useAnimatedColorInterpolateFn(theme.textInputIconColor, theme.textInputIconColorFocused, theme.textInputIconColorDisabled)
+  const clearIconColor = useDerivedValue(() => interpolateIconColor(focusAnimation, disableAnimation))
+  const clearIconScale = useDerivedValue(() => (hasAmount ? 1 : focusAnimation.value), [hasAmount])
+  // We have to use a SharedValue for the icon size event though it's not animated,
+  // just because that is the expected type
+  const clearIconSize = useSharedValue(themeRem)
 
   const onToggleFlipInput = useHandler(() => {
     const otherField = primaryField === 1 ? 0 : 1
@@ -151,6 +163,11 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
     setAmountFocused(false)
     focusAnimation.value = withDelay(120, withTiming(0, { duration: 300 }))
     if (onBlur != null) onBlur()
+  })
+
+  const handleClearPress = useHandler(() => {
+    const newAmounts: [string, string] = ['', '']
+    setAmounts(newAmounts)
   })
 
   const renderBottomRow = (fieldNum: FieldNum) => {
@@ -238,6 +255,11 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
             </BackAnimatedView>
           </InputTextView>
         </AmountFieldContainerTouchable>
+        <SideContainer scale={clearIconScale}>
+          <EdgeTouchableOpacity accessible onPress={handleClearPress}>
+            <CloseIconAnimated color={clearIconColor} size={clearIconSize} />
+          </EdgeTouchableOpacity>
+        </SideContainer>
       </InputContainerView>
     </ContainerView>
   )
@@ -403,6 +425,19 @@ const AmountFieldContainerTouchable = styled(EdgeTouchableWithoutFeedback)(theme
 const BottomContainerView = styled(View)({
   flexDirection: 'row',
   alignItems: 'center'
+})
+
+const SideContainer = styled(Animated.View)<{ scale: SharedValue<number> }>(theme => ({ scale }) => {
+  return [
+    {
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      paddingHorizontal: theme.rem(1)
+    },
+    useAnimatedStyle(() => ({
+      transform: [{ scale: scale.value }]
+    }))
+  ]
 })
 
 function useAnimatedColorInterpolateFn(defaultColor: string, focusColor: string, disableColor: string) {
