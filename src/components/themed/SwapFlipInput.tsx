@@ -74,11 +74,7 @@ export const SwapFlipInput = (props: Props) => {
   // Render
   //
 
-  if (wallet == null) {
-    return <MainButton label={props.buttonText} type="secondary" onPress={launchSelector} />
-  }
-
-  if (!props.isFocused) {
+  if (!props.isFocused && wallet != null) {
     return (
       <CardUi4>
         <RowUi4 icon={<CryptoIconUi4 sizeRem={1.75} walletId={wallet.id} tokenId={tokenId} />} onPress={focusMe}>
@@ -90,6 +86,7 @@ export const SwapFlipInput = (props: Props) => {
 
   return (
     <>
+      {wallet == null ? <MainButton label={props.buttonText} type="secondary" onPress={launchSelector} /> : null}
       {cryptoAmount == null ? null : (
         <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
       )}

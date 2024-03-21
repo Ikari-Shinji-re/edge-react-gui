@@ -1,12 +1,11 @@
 import { div, log10, mul, round } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeTokenId } from 'edge-core-js'
 import React, { useMemo, useState } from 'react'
-import { Platform, ReturnKeyType } from 'react-native'
+import { ReturnKeyType } from 'react-native'
 
-import { useDisplayDenom } from '../../hooks/useDisplayDenom'
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
-import { getExchangeDenom } from '../../selectors/DenominationSelectors'
+import { emptyEdgeDenomination, getExchangeDenom, selectDisplayDenom } from '../../selectors/DenominationSelectors'
 import { useSelector } from '../../types/reactRedux'
 import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
 import { DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
@@ -29,7 +28,7 @@ export interface ExchangedFlipInputAmounts {
 }
 
 export interface Props {
-  wallet: EdgeCurrencyWallet
+  wallet?: EdgeCurrencyWallet
   tokenId: EdgeTokenId
   startNativeAmount?: string
   keyboardVisible?: boolean
@@ -50,7 +49,7 @@ const forceFieldMap: { crypto: FieldNum; fiat: FieldNum } = {
   fiat: 1
 }
 
-// ExchangedFlipInput2 wraps FlipInput2
+// ExchangedFlipInput3 wraps FlipInput2
 // 1. It accepts native crypto amounts from the parent for initial amount and setAmount
 // 2. Has FlipInput2 only show "display" amounts (ie. sats, bits, mETH)
 // 3. Returns values to parent in fiat exchange amt, crypto exchange amt, and crypto native amt
@@ -77,21 +76,12 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
   const styles = getStyles(theme)
 
   const exchangeRates = useSelector(state => state.exchangeRates)
-  const fiatCurrencyCode = useWatch(wallet, 'fiatCurrencyCode')
+  const fiatCurrencyCode = useMaybeFiatCurrencyCode(wallet)
   const flipInputRef = React.useRef<FlipInputRef>(null)
 
-  const pluginId = wallet.currencyInfo.pluginId
-  const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
-  const cryptoExchangeDenom = getExchangeDenom(wallet.currencyConfig, tokenId)
-  const cryptoDisplayDenom = useDisplayDenom(wallet.currencyConfig, tokenId)
+  const cryptoDisplayDenom = useSelector(state => (wallet == null ? emptyEdgeDenomination : selectDisplayDenom(state, wallet.currencyConfig, tokenId)))
   const fiatDenom = getDenomFromIsoCode(fiatCurrencyCode)
 
-  const precisionAdjustVal = precisionAdjust({
-    primaryExchangeMultiplier: cryptoExchangeDenom.multiplier,
-    secondaryExchangeMultiplier: fiatDenom.multiplier,
-    exchangeSecondaryToPrimaryRatio: exchangeRates[`${cryptoCurrencyCode}_${fiatCurrencyCode}`]
-  })
-  const cryptoMaxPrecision = maxPrimaryCurrencyConversionDecimals(log10(cryptoDisplayDenom.multiplier), precisionAdjustVal)
   const fieldInfos: FlipInputFieldInfos = [
     { currencyName: cryptoDisplayDenom.name, maxEntryDecimals: log10(cryptoDisplayDenom.multiplier) },
     { currencyName: fiatDenom.name.replace('iso:', ''), maxEntryDecimals: log10(fiatDenom.multiplier) }
@@ -104,19 +94,34 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
   })
 
   const convertFromCryptoNative = useHandler((nativeAmount: string) => {
+    if (wallet == null) return { fiatAmount: '', exchangeAmount: '', displayAmount: '' }
     if (nativeAmount === '') return { fiatAmount: '', exchangeAmount: '', displayAmount: '' }
+
+    const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
+    const cryptoExchangeDenom = getExchangeDenom(wallet.currencyConfig, tokenId)
     const exchangeAmount = div(nativeAmount, cryptoExchangeDenom.multiplier, DECIMAL_PRECISION)
     const displayAmount = div(nativeAmount, cryptoDisplayDenom.multiplier, DECIMAL_PRECISION)
-    const fiatAmountLong = convertCurrency(exchangeAmount, cryptoCurrencyCode, fiatCurrencyCode)
+    const fiatAmountLong = convertCurrency(exchangeAmount, cryptoCurrencyCode, wallet.fiatCurrencyCode)
     const fiatAmount = round(fiatAmountLong, -2)
     return { fiatAmount, exchangeAmount, displayAmount }
   })
 
   const convertFromFiat = useHandler((fiatAmount: string) => {
+    if (wallet == null) return { nativeAmount: '', exchangeAmount: '', displayAmount: '' }
     if (fiatAmount === '') return { nativeAmount: '', exchangeAmount: '', displayAmount: '' }
-    const exchangeAmountLong = convertCurrency(fiatAmount, fiatCurrencyCode, cryptoCurrencyCode)
+
+    const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
+    const cryptoExchangeDenom = getExchangeDenom(wallet.currencyConfig, tokenId)
+    const exchangeAmountLong = convertCurrency(fiatAmount, wallet.fiatCurrencyCode, cryptoCurrencyCode)
     const nativeAmountLong = mul(exchangeAmountLong, cryptoExchangeDenom.multiplier)
     const displayAmountLong = div(nativeAmountLong, cryptoDisplayDenom.multiplier, DECIMAL_PRECISION)
+
+    const precisionAdjustVal = precisionAdjust({
+      primaryExchangeMultiplier: cryptoExchangeDenom.multiplier,
+      secondaryExchangeMultiplier: fiatDenom.multiplier,
+      exchangeSecondaryToPrimaryRatio: exchangeRates[`${cryptoCurrencyCode}_${fiatCurrencyCode}`]
+    })
+    const cryptoMaxPrecision = maxPrimaryCurrencyConversionDecimals(log10(cryptoDisplayDenom.multiplier), precisionAdjustVal)
 
     // Apply cryptoMaxPrecision to remove extraneous sub-penny precision
     const displayAmount = round(displayAmountLong, -cryptoMaxPrecision)
@@ -170,11 +175,14 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
   })
 
   React.useEffect(() => {
+    if (wallet == null) return
+
+    const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
     const { exchangeAmount, displayAmount } = convertFromCryptoNative(startNativeAmount ?? '')
-    const initFiat = convertCurrency(exchangeAmount, cryptoCurrencyCode, fiatCurrencyCode)
+    const initFiat = convertCurrency(exchangeAmount, cryptoCurrencyCode, wallet.fiatCurrencyCode)
     setRenderDisplayAmount(displayAmount)
     setRenderFiatAmount(initFiat)
-  }, [convertCurrency, convertFromCryptoNative, cryptoCurrencyCode, fiatCurrencyCode, startNativeAmount])
+  }, [convertCurrency, convertFromCryptoNative, startNativeAmount, tokenId, wallet])
 
   React.useImperativeHandle(ref, () => ({
     setAmount: (field, value) => {
@@ -195,14 +203,21 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
    * that we force the user to input a crypto amount, even if the caller wanted
    * to initialize the focused flip input field with fiat.
    */
-  const overrideForceField = useMemo(
-    () => (convertCurrency('100', cryptoCurrencyCode, fiatCurrencyCode) === '0' ? 'crypto' : forceField),
-    [convertCurrency, cryptoCurrencyCode, fiatCurrencyCode, forceField]
-  )
+  const overrideForceField = useMemo(() => {
+    // No wallet has been selected, so we can't get exchange rates yet:
+    if (wallet == null) return forceField
+
+    const cryptoCurrencyCode = getCurrencyCode(wallet, tokenId)
+    const fiatValue = convertCurrency('100', cryptoCurrencyCode, wallet.fiatCurrencyCode)
+    return fiatValue === '0' ? 'crypto' : forceField
+  }, [convertCurrency, forceField, tokenId, wallet])
 
   return (
     <>
-      <RowUi4 onPress={headerCallback} icon={<CryptoIconUi4 marginRem={[0, 0.5, 0, 0]} pluginId={pluginId} sizeRem={1.5} tokenId={tokenId} />}>
+      <RowUi4
+        onPress={headerCallback}
+        icon={wallet == null ? undefined : <CryptoIconUi4 marginRem={[0, 0.5, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.5} tokenId={tokenId} />}
+      >
         <EdgeText style={styles.headerText}>{headerText}</EdgeText>
       </RowUi4>
 
@@ -227,15 +242,14 @@ const ExchangedFlipInputComponent = React.forwardRef<ExchangedFlipInputRef, Prop
 export const ExchangedFlipInput = React.memo(ExchangedFlipInputComponent)
 
 const getStyles = cacheStyles((theme: Theme) => ({
-  // Header
-  headerContainer: {
-    marginRight: Platform.OS === 'ios' ? theme.rem(3.5) : theme.rem(1.5), // Different because adjustsFontSizeToFit behaves differently on android vs ios
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: theme.rem(1)
-  },
   headerText: {
     fontWeight: '600',
     fontSize: theme.rem(1.0)
   }
 }))
+
+const useMaybeFiatCurrencyCode = (wallet?: EdgeCurrencyWallet): string => {
+  const fakeWallet: any = { watch: () => () => {}, fiatCurrencyCode: '' }
+  const fiatCurrencyCode = useWatch(wallet ?? fakeWallet, 'fiatCurrencyCode')
+  return fiatCurrencyCode
+}
