@@ -13,7 +13,7 @@ import { CardUi4 } from '../ui4/CardUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { RowUi4 } from '../ui4/RowUi4'
 import { EdgeText } from './EdgeText'
-import { ExchangedFlipInput2, ExchangedFlipInputAmounts } from './ExchangedFlipInput2'
+import { ExchangedFlipInput, ExchangedFlipInputAmounts } from './ExchangedFlipInput'
 import { MainButton } from './MainButton'
 
 interface Props {
@@ -94,7 +94,7 @@ export const SwapFlipInput = (props: Props) => {
         <EdgeText style={styles.balanceText}>{lstrings.string_wallet_balance + ': ' + cryptoAmount + ' ' + displayDenomination.name}</EdgeText>
       )}
       <CardUi4>
-        <ExchangedFlipInput2
+        <ExchangedFlipInput
           onNext={onNext}
           onFocus={props.onFocus}
           onBlur={props.onBlur}
