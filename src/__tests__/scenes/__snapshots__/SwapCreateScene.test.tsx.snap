@@ -396,33 +396,6 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                     >
                       Select Source Wallet
                     </Text>
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        [
-                          {
-                            "color": undefined,
-                            "fontSize": 22,
-                          },
-                          {
-                            "color": "#00f1a2",
-                            "marginLeft": 22,
-                            "marginRight": 6,
-                            "textAlign": "center",
-                          },
-                          {
-                            "fontFamily": "FontAwesome5Free-Solid",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {
-                            "fontWeight": "900",
-                          },
-                        ]
-                      }
-                    >
-                      
-                    </Text>
                   </View>
                 </View>
               </View>
@@ -1171,33 +1144,6 @@ exports[`SwapCreateScene should render with loading props 1`] = `
                       }
                     >
                       Select Receiving Wallet
-                    </Text>
-                    <Text
-                      allowFontScaling={false}
-                      style={
-                        [
-                          {
-                            "color": undefined,
-                            "fontSize": 22,
-                          },
-                          {
-                            "color": "#00f1a2",
-                            "marginLeft": 22,
-                            "marginRight": 6,
-                            "textAlign": "center",
-                          },
-                          {
-                            "fontFamily": "FontAwesome5Free-Solid",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {
-                            "fontWeight": "900",
-                          },
-                        ]
-                      }
-                    >
-                      
                     </Text>
                   </View>
                 </View>

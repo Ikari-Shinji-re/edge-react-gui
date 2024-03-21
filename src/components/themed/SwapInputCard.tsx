@@ -2,7 +2,6 @@ import { div, log10, mul, round } from 'biggystring'
 import { EdgeCurrencyWallet, EdgeTokenId } from 'edge-core-js'
 import React, { useMemo } from 'react'
 import { ReturnKeyType, TouchableOpacity, View } from 'react-native'
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome5'
 
 import { useHandler } from '../../hooks/useHandler'
 import { useWatch } from '../../hooks/useWatch'
@@ -13,7 +12,6 @@ import { getCurrencyCode } from '../../util/CurrencyInfoHelpers'
 import { DECIMAL_PRECISION, getDenomFromIsoCode, maxPrimaryCurrencyConversionDecimals, precisionAdjust } from '../../util/utils'
 import { styled } from '../hoc/styled'
 import { Space } from '../layout/Space'
-import { useTheme } from '../services/ThemeContext'
 import { ButtonUi4 } from '../ui4/ButtonUi4'
 import { CryptoIconUi4 } from '../ui4/CryptoIconUi4'
 import { EdgeText } from './EdgeText'
@@ -74,8 +72,6 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
     disabled,
     inputAccessoryViewID
   } = props
-
-  const theme = useTheme()
 
   const exchangeRates = useSelector(state => state.exchangeRates)
   const fiatCurrencyCode = useMaybeFiatCurrencyCode(wallet)
@@ -220,7 +216,6 @@ const SwapInputCardComponent = React.forwardRef<SwapInputCardInputRef, Props>((p
               <CryptoIconUi4 marginRem={[0, 0.75, 0, 0]} pluginId={wallet.currencyInfo.pluginId} sizeRem={1.75} tokenId={tokenId} />
             )}
             <WalletPlaceHolderText>{walletPlaceholderText}</WalletPlaceHolderText>
-            <ChevronIcon name="chevron-down" size={theme.rem(1)} />
           </WalletPlaceHolder>
         </Space>
       </Header>
@@ -279,13 +274,6 @@ const WalletPlaceHolder = styled(TouchableOpacity)(theme => ({
 const WalletPlaceHolderText = styled(EdgeText)(theme => ({
   fontSize: theme.rem(1),
   lineHeight: theme.rem(1.5)
-}))
-
-const ChevronIcon = styled(FontAwesome6)(theme => ({
-  color: theme.iconTappable,
-  marginLeft: theme.rem(1),
-  marginRight: theme.rem(0.25),
-  textAlign: 'center'
 }))
 
 const useMaybeFiatCurrencyCode = (wallet?: EdgeCurrencyWallet): string => {
