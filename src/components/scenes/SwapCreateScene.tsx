@@ -30,6 +30,7 @@ import { SwapInputCard } from '../themed/SwapInputCard'
 import { ButtonBox } from '../themed/ThemedButtons'
 import { AlertCardUi4 } from '../ui4/AlertCardUi4'
 import { ButtonsViewUi4 } from '../ui4/ButtonsViewUi4'
+import { ButtonUi4 } from '../ui4/ButtonUi4'
 
 export interface SwapCreateParams {
   // The following props are used to populate the flip inputs
@@ -332,20 +333,24 @@ export const SwapCreateScene = (props: Props) => {
       <CenteringContainer>
         <MaxWidthContainer>
           <EdgeAnim enter={fadeInUp60}>
-            <SwapInputCard
-              ref={fromInputRef}
-              heading={lstrings.exchange_title_sending}
-              disabled={fromWallet == null}
-              forceField="fiat"
-              walletPlaceholderText={fromHeaderText}
-              keyboardVisible={false}
-              onAmountChanged={handleFromAmountChange}
-              onNext={handleNext}
-              onSelectWallet={handleFromSelectWallet}
-              tokenId={fromTokenId}
-              wallet={fromWallet}
-              onMaxPress={hasMaxSpend ? handleMaxPress : undefined}
-            />
+            {fromWallet == null ? (
+              <ButtonUi4 onPress={handleFromSelectWallet} marginRem={[1, 0]} label={lstrings.select_recv_wallet} />
+            ) : (
+              <SwapInputCard
+                ref={fromInputRef}
+                heading={lstrings.exchange_title_sending}
+                disabled={fromWallet == null}
+                forceField="fiat"
+                walletPlaceholderText={fromHeaderText}
+                keyboardVisible={false}
+                onAmountChanged={handleFromAmountChange}
+                onNext={handleNext}
+                onSelectWallet={handleFromSelectWallet}
+                tokenId={fromTokenId}
+                wallet={fromWallet}
+                onMaxPress={hasMaxSpend ? handleMaxPress : undefined}
+              />
+            )}
           </EdgeAnim>
           <EdgeAnim>
             <LineTextDivider lowerCased>
@@ -355,19 +360,23 @@ export const SwapCreateScene = (props: Props) => {
             </LineTextDivider>
           </EdgeAnim>
           <EdgeAnim enter={fadeInDown30}>
-            <SwapInputCard
-              ref={toInputRef}
-              disabled={toWallet == null}
-              forceField="fiat"
-              walletPlaceholderText={toHeaderText}
-              keyboardVisible={false}
-              onAmountChanged={handleToAmountChange}
-              onNext={handleNext}
-              onSelectWallet={handleToSelectWallet}
-              tokenId={toTokenId}
-              wallet={toWallet}
-              heading={lstrings.exchange_title_receiving}
-            />
+            {toWallet == null ? (
+              <ButtonUi4 onPress={handleToSelectWallet} marginRem={[1, 0]} label={lstrings.select_src_wallet} />
+            ) : (
+              <SwapInputCard
+                ref={toInputRef}
+                disabled={toWallet == null}
+                forceField="fiat"
+                walletPlaceholderText={toHeaderText}
+                keyboardVisible={false}
+                onAmountChanged={handleToAmountChange}
+                onNext={handleNext}
+                onSelectWallet={handleToSelectWallet}
+                tokenId={toTokenId}
+                wallet={toWallet}
+                heading={lstrings.exchange_title_receiving}
+              />
+            )}
           </EdgeAnim>
           <EdgeAnim enter={fadeInDown60}>{renderAlert()}</EdgeAnim>
           <EdgeAnim enter={fadeInDown90}>{renderButton()}</EdgeAnim>
