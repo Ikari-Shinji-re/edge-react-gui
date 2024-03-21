@@ -227,7 +227,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
         </ButtonBox>
 
         <AmountFieldContainerTouchable accessible={false} onPress={() => inputRefs[primaryField].current?.focus()}>
-          <InnerView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
+          <InputTextView disableAnimation={disableAnimation} focusAnimation={focusAnimation}>
             <FrontAnimatedView animatedValue={animatedValue} pointerEvents={flipField(primaryField) ? 'auto' : 'none'}>
               {renderTopRow(1)}
               {renderBottomRow(0)}
@@ -236,7 +236,7 @@ export const FlipInputNew = React.forwardRef<FlipInputRef, Props>((props: Props,
               {renderTopRow(0)}
               {renderBottomRow(1)}
             </BackAnimatedView>
-          </InnerView>
+          </InputTextView>
         </AmountFieldContainerTouchable>
       </InputContainerView>
     </ContainerView>
@@ -284,7 +284,7 @@ const InputContainerView = styled(View)(theme => ({
   alignItems: 'center'
 }))
 
-const InnerView = styled(Animated.View)<{
+const InputTextView = styled(Animated.View)<{
   disableAnimation: SharedValue<number>
   focusAnimation: SharedValue<number>
 }>(theme => {
